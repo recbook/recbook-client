@@ -1,6 +1,9 @@
 language: node_js
 node_js:
-  - "6"
+- '6'
 before_script:
-  - npm install
+- npm install
 script: npm test
+notifications:
+  slack:
+    secure: mMeh+PxP2HZMXuXWSSA1J9XhIowv59TXfjTB9hP7pnDvqlubV3pcqCEzgGL2U9o32NO26iO/8RjqZimDTLC/wOPaVQLMWY7oBkVhG2sdYDptm9cAh+DToKWStA+S/LN6m8RVAaYOboR367wVcNpNaXXDuvLfdaGNYglCrj2I1MSGvUtDwMjkl6rDG/WCDAsLf0E29IptKSPbUtFKrl9GGp4Ornnz1zJqOnhTShLLAxaKK6kEIFFYHHE4NI9r/NTsGC8eEr7SOQKW3HhqKdn0lLZXlGKRD0ogO5dWnH+IgCTaYSDcXPMfUwJCwMlZeAL2mPkXMaIbqFnTDV1/P3YiD8xOe3Y3fm2EbiO9b3hAUS3fIDK6nbZ1kSdFHlu8Dqw332nbJjuvtOov1clEok04n1AVlP5oJmxRWIIm+Mzey6Ud3SKIxnSrA/suU+OteSyDU6MFI+xiwnxuRgzYZltwm7Z6w+mUOZdZmdzzGpxwzjMuCJQcZshoOAl2FSwZSctvLWWTHv8hxbxdlF4XKj++2nwfhpoT5LYiYFO8n8rb8tShaYBv+bsbXbOOAUkA7OIPoLli+VEyjfvbICSf3gajQqWUvVPakV3tpPQTOscMXhiusXNwAA0b30chfB7SB0HVZWg8TbGTPd1A9FL2pDolmO7SSA/+ntG2MyFHRXEwBOU=
