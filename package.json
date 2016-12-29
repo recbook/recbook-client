@@ -1,16 +1,22 @@
 {
-  "name": "recbook-client",
+  "name": "recbook",
   "version": "0.0.1",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 0"
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "test": "jest"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/recbook/recbook-client.git"
+  "dependencies": {
+    "react": "15.4.1",
+    "react-native": "0.39.2"
   },
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/recbook/recbook-client/issues"
+  "devDependencies": {
+    "babel-jest": "18.0.0",
+    "babel-preset-react-native": "1.9.1",
+    "jest": "18.1.0",
+    "react-test-renderer": "15.4.1"
   },
-  "homepage": "https://github.com/recbook/recbook-client#readme"
+  "jest": {
+    "preset": "react-native"
+  }
 }
