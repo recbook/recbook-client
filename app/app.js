@@ -23,7 +23,7 @@ const styles = {
   }
 };
 
-export default class recbook extends Component {
+export default class Recbook extends Component {
   render() {
     return (
       <View style={styles.container}>
