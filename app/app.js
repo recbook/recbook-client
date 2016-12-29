@@ -1,43 +1,51 @@
-import React, { Component } from 'react';
-import {
-  Text,
-  View
-} from 'react-native';
+import React from 'react';
+import { Navigator } from 'react-native';
+import Relay from 'react-relay';
+import { homeNavigatorRoute } from './navigator/navigatorRoutes';
 
-const styles = {
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF'
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5
+export function setNetworkLayer() {
+  let options = {};
+  const authToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ODY0ZjFiZjc3Mzc4MDBkODg5MmU5MTMiLCJuYW1lIj' +
+    'oiaHl1bmNoYW4iLCJlbWFpbCI6Imh5dW5jaGFuQGdtYWlsLmNvbSIsImlhdCI6MTQ4MzAxMDQ5NX0.w4zhjhtOxeS7PV6Iif3aKSNNoR1PAhlmu6YsE' +
+    'P-bnbQ';
+  options.headers = {
+    Authorization: authToken
+  };
+  Relay.injectNetworkLayer(
+    new Relay.DefaultNetworkLayer('http://192.168.0.30:5001/graphql', options)
+  );
+}
+
+export function renderRelayScene(route, navigator) {
+  const { Component, queryConfig } = route;
+  return (
+    <Relay.RootContainer
+      Component={Component}
+      route={queryConfig}
+      renderFetched={(data) => {
+        return (
+          <Component
+            navigator={navigator}
+            {...data}
+          />
+        );
+      }}
+    />
+  );
+}
+
+export default class Recbook extends React.Component {
+  componentDidMount() {
+    setNetworkLayer();
   }
-};
 
-export default class Recbook extends Component {
   render() {
+    const initialRoute = homeNavigatorRoute();
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.ios.js
-        </Text>
-        <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
-        </Text>
-      </View>
+      <Navigator
+        initialRoute={initialRoute}
+        renderScene={renderRelayScene}
+      />
     );
   }
 }
