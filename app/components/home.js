@@ -1,10 +1,6 @@
 import React, { Component, PropTypes } from 'react';
+import {Container, Content, Header, Button, Footer, Text} from 'native-base';
 import Relay from 'react-relay';
-import {
-  Text,
-  View,
-  TouchableHighlight
-} from 'react-native';
 import RegisterMutation from '../mutations/register';
 
 const styles = {
@@ -13,16 +9,6 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF'
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5
   }
 };
 
@@ -43,29 +29,9 @@ export function register(email, username, password) {
       onFailure: (transaction) => {
         console.log(transaction.getError());
         reject(transaction.getError().message);
-      },
+      }
     });
   });
-}
-
-export function login(username, password) {
-  // return new Promise((resolve, reject) => {
-  //   Relay.Store.commitUpdate(new LoginMutation({
-  //     input: {
-  //       username: username,
-  //       password: password,
-  //     },
-  //     user: null,
-  //   }), {
-  //     onSuccess: (data) => {
-  //       resolve(data);
-  //     },
-  //
-  //     onFailure: (transaction) => {
-  //       reject(transaction.getError().message);
-  //     },
-  //   });
-  // });
 }
 
 export class Home extends Component {
@@ -73,27 +39,30 @@ export class Home extends Component {
     Users: PropTypes.Object
   };
 
-  constructor() {
-    super();
-  }
-
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          {this.props.Users.name}
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.ios.js
-        </Text>
-        <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
-        </Text>
-        <TouchableHighlight onPress={() => register("fffffffddff@gfmail.com", "fzzzfff", "12a34")}>
-          <Text>Register</Text>
-        </TouchableHighlight>
-      </View>
+        <Container style={styles.container}>
+          <Header>
+            <Button transparent>My Library</Button>
+            <Button transparent>button1</Button>
+            <Button transparent>button2</Button>
+          </Header>
+          <Content>
+            <Text style={styles.welcome}>
+              {this.props.Users.name}
+              </Text>
+            <Text style={styles.instructions}>
+              Recbook
+            </Text>
+            <Button onPress={() => register('fffffffddff@gfmail.com', 'fzzzfff', '12a34')}>
+              Register
+            </Button>
+          </Content>
+          <Footer>
+            <Button transparent>RECBOOK</Button>
+            <Button transparent>CAMERA</Button>
+          </Footer>
+        </Container>
     );
   }
 }
