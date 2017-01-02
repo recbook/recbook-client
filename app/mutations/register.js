@@ -8,7 +8,7 @@ export default class RegisterMutation extends Relay.Mutation {
   getMutation() {
     return Relay.QL`
         mutation {
-            createUser
+            _createUser
         }
     `;
   }
@@ -23,7 +23,7 @@ export default class RegisterMutation extends Relay.Mutation {
 
   getFatQuery() {
     return Relay.QL`
-        fragment on createUserPayload {
+        fragment on _createUserPayload {
          user{
              _id
              name
@@ -36,7 +36,7 @@ export default class RegisterMutation extends Relay.Mutation {
     return [{
       type: 'REQUIRED_CHILDREN',
       children: [Relay.QL `
-          fragment on createUserPayload {
+          fragment on _createUserPayload {
               user{
                   _id
                   name
