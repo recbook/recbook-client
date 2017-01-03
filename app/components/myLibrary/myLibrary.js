@@ -10,7 +10,7 @@ import Relay from 'react-relay';
 
 const COLUMN_CONSTANT = {
   LEFT: 'left',
-  RIGHT: 'RIGHT'
+  RIGHT: 'right'
 };
 
 const styles = {
