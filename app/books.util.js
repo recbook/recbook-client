@@ -1,6 +1,8 @@
+import CONFIG from '../local.config.json';
+
 const GOOGLE_BOOKS_API = {
   URL: 'https://www.googleapis.com/books/v1/volumes',
-  API_KEY: 'AIzaSyDnRPy41g22amYI96EBjaCiiohytGLI6A8',
+  API_KEY: CONFIG.GOOGLE.API_KEY,
   NO_RESULT_ERR: 'NO_RESULT_ERROR: no results.'
 };
 
