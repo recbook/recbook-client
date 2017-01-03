@@ -9,11 +9,13 @@
   "dependencies": {
     "react": "15.4.1",
     "react-native": "0.39.2",
+    "react-native-router-flux": "^3.37.0",
     "react-relay": "^0.10.0",
     "sync-request": "^3.0.1"
   },
   "devDependencies": {
     "babel-core": "^6.21.0",
+    "babel-eslint": "^7.1.1",
     "babel-jest": "18.0.0",
     "babel-preset-react-native": "^1.9.1",
     "babel-relay-plugin": "^0.10.0",

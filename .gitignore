@@ -42,3 +42,6 @@ android/keystores/debug.keystore
 android/captures
 
 ios/Pods
+
+graphql.config.json
+data/schema.json
