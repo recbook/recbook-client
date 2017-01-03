@@ -5,14 +5,12 @@ import { homeNavigatorRoute } from './navigator/navigatorRoutes';
 
 export function setNetworkLayer() {
   let options = {};
-  const authToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ODY0ZjFiZjc3Mzc4MDBkODg5MmU5MTMiLCJuYW1lIj' +
-    'oiaHl1bmNoYW4iLCJlbWFpbCI6Imh5dW5jaGFuQGdtYWlsLmNvbSIsImlhdCI6MTQ4MzAxMDQ5NX0.w4zhjhtOxeS7PV6Iif3aKSNNoR1PAhlmu6YsE' +
-    'P-bnbQ';
+  const authToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ODY1YjUxZWM4NmVlMTAwMWRiMDEyZTMiLCJuYW1lIjoiY2hhbiIsImVtYWlsIjoiaGNraW0wNjI1QGdtYWlsLmNvbSIsImlhdCI6MTQ4MzA2MDUxMH0.OD2ZeQ6Djt5kOgrdt630_iDx9EKLxJapUxR9tuUCOeo';
   options.headers = {
     Authorization: authToken
   };
   Relay.injectNetworkLayer(
-    new Relay.DefaultNetworkLayer('http://192.168.0.30:5001/graphql', options)
+    new Relay.DefaultNetworkLayer('http://52.79.112.162/graphql', options)
   );
 }
 
