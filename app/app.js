@@ -37,16 +37,16 @@ export default class App extends React.Component {
 
   render() {
     return (
-        <Router createReducer={reducerCreate} sceneStyle={{flex: 1}} wrapBy={RelayRenderer()}>
-          <Scene key="root">
-            <Scene
-                key="myLibrary"
-                component={MyLibrary}
-                initial={true}
-                queries={{user: () => Relay.QL`query { viewer } `}}
-            />
-          </Scene>
-        </Router>
+      <Router createReducer={reducerCreate} sceneStyle={{flex: 1}} wrapBy={RelayRenderer()}>
+        <Scene key="root">
+          <Scene
+            key="myLibrary"
+            component={MyLibrary}
+            initial={true}
+            queries={{user: () => Relay.QL`query { viewer } `}}
+          />
+        </Scene>
+      </Router>
     );
   }
 }
