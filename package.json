@@ -7,9 +7,9 @@
     "test": "eslint app/**/*.js && jest"
   },
   "dependencies": {
-    "native-base": "^0.5.20",
     "react": "15.4.1",
     "react-native": "0.39.2",
+    "react-native-router-flux": "^3.37.0",
     "react-relay": "^0.10.0",
     "sync-request": "^3.0.1"
   },

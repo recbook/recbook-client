@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
-import {Container, Content, Header, Button, Footer, Text} from 'native-base';
+import { TouchableOpacity, Text, View } from 'react-native';
 import Relay from 'react-relay';
-import RegisterMutation from '../mutations/register';
+import RegisterMutation from '../../mutations/register';
 
 const styles = {
   container: {
@@ -34,45 +34,30 @@ export function register(email, username, password) {
   });
 }
 
-export class Home extends Component {
+export class MyLibrary extends Component {
   static propTypes = {
-    Users: PropTypes.Object
+    user: PropTypes.object
   };
 
   render() {
     return (
-        <Container style={styles.container}>
-          <Header>
-            <Button transparent>My Library</Button>
-            <Button transparent>button1</Button>
-            <Button transparent>button2</Button>
-          </Header>
-          <Content>
-            <Text style={styles.welcome}>
-              {this.props.Users.name}
-              </Text>
-            <Text style={styles.instructions}>
-              Recbook
-            </Text>
-            <Button onPress={() => register('fffffffddff@gfmail.com', 'fzzzfff', '12a34')}>
-              Register
-            </Button>
-          </Content>
-          <Footer>
-            <Button transparent>RECBOOK</Button>
-            <Button transparent>CAMERA</Button>
-          </Footer>
-        </Container>
+        <View style={styles.container}>
+          <Text>{this.props.user.name}</Text>
+          <Text>Recbook</Text>
+          <TouchableOpacity onPress={() => register('fff@gmail.com', 'dankim', '12a34')}>
+            <Text>Register</Text>
+          </TouchableOpacity>
+        </View>
     );
   }
 }
 
-export default Relay.createContainer(Home, {
+export default Relay.createContainer(MyLibrary, {
   initialVariables: {
     orderBy: null
   },
   fragments: {
-    Users: () => {
+    user: () => {
       return Relay.QL `
           fragment on User {
               _id,

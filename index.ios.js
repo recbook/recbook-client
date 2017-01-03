@@ -1,4 +1,4 @@
 import { AppRegistry } from 'react-native';
-import Recbook from './app/app';
+import App from './app/app';
 
-AppRegistry.registerComponent('recbook', () => Recbook);
+AppRegistry.registerComponent('recbook', () => App);

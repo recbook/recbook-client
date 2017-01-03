@@ -1,7 +1,21 @@
 import React from 'react';
-import { Navigator } from 'react-native';
 import Relay from 'react-relay';
-import { homeNavigatorRoute } from './navigator/navigatorRoutes';
+import {
+  Router,
+  Reducer,
+  Scene
+} from 'react-native-router-flux';
+import RelayRenderer from './shared/relayComponentRenderer';
+
+import MyLibrary from './components/myLibrary/myLibrary';
+
+// Define reducer to manage scenes
+const reducerCreate = (params) => {
+  const defaultReducer = Reducer(params);
+  return (state, action) => {
+    return defaultReducer(state, action);
+  };
+};
 
 export function setNetworkLayer() {
   let options = {};
@@ -16,36 +30,23 @@ export function setNetworkLayer() {
   );
 }
 
-export function renderRelayScene(route, navigator) {
-  const { Component, queryConfig } = route;
-  return (
-    <Relay.RootContainer
-      Component={Component}
-      route={queryConfig}
-      renderFetched={(data) => {
-        return (
-          <Component
-            navigator={navigator}
-            {...data}
-          />
-        );
-      }}
-    />
-  );
-}
-
-export default class Recbook extends React.Component {
+export default class App extends React.Component {
   componentDidMount() {
     setNetworkLayer();
   }
 
   render() {
-    const initialRoute = homeNavigatorRoute();
     return (
-      <Navigator
-        initialRoute={initialRoute}
-        renderScene={renderRelayScene}
-      />
+        <Router createReducer={reducerCreate} sceneStyle={{flex: 1}} wrapBy={RelayRenderer()}>
+          <Scene key="root">
+            <Scene
+                key="myLibrary"
+                component={MyLibrary}
+                initial={true}
+                queries={{user: () => Relay.QL`query { viewer } `}}
+            />
+          </Scene>
+        </Router>
     );
   }
 }

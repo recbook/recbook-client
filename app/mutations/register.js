@@ -29,7 +29,7 @@ export default class RegisterMutation extends Relay.Mutation {
              name
          }
         }
-    `
+    `;
   }
 
   getConfigs() {
@@ -46,6 +46,6 @@ export default class RegisterMutation extends Relay.Mutation {
               }
           }
       `]
-    }]
+    }];
   }
 }
