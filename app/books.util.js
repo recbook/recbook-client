@@ -81,7 +81,7 @@ export default class BookAPIUtil {
 
     let query = '';
     options.forEach((value, key) => {
-      query += `&${key}=${value}`;
+      query = query + `&${key}=${value}`;
     });
     const address = `${GOOGLE_BOOKS_API.URL}?q=${keyword}${query}&key=${GOOGLE_BOOKS_API.API_KEY}`;
     return fetch(address, { method: 'GET' })
@@ -106,11 +106,13 @@ export default class BookAPIUtil {
           return searchResult;
         }
 
+        const lastIndex = obj.items.length === 0 ? 0 : startIndex + obj.items.length - 1;
+        const totalSize = obj.totalItems;
         // @Warning totalSize can be different even if you search same text.
         searchResult.pageInfo = {
-          totalSize: obj.totalItems,
+          totalSize,
           startIndex,
-          lastIndex: obj.items.length === 0 ? 0 : startIndex + obj.items.length - 1,
+          lastIndex,
           hasNext: totalSize > lastIndex + 1,
           hasPrev: startIndex > 0
         };
@@ -120,7 +122,6 @@ export default class BookAPIUtil {
           return book;
         });
         searchResult.bookList = bookList;
-        console.log(searchResult);
         return searchResult;
       })
       .catch(() => {
