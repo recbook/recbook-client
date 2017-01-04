@@ -6,6 +6,20 @@ const GOOGLE_BOOKS_API = {
   NO_RESULT_ERR: 'NO_RESULT_ERROR: no results.'
 };
 
+/*
+  ORDER_BY: newest, relevance
+  MAX_RESULTS: 0 ~ 40
+  START_INDEX: starts at 0
+  PRINT_TYPE: all, books, magazines
+*/
+
+export const OPTIONS_KEY = {
+  ORDER_BY: 'orderBy',
+  MAX_RESULTS: 'maxResults',
+  START_INDEX: 'startIndex',
+  PRINT_TYPE: 'printType'
+};
+
 export default class BookAPIUtil {
 
   static responseParser(item) {
@@ -34,23 +48,42 @@ export default class BookAPIUtil {
   /*
     https://developers.google.com/books/docs/v1/reference/volumes/list
     Return Type : Array[JSON]
-    [
-      {
-        googleBookId: String,
-        title: String,
-        authors: Array[String],
-        publisher: String,
-        publishedDate: String,
-        categories: Array[String],
-        // optional
-        isbn13: String,
-        thumbnail: String
-      }
-    ]
+    {
+      pageInfo: {
+        totalSize: String,   // totalSize can be changed, even if you search same text.
+        startIndex: Number,
+        lastIndex: Number,
+        hasNext: Boolean,
+        hasPrev: Boolean
+      },
+      bookList: [
+        {
+          googleBookId: String,
+          title: String,
+          authors: Array[String],
+          publisher: String,
+          publishedDate: String,
+          categories: Array[String],
+          // optional
+          isbn13: String,
+          thumbnail: String
+        }
+      ]
+    }
   */
 
-  static searchBooks(keyword) {
-    const address = `${GOOGLE_BOOKS_API.URL}?q=${keyword}&key=${GOOGLE_BOOKS_API.API_KEY}`;
+  static searchBooks(keyword, { orderBy = 'relevance', maxResults = 5, startIndex = 0, printType = 'books' }) {
+    const options = new Map()
+      .set('orderBy', orderBy)
+      .set('maxResults', maxResults)
+      .set('startIndex', startIndex)
+      .set('printType', printType);
+
+    let query = '';
+    options.forEach((value, key) => {
+      query += `&${key}=${value}`;
+    });
+    const address = `${GOOGLE_BOOKS_API.URL}?q=${keyword}${query}&key=${GOOGLE_BOOKS_API.API_KEY}`;
     return fetch(address, { method: 'GET' })
       .then(response => {
         if (!response.ok) {
@@ -59,7 +92,36 @@ export default class BookAPIUtil {
         return response.json();
       })
       .then(obj => {
-        return obj.items.map(BookAPIUtil.responseParser);
+        const searchResult = {};
+
+        if (obj.items.length === 0) {
+          searchResult.pageInfo = {
+            totalSize: obj.totalItems,
+            startIndex,
+            lastIndex: 0,
+            hasNext: false,
+            hasPrev: false
+          };
+          searchResult.bookList = [];
+          return searchResult;
+        }
+
+        // @Warning totalSize can be different even if you search same text.
+        searchResult.pageInfo = {
+          totalSize: obj.totalItems,
+          startIndex,
+          lastIndex: obj.items.length === 0 ? 0 : startIndex + obj.items.length - 1,
+          hasNext: totalSize > lastIndex + 1,
+          hasPrev: startIndex > 0
+        };
+        const bookList = obj.items.map((item, index) => {
+          const book = BookAPIUtil.responseParser(item);
+          book.index = startIndex + index;
+          return book;
+        });
+        searchResult.bookList = bookList;
+        console.log(searchResult);
+        return searchResult;
       })
       .catch(() => {
         throw Error(GOOGLE_BOOKS_API.NO_RESULT_ERR);
@@ -96,4 +158,6 @@ export default class BookAPIUtil {
         throw Error(GOOGLE_BOOKS_API.NO_RESULT_ERR);
       });
   }
+
 }
+
