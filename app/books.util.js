@@ -80,9 +80,9 @@ export default class BookAPIUtil {
       .set('printType', printType);
 
     let query = '';
-    options.forEach((value, key) => {
+    for (let [key, value] of options) {
       query = query + `&${key}=${value}`;
-    });
+    }
     const address = `${GOOGLE_BOOKS_API.URL}?q=${keyword}${query}&key=${GOOGLE_BOOKS_API.API_KEY}`;
     return fetch(address, { method: 'GET' })
       .then(response => {
