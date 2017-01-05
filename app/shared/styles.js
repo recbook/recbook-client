@@ -1,7 +1,7 @@
 import {
   Dimensions,
   Platform,
-  StyleSheet,
+  StyleSheet
 } from 'react-native';
 
 const WIDTH = Dimensions.get('window').width;
@@ -77,14 +77,14 @@ const styles = StyleSheet.create({
   },
   bottomNavigationBar: {
     position: 'absolute',
-    flex:0.1,
+    flex: 0.1,
     left: 0,
     right: 0,
     bottom: -10,
-    backgroundColor:'green',
-    flexDirection:'row',
-    height:80,
-    alignItems:'center'
+    backgroundColor: 'green',
+    flexDirection: 'row',
+    height: 80,
+    alignItems: 'center'
   }
 });
 
