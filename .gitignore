@@ -43,5 +43,6 @@ android/captures
 
 ios/Pods
 
-# CONFIG
 local.config.json
+graphql.config.json
+data/schema.json
