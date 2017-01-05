@@ -13,6 +13,7 @@ const COLUMN_CONSTANT = {
   RIGHT: 'right'
 };
 
+const HEIGHT = Dimensions.get('window').height;
 const styles = {
   container: {
     flex: 1,
@@ -129,7 +130,7 @@ export class MyLibrary extends Component {
 
   render() {
     return (
-      <ScrollView style={{flex: 1}}>
+      <ScrollView style={{flex: 1, marginTop: HEIGHT * 0.11}}>
         <View style={styles.container}>
           {this.renderLeftColumn()}
           {this.renderRightColumn()}
