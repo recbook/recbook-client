@@ -50,12 +50,14 @@ export default class App extends React.Component {
             <TouchableOpacity style={Styles.changeButton}>
               <Image
                   style={Styles.changeImage}
-                  source={require("./resources/view change01.png")}/>
+                  source={require("./resources/view change01.png")}
+              />
             </TouchableOpacity>
             <TouchableOpacity style={Styles.searchButton}>
               <Image
                   style={Styles.searchImage}
-                  source={require("./resources/search.png")}/>
+                  source={require("./resources/search.png")}
+              />
             </TouchableOpacity>
           </View>
       );
