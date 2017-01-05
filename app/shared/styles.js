@@ -74,17 +74,6 @@ const styles = StyleSheet.create({
     height: 20,
     backgroundColor: 'transparent',
     resizeMode: 'contain'
-  },
-  bottomNavigationBar: {
-    position: 'absolute',
-    flex: 0.1,
-    left: 0,
-    right: 0,
-    bottom: -10,
-    backgroundColor: 'green',
-    flexDirection: 'row',
-    height: 80,
-    alignItems: 'center'
   }
 });
 

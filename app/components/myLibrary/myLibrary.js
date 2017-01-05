@@ -7,6 +7,7 @@ import {
   View
 } from 'react-native';
 import Relay from 'react-relay';
+import Footer from '../../footer';
 
 const COLUMN_CONSTANT = {
   LEFT: 'left',
@@ -46,6 +47,17 @@ const styles = {
   textContainer: {
     marginLeft: 10,
     flex: 1
+  },
+  bottomNavigationBar: {
+    position: 'absolute',
+    flex: 0.1,
+    left: 0,
+    right: 0,
+    bottom: -10,
+    backgroundColor: 'green',
+    flexDirection: 'row',
+    height: 80,
+    alignItems: 'center'
   }
 };
 
@@ -130,12 +142,15 @@ export class MyLibrary extends Component {
 
   render() {
     return (
-      <ScrollView style={{flex: 1, marginTop: HEIGHT * 0.11}}>
-        <View style={styles.container}>
-          {this.renderLeftColumn()}
-          {this.renderRightColumn()}
+        <View style={{flex: 1}}>
+          <ScrollView style={{flex: 1, marginTop: HEIGHT * 0.11}}>
+            <View style={styles.container}>
+              {this.renderLeftColumn()}
+              {this.renderRightColumn()}
+            </View>
+          </ScrollView>
+          <Footer/>
         </View>
-      </ScrollView>
     );
   }
 }
