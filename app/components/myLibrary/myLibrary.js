@@ -7,6 +7,7 @@ import {
   View
 } from 'react-native';
 import Relay from 'react-relay';
+import Styles from './styles';
 
 const COLUMN_CONSTANT = {
   LEFT: 'left',
@@ -14,40 +15,6 @@ const COLUMN_CONSTANT = {
 };
 
 const HEIGHT = Dimensions.get('window').height;
-const styles = {
-  container: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between'
-  },
-  row: {
-    margin: 10,
-    flexDirection: 'column',
-    borderRadius: 7
-  },
-  leftColumn: {
-    paddingBottom: 100
-  },
-  rightColumn: {
-    paddingTop: 50
-  },
-  book: {
-    margin: 10,
-    height: 200,
-    borderRadius: 7
-  },
-  textBookTitle: {
-    fontWeight: 'bold'
-  },
-  textBookInfo: {
-    color: '#8e8e8e',
-    fontSize: 10
-  },
-  textContainer: {
-    marginLeft: 10,
-    flex: 1
-  }
-};
 
 const generateRandomColor = () => {
   // eslint-disable-next-line
@@ -86,17 +53,23 @@ export class MyLibrary extends Component {
     return (
       <TouchableOpacity
         style={[
-          styles.row,
+          Styles.row,
           {backgroundColor: (this.state.onPressedBookIndex === index && this.state.onPressedColumn === col) ? '#ececec' : 'white'}]}
         onPress={() => this.handleOnPressBook(index, col)}
         activeOpacity={1}
+        key={content.data}
       >
-        <View style={[styles.book, {backgroundColor: content.color}]}/>
-        <View style={styles.textContainer}>
-          <Text style={styles.textBookTitle}>BOOK #{content.data}</Text>
+        <View style={[Styles.book, {backgroundColor: content.color}]}/>
+        <View style={Styles.textContainerTitle}>
+          <Text style={Styles.textBookTitle}>BOOK{'\n'}Example #{content.data}</Text>
+          <View style={Styles.snippetCountContainer}>
+            <View style={Styles.snippetCountBox}>
+            <Text style={Styles.textSnippetCount}>{content.data}</Text>
+            </View>
+          </View>
         </View>
-        <View style={[styles.textContainer, {marginBottom: 10}]}>
-          <Text style={styles.textBookInfo}>author: {content.data} bibbid vav sust reandsaf asdf lkdasdfas kds</Text>
+        <View style={Styles.textContainerInfo}>
+          <Text style={Styles.textBookInfo}>author: {content.data} bibbid vav sust reandsaf asdf lkdasdfas kds</Text>
         </View>
       </TouchableOpacity>
     );
@@ -113,7 +86,7 @@ export class MyLibrary extends Component {
   renderLeftColumn() {
     const leftDataSource = this.filterDataSourceUponColumn(0);
     return (
-      <View style={[styles.leftColumn, {width: Dimensions.get('window').width / 2}]}>
+      <View style={Styles.leftColumn}>
         {leftDataSource.map((t, i) => this.renderRow(t, i, COLUMN_CONSTANT.LEFT))}
       </View>
     );
@@ -122,7 +95,7 @@ export class MyLibrary extends Component {
   renderRightColumn() {
     const rightDataSource = this.filterDataSourceUponColumn(1);
     return (
-      <View style={[styles.rightColumn, {width: Dimensions.get('window').width / 2}]}>
+      <View style={Styles.rightColumn}>
         {rightDataSource.map((t, i) => this.renderRow(t, i, COLUMN_CONSTANT.RIGHT))}
       </View>
     );
@@ -131,7 +104,7 @@ export class MyLibrary extends Component {
   render() {
     return (
       <ScrollView style={{flex: 1, marginTop: HEIGHT * 0.11}}>
-        <View style={styles.container}>
+        <View style={Styles.container}>
           {this.renderLeftColumn()}
           {this.renderRightColumn()}
         </View>
@@ -157,4 +130,3 @@ export default Relay.createContainer(MyLibrary, {
     }
   }
 });
-
