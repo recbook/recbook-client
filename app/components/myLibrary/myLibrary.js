@@ -146,7 +146,7 @@ export default Relay.createContainer(MyLibrary, {
   },
   fragments: {
     user: () => {
-      return Relay.QL `          
+      return Relay.QL `
           fragment on User {
               _id,
               email,
