@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import {
+  Animated,
   Dimensions,
   ScrollView,
   Text,
@@ -30,7 +31,8 @@ export class MyLibrary extends Component {
       dataSource: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
       onPressedBookIndex: undefined,
       onPressedColumn: undefined,
-      initialBookColor: []
+      initialBookColor: [],
+      fadeAnimRow: new Animated.Value(0)
     };
     for (let i = 0; i < this.state.dataSource.length; i = i + 1) {
       this.state.initialBookColor.push(generateRandomColor());
@@ -41,37 +43,73 @@ export class MyLibrary extends Component {
     user: PropTypes.object
   };
 
-  handleOnPressBook(index, col) {
+  animateFadeRow() {
+    Animated.sequence([
+      Animated.timing(
+        this.state.fadeAnimRow,
+        {
+          toValue: 0,
+          duration: 0
+        }
+      ),
+      Animated.timing(
+        this.state.fadeAnimRow,
+        {
+          toValue: 1,
+          duration: 300
+        }
+      )
+    ]).start();
+  }
+
+  handleOnPressBookStyle(index, col) {
     // todo: implement this.
     this.setState({
       onPressedBookIndex: index,
       onPressedColumn: col
     });
+    this.animateFadeRow();
+  }
+
+  handleOnPressBookTransition() {
+    // todo: implement scene transition on book press here
   }
 
   renderRow(content, index, col) {
+    const color = this.state.fadeAnimRow.interpolate({
+      inputRange: [0, 1],
+      outputRange: ['rgba(255, 255, 255, 1)', 'rgba(236, 236, 236, 1)']
+    });
     return (
-      <TouchableOpacity
+      <Animated.View
         style={[
           Styles.row,
-          {backgroundColor: (this.state.onPressedBookIndex === index && this.state.onPressedColumn === col) ? '#ececec' : 'white'}]}
-        onPress={() => this.handleOnPressBook(index, col)}
-        activeOpacity={1}
+          {
+            backgroundColor: (this.state.onPressedBookIndex === index && this.state.onPressedColumn === col) ? color : 'white'
+          }
+        ]}
         key={content.data}
       >
-        <View style={[Styles.book, {backgroundColor: content.color}]}/>
-        <View style={Styles.textContainerTitle}>
-          <Text style={Styles.textBookTitle}>BOOK{'\n'}Example #{content.data}</Text>
-          <View style={Styles.snippetCountContainer}>
-            <View style={Styles.snippetCountBox}>
-            <Text style={Styles.textSnippetCount}>{content.data}</Text>
+        <TouchableOpacity
+          style={Styles.row}
+          onPressIn={() => this.handleOnPressBookStyle(index, col)}
+          onPress={() => this.handleOnPressBookTransition()}
+          activeOpacity={1}
+        >
+          <View style={[Styles.book, {backgroundColor: content.color}]}/>
+          <View style={Styles.textContainerTitle}>
+            <Text style={Styles.textBookTitle}>BOOK{'\n'}Example #{content.data}</Text>
+            <View style={Styles.snippetCountContainer}>
+              <View style={Styles.snippetCountBox}>
+              <Text style={Styles.textSnippetCount}>{content.data}</Text>
+              </View>
             </View>
           </View>
-        </View>
-        <View style={Styles.textContainerInfo}>
-          <Text style={Styles.textBookInfo}>author: {content.data} bibbid vav sust reandsaf asdf lkdasdfas kds</Text>
-        </View>
-      </TouchableOpacity>
+          <View style={Styles.textContainerInfo}>
+            <Text style={Styles.textBookInfo}>author: {content.data} bibbid vav sust reandsaf asdf lkdasdfas kds</Text>
+          </View>
+        </TouchableOpacity>
+      </Animated.View>
     );
   }
 

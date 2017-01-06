@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
   snippetCountBox: {
     width: WIDTH * 0.0534,
     height: WIDTH * 0.0534,
-    backgroundColor: '#f9f9f9',
+    backgroundColor: '#ececec',
     borderRadius: 4,
     justifyContent: 'center',
     right: 0,
