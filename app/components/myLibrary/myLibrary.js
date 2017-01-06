@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import {
+  Animated,
   Dimensions,
   ScrollView,
   Text,
@@ -7,6 +8,7 @@ import {
   View
 } from 'react-native';
 import Relay from 'react-relay';
+import Styles from './styles';
 import Footer from '../../footer';
 
 const COLUMN_CONSTANT = {
@@ -15,40 +17,6 @@ const COLUMN_CONSTANT = {
 };
 
 const HEIGHT = Dimensions.get('window').height;
-const styles = {
-  container: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between'
-  },
-  row: {
-    margin: 10,
-    flexDirection: 'column',
-    borderRadius: 7
-  },
-  leftColumn: {
-    paddingBottom: 100
-  },
-  rightColumn: {
-    paddingTop: 50
-  },
-  book: {
-    margin: 10,
-    height: 200,
-    borderRadius: 7
-  },
-  textBookTitle: {
-    fontWeight: 'bold'
-  },
-  textBookInfo: {
-    color: '#8e8e8e',
-    fontSize: 10
-  },
-  textContainer: {
-    marginLeft: 10,
-    flex: 1
-  }
-};
 
 const generateRandomColor = () => {
   // eslint-disable-next-line
@@ -65,6 +33,7 @@ export class MyLibrary extends Component {
       onPressedBookIndex: undefined,
       onPressedColumn: undefined,
       initialBookColor: [],
+      fadeAnimRow: new Animated.Value(0),
       offset: 0,
       direction: undefined
     };
@@ -77,31 +46,73 @@ export class MyLibrary extends Component {
     user: PropTypes.object
   };
 
-  handleOnPressBook(index, col) {
+  animateFadeRow() {
+    Animated.sequence([
+      Animated.timing(
+        this.state.fadeAnimRow,
+        {
+          toValue: 0,
+          duration: 0
+        }
+      ),
+      Animated.timing(
+        this.state.fadeAnimRow,
+        {
+          toValue: 1,
+          duration: 300
+        }
+      )
+    ]).start();
+  }
+
+  handleOnPressBookStyle(index, col) {
     // todo: implement this.
     this.setState({
       onPressedBookIndex: index,
       onPressedColumn: col
     });
+    this.animateFadeRow();
+  }
+
+  handleOnPressBookTransition() {
+    // todo: implement scene transition on book press here
   }
 
   renderRow(content, index, col) {
+    const color = this.state.fadeAnimRow.interpolate({
+      inputRange: [0, 1],
+      outputRange: ['rgba(255, 255, 255, 1)', 'rgba(236, 236, 236, 1)']
+    });
     return (
-      <TouchableOpacity
+      <Animated.View
         style={[
-          styles.row,
-          {backgroundColor: (this.state.onPressedBookIndex === index && this.state.onPressedColumn === col) ? '#ececec' : 'white'}]}
-        onPress={() => this.handleOnPressBook(index, col)}
-        activeOpacity={1}
+          Styles.row,
+          {
+            backgroundColor: (this.state.onPressedBookIndex === index && this.state.onPressedColumn === col) ? color : 'white'
+          }
+        ]}
+        key={content.data}
       >
-        <View style={[styles.book, {backgroundColor: content.color}]}/>
-        <View style={styles.textContainer}>
-          <Text style={styles.textBookTitle}>BOOK #{content.data}</Text>
-        </View>
-        <View style={[styles.textContainer, {marginBottom: 10}]}>
-          <Text style={styles.textBookInfo}>author: {content.data} bibbid vav sust reandsaf asdf lkdasdfas kds</Text>
-        </View>
-      </TouchableOpacity>
+        <TouchableOpacity
+          style={Styles.row}
+          onPressIn={() => this.handleOnPressBookStyle(index, col)}
+          onPress={() => this.handleOnPressBookTransition()}
+          activeOpacity={1}
+        >
+          <View style={[Styles.book, {backgroundColor: content.color}]}/>
+          <View style={Styles.textContainerTitle}>
+            <Text style={Styles.textBookTitle}>BOOK{'\n'}Example #{content.data}</Text>
+            <View style={Styles.snippetCountContainer}>
+              <View style={Styles.snippetCountBox}>
+              <Text style={Styles.textSnippetCount}>{content.data}</Text>
+              </View>
+            </View>
+          </View>
+          <View style={Styles.textContainerInfo}>
+            <Text style={Styles.textBookInfo}>author: {content.data} bibbid vav sust reandsaf asdf lkdasdfas kds</Text>
+          </View>
+        </TouchableOpacity>
+      </Animated.View>
     );
   }
 
@@ -116,7 +127,7 @@ export class MyLibrary extends Component {
   renderLeftColumn() {
     const leftDataSource = this.filterDataSourceUponColumn(0);
     return (
-      <View style={[styles.leftColumn, {width: Dimensions.get('window').width / 2}]}>
+      <View style={Styles.leftColumn}>
         {leftDataSource.map((t, i) => this.renderRow(t, i, COLUMN_CONSTANT.LEFT))}
       </View>
     );
@@ -125,7 +136,7 @@ export class MyLibrary extends Component {
   renderRightColumn() {
     const rightDataSource = this.filterDataSourceUponColumn(1);
     return (
-      <View style={[styles.rightColumn, {width: Dimensions.get('window').width / 2}]}>
+      <View style={Styles.rightColumn}>
         {rightDataSource.map((t, i) => this.renderRow(t, i, COLUMN_CONSTANT.RIGHT))}
       </View>
     );
@@ -142,19 +153,19 @@ export class MyLibrary extends Component {
 
   render() {
     return (
-        <View style={{flex: 1}}>
-          <ScrollView
-              scrollEventThrottle={16}
-              onScroll={this.onScroll.bind(this)}
-              style={{flex: 1, marginTop: HEIGHT * 0.11}}
-          >
-            <View style={styles.container}>
-              {this.renderLeftColumn()}
-              {this.renderRightColumn()}
-            </View>
-          </ScrollView>
-          <Footer status={this.state.direction}/>
-        </View>
+      <View style={{flex: 1}}>
+        <ScrollView
+          scrollEventThrottle={16}
+          onScroll={this.onScroll.bind(this)}
+          style={{flex: 1, marginTop: HEIGHT * 0.11}}
+        >
+          <View style={Styles.container}>
+            {this.renderLeftColumn()}
+            {this.renderRightColumn()}
+          </View>
+        </ScrollView>
+        <Footer status={this.state.direction}/>
+      </View>
     );
   }
 }
