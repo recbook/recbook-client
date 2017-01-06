@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import Relay from 'react-relay';
 import Footer from '../../footer';
-
+import { Actions } from 'react-native-router-flux';
 const COLUMN_CONSTANT = {
   LEFT: 'left',
   RIGHT: 'right'
@@ -75,7 +75,9 @@ export class MyLibrary extends Component {
       dataSource: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
       onPressedBookIndex: undefined,
       onPressedColumn: undefined,
-      initialBookColor: []
+      initialBookColor: [],
+      offset: 0,
+      direction: undefined
     };
     for (let i = 0; i < this.state.dataSource.length; i = i + 1) {
       this.state.initialBookColor.push(generateRandomColor());
@@ -140,16 +142,29 @@ export class MyLibrary extends Component {
     );
   }
 
+  onScroll(event) {
+    let currentOffset = event.nativeEvent.contentOffset.y;
+    let direction = currentOffset > this.state.offset ? 'down' : 'up';
+    this.setState({
+      offset: currentOffset,
+      direction: direction
+    });
+  }
+
   render() {
     return (
         <View style={{flex: 1}}>
-          <ScrollView style={{flex: 1, marginTop: HEIGHT * 0.11}}>
+          <ScrollView
+              scrollEventThrottle={16}
+              onScroll={this.onScroll.bind(this)}
+              style={{flex: 1, marginTop: HEIGHT * 0.11}}
+          >
             <View style={styles.container}>
               {this.renderLeftColumn()}
               {this.renderRightColumn()}
             </View>
           </ScrollView>
-          <Footer/>
+          <Footer status={this.state.direction}/>
         </View>
     );
   }

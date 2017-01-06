@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import {
+  Animated,
   Dimensions,
   Image,
   StyleSheet,
   Text,
   TouchableOpacity,
-  View
 } from 'react-native';
 
 const WIDTH = Dimensions.get('window').width;
@@ -18,7 +18,6 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     backgroundColor: '#605C56',
-    height: HEIGHT * 0.096,
     shadowColor: '#000000',
     shadowOpacity: 0.2,
     shadowRadius: 4,
@@ -32,14 +31,14 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     justifyContent: 'center',
     marginLeft: WIDTH * 0.067,
-    marginRight: WIDTH * 0.19,
+    marginRight: WIDTH * 0.18,
     alignSelf: 'center'
   },
   profileText: {
     fontSize: 12,
     color: '#D20058',
     fontWeight: 'bold',
-    letterSpacing: 0.5
+    letterSpacing: 1
   },
   cameraContainer: {
     backgroundColor: 'transparent',
@@ -55,6 +54,21 @@ const styles = StyleSheet.create({
 });
 
 class Footer extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      bottomTabHeight: HEIGHT * 0.096
+    };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.status === 'down') {
+      this.setState({bottomTabHeight: 0});
+    } else {
+      this.setState({bottomTabHeight: HEIGHT * 0.096});
+    }
+  }
+
   renderMyProfile() {
     return (
       <TouchableOpacity style={styles.profileContainer}>
@@ -81,14 +95,12 @@ class Footer extends Component {
 
   render() {
     return (
-        <View style={styles.bottomNavigationBar}>
+        <Animated.View style={[styles.bottomNavigationBar, {height: this.state.bottomTabHeight}]}>
           {this.renderMyProfile()}
           {this.renderCamera()}
-        </View>
+        </Animated.View>
     );
   }
 }
 
 export default Footer;
-
-
