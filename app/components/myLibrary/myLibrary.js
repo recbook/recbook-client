@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import Relay from 'react-relay';
 import Footer from '../../footer';
-import { Actions } from 'react-native-router-flux';
+
 const COLUMN_CONSTANT = {
   LEFT: 'left',
   RIGHT: 'right'
@@ -47,17 +47,6 @@ const styles = {
   textContainer: {
     marginLeft: 10,
     flex: 1
-  },
-  bottomNavigationBar: {
-    position: 'absolute',
-    flex: 0.1,
-    left: 0,
-    right: 0,
-    bottom: -10,
-    backgroundColor: 'green',
-    flexDirection: 'row',
-    height: 80,
-    alignItems: 'center'
   }
 };
 
@@ -187,4 +176,3 @@ export default Relay.createContainer(MyLibrary, {
     }
   }
 });
-
