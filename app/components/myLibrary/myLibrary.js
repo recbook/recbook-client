@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import Relay from 'react-relay';
 import Styles from './styles';
+import Footer from '../../footer';
 
 const COLUMN_CONSTANT = {
   LEFT: 'left',
@@ -32,7 +33,9 @@ export class MyLibrary extends Component {
       onPressedBookIndex: undefined,
       onPressedColumn: undefined,
       initialBookColor: [],
-      fadeAnimRow: new Animated.Value(0)
+      fadeAnimRow: new Animated.Value(0),
+      offset: 0,
+      direction: undefined
     };
     for (let i = 0; i < this.state.dataSource.length; i = i + 1) {
       this.state.initialBookColor.push(generateRandomColor());
@@ -139,14 +142,30 @@ export class MyLibrary extends Component {
     );
   }
 
+  onScroll(event) {
+    let currentOffset = event.nativeEvent.contentOffset.y;
+    let direction = currentOffset > this.state.offset ? 'down' : 'up';
+    this.setState({
+      offset: currentOffset,
+      direction: direction
+    });
+  }
+
   render() {
     return (
-      <ScrollView style={{flex: 1, marginTop: HEIGHT * 0.11}}>
-        <View style={Styles.container}>
-          {this.renderLeftColumn()}
-          {this.renderRightColumn()}
-        </View>
-      </ScrollView>
+      <View style={{flex: 1}}>
+        <ScrollView
+          scrollEventThrottle={16}
+          onScroll={this.onScroll.bind(this)}
+          style={{flex: 1, marginTop: HEIGHT * 0.11}}
+        >
+          <View style={Styles.container}>
+            {this.renderLeftColumn()}
+            {this.renderRightColumn()}
+          </View>
+        </ScrollView>
+        <Footer status={this.state.direction}/>
+      </View>
     );
   }
 }
