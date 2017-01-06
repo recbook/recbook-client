@@ -74,6 +74,15 @@ const styles = StyleSheet.create({
     height: 20,
     backgroundColor: 'transparent',
     resizeMode: 'contain'
+  },
+  dropDown: {
+    height: 100,
+    width: 100,
+    position: 'absolute',
+    top: 20,
+    left: 100,
+    backgroundColor: 'white',
+    flexDirection: 'column'
   }
 });
 

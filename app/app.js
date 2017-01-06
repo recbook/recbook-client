@@ -1,11 +1,12 @@
 import React from 'react';
-import { Image, Text, TouchableOpacity, View } from 'react-native';
+import { Image, Text, TouchableOpacity, View, Modal } from 'react-native';
 import Styles from './shared/styles';
 import Relay from 'react-relay';
 import {
   Router,
   Reducer,
-  Scene
+  Scene,
+  Actions
 } from 'react-native-router-flux';
 import RelayRenderer from './shared/relayComponentRenderer';
 import MyLibrary from './components/myLibrary/myLibrary';
@@ -32,36 +33,68 @@ export function setNetworkLayer() {
 }
 
 export default class App extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      modalVisible: false
+    };
+    this.renderDropDown = this.renderDropDown.bind(this);
+  }
+
   componentDidMount() {
     setNetworkLayer();
+  }
+
+  renderDropDown() {
+    // todo: follow style guideline
+    return (
+      <View style={Styles.dropDown}>
+        <Text>My Library</Text>
+        <Text>Snippets</Text>
+        <Text>Other</Text>
+      </View>
+    );
   }
 
   render() {
     const createNavBarButtons = () => {
       return (
-          <View style={Styles.navBarButtonContainer}>
-            <TouchableOpacity style={Styles.dropDownButtonContainer}>
-              <Text style={Styles.dropDownText}>My Library</Text>
-              <Image
-                  style={Styles.dropDownArrowImage}
-                  source={require("./resources/arrow_down.png")}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity style={Styles.changeButton}>
-              <Image
-                  style={Styles.changeImage}
-                  source={require("./resources/view change01.png")}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity style={Styles.searchButton}>
-              <Image
-                  style={Styles.searchImage}
-                  source={require("./resources/search.png")}
-              />
-            </TouchableOpacity>
-          </View>
+        <View style={Styles.navBarButtonContainer}>
+          <TouchableOpacity
+            style={Styles.dropDownButtonContainer}
+            onPress={() => {
+              this.setState({modalVisible: !this.state.modalVisible});
+              Actions.refresh();
+            }}
+          >
+            <Text style={Styles.dropDownText}>My Library</Text>
+            <Image
+                style={Styles.dropDownArrowImage}
+                source={require("./resources/arrow_down.png")}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={Styles.changeButton}
+            onPress={() => Actions.test()}
+          >
+            <Image
+                style={Styles.changeImage}
+                source={require("./resources/view change01.png")}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={Styles.searchButton}
+            onPress={() => console.log('asdfsfs')}
+          >
+            <Image
+                style={Styles.searchImage}
+                source={require("./resources/search.png")}
+            />
+          </TouchableOpacity>
+          {(this.state.modalVisible) ? this.renderDropDown() : null}
+        </View>
       );
-    }
+    };
 
     return (
       <Router createReducer={reducerCreate} sceneStyle={{flex: 1}} wrapBy={RelayRenderer()}>
@@ -73,9 +106,9 @@ export default class App extends React.Component {
             key="myLibrary"
             component={MyLibrary}
             hideNavBar={false}
-            initial={true}
             renderRightButton={createNavBarButtons}
             queries={{user: () => Relay.QL`query { viewer } `}}
+            initial
           />
         </Scene>
       </Router>
