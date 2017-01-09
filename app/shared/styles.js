@@ -8,7 +8,7 @@ import {
 const { StatusBarManager } = NativeModules;
 
 export const WIDTH = Dimensions.get('window').width;
-const HEIGHT = Dimensions.get('window').height;
+export const HEIGHT = Dimensions.get('window').height;
 const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : StatusBarManager.HEIGHT;
 const HEADER_HEIGHT = 63.5;
 
@@ -89,6 +89,14 @@ const styles = StyleSheet.create({
     top: 20,
     left: 133 - WIDTH * 0.415 / 2, // eslint-disable-line todo: change magic num 133 to relative value
     flexDirection: 'column'
+  },
+  dropDownOuterContainer: {
+    position: 'absolute',
+    left: 0,
+    top: 0,
+    width: WIDTH,
+    height: HEIGHT,
+    opacity: 0.5
   },
   dropDownContainer: {
     backgroundColor: 'transparent',

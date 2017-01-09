@@ -76,21 +76,30 @@ export default class App extends React.Component {
 
   renderDropDown() {
     return (
-      <Image
-        style={Styles.dropDown}
-        source={require("./resources/dropdown.png")}
-        resizeMode={'stretch'}
+      <TouchableOpacity
+        style={Styles.dropDownOuterContainer}
+        activeOpacity={1}
+        onPress={() => {
+          this.setState({modalVisible: false});
+          Actions.refresh();
+        }}
       >
-        <View style={Styles.dropDownContainer}>
-          <View style={{flex: 1}}/>
-          <View style={{flex: 13, flexDirection: 'column'}}>
-            {this.renderDropDownText('My Library', {borderBottomWidth: 1, borderColor: '#e7e7e7'})}
-            {this.renderDropDownText('Saved', {borderBottomWidth: 1, borderColor: '#e7e7e7'})}
-            {this.renderDropDownText('Recommended')}
+        <Image
+          style={Styles.dropDown}
+          source={require("./resources/dropdown.png")}
+          resizeMode={'stretch'}
+        >
+          <View style={Styles.dropDownContainer}>
+            <View style={{flex: 1}}/>
+            <View style={{flex: 13, flexDirection: 'column'}}>
+              {this.renderDropDownText('My Library', {borderBottomWidth: 1, borderColor: '#e7e7e7'})}
+              {this.renderDropDownText('Saved', {borderBottomWidth: 1, borderColor: '#e7e7e7'})}
+              {this.renderDropDownText('Recommended')}
+            </View>
+            <View style={{flex: 0.5}}/>
           </View>
-          <View style={{flex: 0.5}}/>
-        </View>
-      </Image>
+        </Image>
+      </TouchableOpacity>
     );
   }
 
