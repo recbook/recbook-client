@@ -1,16 +1,22 @@
 import {
   Dimensions,
   Platform,
-  StyleSheet
+  StyleSheet,
+  NativeModules
 } from 'react-native';
 
-const WIDTH = Dimensions.get('window').width;
+const { StatusBarManager } = NativeModules;
+
+export const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
+const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : StatusBarManager.HEIGHT;
+const HEADER_HEIGHT = 63.5;
+
 const styles = StyleSheet.create({
   navBar: {
     ...Platform.select({
       ios: {
-        height: HEIGHT * 0.11
+        height: HEADER_HEIGHT + STATUSBAR_HEIGHT
       },
       android: {
         height: HEIGHT * 0.08
@@ -29,7 +35,8 @@ const styles = StyleSheet.create({
   navBarButtonContainer: {
     width: WIDTH,
     flexDirection: 'row',
-    backgroundColor: 'transparent'
+    backgroundColor: 'transparent',
+    top: 10 // eslint-disable-line todo: change magic num 10 to relative value
   },
   dropDownButtonContainer: {
     width: 150,
@@ -76,13 +83,32 @@ const styles = StyleSheet.create({
     resizeMode: 'contain'
   },
   dropDown: {
-    height: 100,
-    width: 100,
+    height: HEIGHT * 0.254,
+    width: WIDTH * 0.415,
     position: 'absolute',
     top: 20,
-    left: 100,
-    backgroundColor: 'white',
+    left: 133 - WIDTH * 0.415 / 2, // eslint-disable-line todo: change magic num 133 to relative value
     flexDirection: 'column'
+  },
+  dropDownContainer: {
+    backgroundColor: 'transparent',
+    flex: 1
+  },
+  textDropdown: {
+    backgroundColor: 'transparent',
+    alignSelf: 'flex-start',
+    marginLeft: 14,
+    color: '#AAAAAA',
+    fontWeight: 'bold'
+  },
+  textDropdownContainer: {
+    flex: 1,
+    justifyContent: 'flex-start',
+    flexDirection: 'row'
+  },
+  textDropdownInnerContainer: {
+    flex: 1,
+    justifyContent: 'center'
   }
 });
 

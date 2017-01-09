@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, Text, TouchableOpacity, View, Modal } from 'react-native';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
 import Styles from './shared/styles';
 import Relay from 'react-relay';
 import {
@@ -10,6 +10,9 @@ import {
 } from 'react-native-router-flux';
 import RelayRenderer from './shared/relayComponentRenderer';
 import MyLibrary from './components/myLibrary/myLibrary';
+
+import imgArrowDown from './resources/arrow_down.png';
+import imgArrowUp from './resources/arrow_up.png';
 
 // Define reducer to manage scenes
 const reducerCreate = (params) => {
@@ -45,14 +48,35 @@ export default class App extends React.Component {
     setNetworkLayer();
   }
 
-  renderDropDown() {
-    // todo: follow style guideline
+  renderDropDownText(text, style) {
     return (
-      <View style={Styles.dropDown}>
-        <Text>My Library</Text>
-        <Text>Snippets</Text>
-        <Text>Other</Text>
+      <View style={Styles.textDropdownContainer}>
+        <View style={{width: 4}}/>
+        <View style={[Styles.textDropdownInnerContainer, (style) ? style : {}]}>
+          <Text style={Styles.textDropdown}>{text}</Text>
+        </View>
+        <View style={{width: 4}}/>
       </View>
+    );
+  }
+
+  renderDropDown() {
+    return (
+      <Image
+        style={Styles.dropDown}
+        source={require("./resources/dropdown.png")}
+        resizeMode={'stretch'}
+      >
+        <View style={Styles.dropDownContainer}>
+          <View style={{flex: 1}}/>
+          <View style={{flex: 13, flexDirection: 'column'}}>
+            {this.renderDropDownText('My Library', {borderBottomWidth: 1, borderColor: '#e7e7e7'})}
+            {this.renderDropDownText('Saved', {borderBottomWidth: 1, borderColor: '#e7e7e7'})}
+            {this.renderDropDownText('Recommended')}
+          </View>
+          <View style={{flex: 0.5}}/>
+        </View>
+      </Image>
     );
   }
 
@@ -70,7 +94,7 @@ export default class App extends React.Component {
             <Text style={Styles.dropDownText}>My Library</Text>
             <Image
                 style={Styles.dropDownArrowImage}
-                source={require("./resources/arrow_down.png")}
+                source={(this.state.modalVisible) ? imgArrowUp : imgArrowDown}
             />
           </TouchableOpacity>
           <TouchableOpacity
@@ -84,7 +108,6 @@ export default class App extends React.Component {
           </TouchableOpacity>
           <TouchableOpacity
             style={Styles.searchButton}
-            onPress={() => console.log('asdfsfs')}
           >
             <Image
                 style={Styles.searchImage}
