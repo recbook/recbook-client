@@ -22,6 +22,12 @@ const reducerCreate = (params) => {
   };
 };
 
+const SCENE_CONSTANT = {
+  MY_LIBRARY: 'My Library',
+  SAVED: 'Saved',
+  RECOMMENDED: 'Recommended'
+};
+
 export function setNetworkLayer() {
   let options = {};
 
@@ -39,7 +45,8 @@ export default class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      modalVisible: false
+      modalVisible: false,
+      currentScene: SCENE_CONSTANT.MY_LIBRARY
     };
     this.renderDropDown = this.renderDropDown.bind(this);
   }
@@ -52,9 +59,16 @@ export default class App extends React.Component {
     return (
       <View style={Styles.textDropdownContainer}>
         <View style={{width: 4}}/>
-        <View style={[Styles.textDropdownInnerContainer, (style) ? style : {}]}>
-          <Text style={Styles.textDropdown}>{text}</Text>
-        </View>
+        <TouchableOpacity
+          style={[Styles.textDropdownInnerContainer, (style) ? style : {}]}
+          activeOpacity={1}
+          onPress={() => {
+            this.setState({currentScene: text});
+            Actions.refresh();
+          }}
+        >
+          <Text style={[Styles.textDropdown, {color: (text === this.state.currentScene) ? '#000' : '#AAA'}]}>{text}</Text>
+        </TouchableOpacity>
         <View style={{width: 4}}/>
       </View>
     );
