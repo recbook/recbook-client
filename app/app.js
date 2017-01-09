@@ -5,10 +5,15 @@ import Relay from 'react-relay';
 import {
   Router,
   Reducer,
-  Scene
+  Scene,
+  Actions
 } from 'react-native-router-flux';
 import RelayRenderer from './shared/relayComponentRenderer';
 import MyLibrary from './components/myLibrary/myLibrary';
+import Snippet from './components/snippet/snippet';
+
+import imgViewChange01 from './resources/view change01.png';
+import imgViewChange02 from './resources/view change02.png';
 
 // Define reducer to manage scenes
 const reducerCreate = (params) => {
@@ -22,7 +27,7 @@ export function setNetworkLayer() {
   let options = {};
 
   // Access Token
-  const authToken = '';
+  const authToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ODZkZDIxZWJiYjYzMTAwMWQzNDdlYzMiLCJuYW1lIjoiRGFuIEtpbSIsImVtYWlsIjoiaGNraW0wNjI1QGdtYWlsLmNvbSIsImlhdCI6MTQ4MzU5MjIyMn0.WAJhwzUqUqXMEYLLQ7eqaZ32SOKZwjXxsQxInslaU7g';
   options.headers = {
     Authorization: authToken
   };
@@ -32,6 +37,13 @@ export function setNetworkLayer() {
 }
 
 export default class App extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      viewSwitch: true
+    };
+  }
+
   componentDidMount() {
     setNetworkLayer();
   }
@@ -47,10 +59,17 @@ export default class App extends React.Component {
                   source={require("./resources/arrow_down.png")}
               />
             </TouchableOpacity>
-            <TouchableOpacity style={Styles.changeButton}>
+            <TouchableOpacity
+              style={Styles.changeButton}
+              onPress={() => {
+                this.setState({viewSwitch: !this.state.viewSwitch});
+                (this.state.viewSwitch) ? Actions.snippet() : Actions.pop();
+              }}
+              activeOpacity={1}
+            >
               <Image
                   style={Styles.changeImage}
-                  source={require("./resources/view change01.png")}
+                  source={(this.state.viewSwitch) ? imgViewChange01 : imgViewChange02}
               />
             </TouchableOpacity>
             <TouchableOpacity style={Styles.searchButton}>
@@ -61,7 +80,7 @@ export default class App extends React.Component {
             </TouchableOpacity>
           </View>
       );
-    }
+    };
 
     return (
       <Router createReducer={reducerCreate} sceneStyle={{flex: 1}} wrapBy={RelayRenderer()}>
@@ -75,6 +94,16 @@ export default class App extends React.Component {
             hideNavBar={false}
             initial={true}
             renderRightButton={createNavBarButtons}
+            duration={0}
+            queries={{user: () => Relay.QL`query { viewer } `}}
+          />
+          <Scene
+            key="snippet"
+            component={Snippet}
+            hideNavBar={false}
+            renderRightButton={createNavBarButtons}
+            renderBackButton={()=>{}}
+            duration={0}
             queries={{user: () => Relay.QL`query { viewer } `}}
           />
         </Scene>
