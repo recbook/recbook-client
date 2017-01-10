@@ -116,25 +116,20 @@ export default class App extends React.Component {
           >
             <Text style={Styles.dropDownText}>My Library</Text>
             <Image
-                style={Styles.dropDownArrowImage}
-                source={(this.state.modalVisible) ? imgArrowUp : imgArrowDown}
+              style={Styles.dropDownArrowImage}
+              source={(this.state.modalVisible) ? imgArrowUp : imgArrowDown}
             />
           </TouchableOpacity>
-          <TouchableOpacity
-            style={Styles.changeButton}
-            onPress={() => Actions.test()}
-          >
+          <TouchableOpacity style={Styles.changeButton}>
             <Image
-                style={Styles.changeImage}
-                source={require("./resources/view change01.png")}
+              style={Styles.changeImage}
+              source={require("./resources/view change01.png")}
             />
           </TouchableOpacity>
-          <TouchableOpacity
-            style={Styles.searchButton}
-          >
+          <TouchableOpacity style={Styles.searchButton}>
             <Image
-                style={Styles.searchImage}
-                source={require("./resources/search.png")}
+              style={Styles.searchImage}
+              source={require("./resources/search.png")}
             />
           </TouchableOpacity>
           {(this.state.modalVisible) ? this.renderDropDown() : null}
@@ -145,8 +140,8 @@ export default class App extends React.Component {
     return (
       <Router createReducer={reducerCreate} sceneStyle={{flex: 1}} wrapBy={RelayRenderer()}>
         <Scene
-            key="root"
-            navigationBarStyle={Styles.navBar}
+          key="root"
+          navigationBarStyle={Styles.navBar}
         >
           <Scene
             key="myLibrary"
