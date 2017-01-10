@@ -119,4 +119,12 @@ const styles = StyleSheet.create({
   }
 });
 
+// font family names:
+// Calibri-BoldItalic
+// Calibri-Italic
+// Calibri-LightItalic
+// Calibri-Light
+// Calibri
+// Calibri-Bold
+
 export default styles;
