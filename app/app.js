@@ -129,7 +129,7 @@ export default class App extends React.Component {
             style={Styles.changeButton}
             onPress={() => {
               this.setState({viewSwitch: !this.state.viewSwitch});
-              (this.state.viewSwitch) ? Actions.snippet() : Actions.pop();
+              (this.state.viewSwitch) ? Actions.snippet() : Actions.myLibrary();
             }}
             activeOpacity={1}
           >
@@ -153,7 +153,8 @@ export default class App extends React.Component {
       <Router drawerImage={null} createReducer={reducerCreate} sceneStyle={{flex: 1}} wrapBy={RelayRenderer()}>
         <Scene key="drawer" component={MyPage} open={false}>
           <Scene
-            key="root" navigationBarStyle={Styles.navBar}
+            key="root"
+            navigationBarStyle={Styles.navBar}
             hideNavBar={true}
           >
             <Scene
@@ -161,27 +162,20 @@ export default class App extends React.Component {
               component={MyLibrary}
               hideNavBar={false}
               initial={true}
+              type="replace"
               renderRightButton={createNavBarButtons}
               queries={{user: () => Relay.QL`query { viewer } `}}
             />
-          <Scene
-            key="myLibrary"
-            component={MyLibrary}
-            hideNavBar={false}
-            renderRightButton={createNavBarButtons}
-            duration={0}
-            queries={{user: () => Relay.QL`query { viewer } `}}
-          />
-          <Scene
-            key="snippet"
-            component={Snippet}
-            hideNavBar={false}
-            renderRightButton={createNavBarButtons}
-            renderBackButton={()=>{}}
-            duration={0}
-            queries={{user: () => Relay.QL`query { viewer } `}}
-            initial
-          />
+            <Scene
+              key="snippet"
+              component={Snippet}
+              hideNavBar={false}
+              renderRightButton={createNavBarButtons}
+              renderBackButton={()=>{}}
+              duration={0}
+              type="replace"
+              queries={{user: () => Relay.QL`query { viewer } `}}
+            />
           </Scene>
         </Scene>
       </Router>
