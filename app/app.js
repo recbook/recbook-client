@@ -11,6 +11,10 @@ import {
 import RelayRenderer from './shared/relayComponentRenderer';
 import MyLibrary from './components/myLibrary/myLibrary';
 import DetailView from './components/detailView/detailView';
+import Snippet from './components/snippet/snippet';
+
+import imgViewChange01 from './resources/view change01.png';
+import imgViewChange02 from './resources/view change02.png';
 
 import imgArrowDown from './resources/arrow_down.png';
 import imgArrowUp from './resources/arrow_up.png';
@@ -46,6 +50,7 @@ export default class App extends React.Component {
   constructor() {
     super();
     this.state = {
+      viewSwitch: true,
       modalVisible: false,
       currentScene: SCENE_CONSTANT.MY_LIBRARY
     };
@@ -107,7 +112,6 @@ export default class App extends React.Component {
   render() {
     const createNavBarButtons = (route) => {
       let { sceneKey } = route;
-      console.log((sceneKey === 'detailView'));
       return (
         <View
           style=
@@ -129,18 +133,25 @@ export default class App extends React.Component {
             </TouchableOpacity>
           }
           {(sceneKey === 'detailView') ? null :
-            <TouchableOpacity style={Styles.changeButton}>
+            <TouchableOpacity
+              style={Styles.changeButton}
+              onPress={() => {
+                this.setState({viewSwitch: !this.state.viewSwitch});
+                (this.state.viewSwitch) ? Actions.snippet() : Actions.pop();
+              }}
+              activeOpacity={1}
+            >
               <Image
                 style={Styles.changeImage}
-                source={require("./resources/view change01.png")}
+                source={(this.state.viewSwitch) ? imgViewChange01 : imgViewChange02}
               />
             </TouchableOpacity>
           }
           {(sceneKey === 'detailView') ? null :
             <TouchableOpacity style={Styles.searchButton}>
               <Image
-              style={Styles.searchImage}
-              source={require("./resources/search.png")}
+                style={Styles.searchImage}
+                source={require("./resources/search.png")}
               />
             </TouchableOpacity>
           }
@@ -161,6 +172,17 @@ export default class App extends React.Component {
             component={MyLibrary}
             hideNavBar={false}
             renderRightButton={createNavBarButtons}
+            duration={0}
+            queries={{user: () => Relay.QL`query { viewer } `}}
+            initial
+          />
+          <Scene
+            key="snippet"
+            component={Snippet}
+            hideNavBar={false}
+            renderRightButton={createNavBarButtons}
+            renderBackButton={()=>{}}
+            duration={0}
             queries={{user: () => Relay.QL`query { viewer } `}}
           />
           <Scene
@@ -169,7 +191,6 @@ export default class App extends React.Component {
             component={DetailView}
             hideNavBar={false}
             renderRightButton={createNavBarButtons}
-            initial
           />
         </Scene>
       </Router>
