@@ -10,7 +10,7 @@ import {
 } from 'react-native-router-flux';
 import RelayRenderer from './shared/relayComponentRenderer';
 import MyLibrary from './components/myLibrary/myLibrary';
-import DetailView from './components/detailView/detailView';
+import FlipCardDetailView from './components/detailView/flipCard';
 import Snippet from './components/snippet/snippet';
 
 import imgViewChange01 from './resources/view change01.png';
@@ -188,8 +188,8 @@ export default class App extends React.Component {
           <Scene
             key="detailView"
             navigationBarStyle={Styles.navBarSceneDetailView}
-            component={DetailView}
-            hideNavBar={false}
+            component={FlipCardDetailView}
+            hideNavBar={true}
             renderRightButton={createNavBarButtons}
           />
         </Scene>
