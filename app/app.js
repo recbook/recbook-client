@@ -10,6 +10,7 @@ import {
 } from 'react-native-router-flux';
 import RelayRenderer from './shared/relayComponentRenderer';
 import MyLibrary from './components/myLibrary/myLibrary';
+import DetailView from './components/detailView/detailView';
 
 import imgArrowDown from './resources/arrow_down.png';
 import imgArrowUp from './resources/arrow_up.png';
@@ -32,7 +33,7 @@ export function setNetworkLayer() {
   let options = {};
 
   // Access Token
-  const authToken = '';
+  const authToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ODZkZDIxZWJiYjYzMTAwMWQzNDdlYzMiLCJuYW1lIjoiRGFuIEtpbSIsImVtYWlsIjoiaGNraW0wNjI1QGdtYWlsLmNvbSIsImlhdCI6MTQ4MzU5MjIyMn0.WAJhwzUqUqXMEYLLQ7eqaZ32SOKZwjXxsQxInslaU7g';
   options.headers = {
     Authorization: authToken
   };
@@ -104,34 +105,45 @@ export default class App extends React.Component {
   }
 
   render() {
-    const createNavBarButtons = () => {
+    const createNavBarButtons = (route) => {
+      let { sceneKey } = route;
+      console.log((sceneKey === 'detailView'));
       return (
-        <View style={Styles.navBarButtonContainer}>
-          <TouchableOpacity
-            style={Styles.dropDownButtonContainer}
-            onPress={() => {
-              this.setState({modalVisible: !this.state.modalVisible});
-              Actions.refresh();
-            }}
-          >
-            <Text style={Styles.dropDownText}>My Library</Text>
-            <Image
-              style={Styles.dropDownArrowImage}
-              source={(this.state.modalVisible) ? imgArrowUp : imgArrowDown}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity style={Styles.changeButton}>
-            <Image
-              style={Styles.changeImage}
-              source={require("./resources/view change01.png")}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity style={Styles.searchButton}>
-            <Image
+        <View
+          style=
+            {Styles.navBarButtonContainer}
+        >
+          {(sceneKey === 'detailView') ? null :
+            <TouchableOpacity
+              style={Styles.dropDownButtonContainer}
+              onPress={() => {
+                this.setState({modalVisible: !this.state.modalVisible});
+                Actions.refresh();
+              }}
+            >
+              <Text style={Styles.dropDownText}>My Library</Text>
+              <Image
+                style={Styles.dropDownArrowImage}
+                source={(this.state.modalVisible) ? imgArrowUp : imgArrowDown}
+              />
+            </TouchableOpacity>
+          }
+          {(sceneKey === 'detailView') ? null :
+            <TouchableOpacity style={Styles.changeButton}>
+              <Image
+                style={Styles.changeImage}
+                source={require("./resources/view change01.png")}
+              />
+            </TouchableOpacity>
+          }
+          {(sceneKey === 'detailView') ? null :
+            <TouchableOpacity style={Styles.searchButton}>
+              <Image
               style={Styles.searchImage}
               source={require("./resources/search.png")}
-            />
-          </TouchableOpacity>
+              />
+            </TouchableOpacity>
+          }
           {(this.state.modalVisible) ? this.renderDropDown() : null}
         </View>
       );
@@ -145,10 +157,18 @@ export default class App extends React.Component {
         >
           <Scene
             key="myLibrary"
+            navigationBarStyle={Styles.navBar}
             component={MyLibrary}
             hideNavBar={false}
             renderRightButton={createNavBarButtons}
             queries={{user: () => Relay.QL`query { viewer } `}}
+          />
+          <Scene
+            key="detailView"
+            navigationBarStyle={Styles.navBarSceneDetailView}
+            component={DetailView}
+            hideNavBar={false}
+            renderRightButton={createNavBarButtons}
             initial
           />
         </Scene>
