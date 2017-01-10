@@ -87,7 +87,7 @@ export default class DetailView extends Component {
         </View>
         <View style={Styles.detailViewSnippetSlideContainer}>
           <Text style={Styles.textDetailViewSnippetSlide}>
-            "A sunflower seed and a solar system are the same thing; they both are whole systems. I find it easier to
+            A sunflower seed and a solar system are the same thing; they both are whole systems. I find it easier to
             pay attention to the complexities of the smaller than to pay attention to the complexities of the larger.
             That..
           </Text>
