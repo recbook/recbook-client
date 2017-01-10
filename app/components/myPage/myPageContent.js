@@ -27,7 +27,7 @@ class MyPageContent extends Component {
         <View style={Styles.container}>
           <View style={Styles.profileContainer}>
             <Image
-                style={Styles.profileImage}
+              style={Styles.profileImage}
             />
             <Text style={Styles.userName}>Dan Kim</Text>
             <Text style={Styles.nickName}>Bookworm</Text>

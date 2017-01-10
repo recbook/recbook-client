@@ -142,17 +142,16 @@ export default class App extends React.Component {
       <Router drawerImage={null} createReducer={reducerCreate} sceneStyle={{flex: 1}} wrapBy={RelayRenderer()}>
         <Scene key="drawer" component={MyPage} open={false}>
           <Scene
-              key="root"
-              navigationBarStyle={Styles.navBar}
-              hideNavBar={true}
+            key="root" navigationBarStyle={Styles.navBar}
+            hideNavBar={true}
           >
             <Scene
-                key="myLibrary"
-                component={MyLibrary}
-                hideNavBar={false}
-                initial={true}
-                renderRightButton={createNavBarButtons}
-                queries={{user: () => Relay.QL`query { viewer } `}}
+              key="myLibrary"
+              component={MyLibrary}
+              hideNavBar={false}
+              initial={true}
+              renderRightButton={createNavBarButtons}
+              queries={{user: () => Relay.QL`query { viewer } `}}
             />
           </Scene>
         </Scene>
