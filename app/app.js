@@ -10,6 +10,7 @@ import {
 } from 'react-native-router-flux';
 import RelayRenderer from './shared/relayComponentRenderer';
 import MyLibrary from './components/myLibrary/myLibrary';
+import MyPage from './components/myPage/myPage';
 
 import imgArrowDown from './resources/arrow_down.png';
 import imgArrowUp from './resources/arrow_up.png';
@@ -138,19 +139,22 @@ export default class App extends React.Component {
     };
 
     return (
-      <Router createReducer={reducerCreate} sceneStyle={{flex: 1}} wrapBy={RelayRenderer()}>
-        <Scene
-          key="root"
-          navigationBarStyle={Styles.navBar}
-        >
+      <Router drawerImage={null} createReducer={reducerCreate} sceneStyle={{flex: 1}} wrapBy={RelayRenderer()}>
+        <Scene key="drawer" component={MyPage} open={false}>
           <Scene
-            key="myLibrary"
-            component={MyLibrary}
-            hideNavBar={false}
-            renderRightButton={createNavBarButtons}
-            queries={{user: () => Relay.QL`query { viewer } `}}
-            initial
-          />
+              key="root"
+              navigationBarStyle={Styles.navBar}
+              hideNavBar={true}
+          >
+            <Scene
+                key="myLibrary"
+                component={MyLibrary}
+                hideNavBar={false}
+                initial={true}
+                renderRightButton={createNavBarButtons}
+                queries={{user: () => Relay.QL`query { viewer } `}}
+            />
+          </Scene>
         </Scene>
       </Router>
     );

@@ -6,7 +6,9 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
+  View
 } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
@@ -18,6 +20,23 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     backgroundColor: '#605C56',
+    shadowColor: '#000000',
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    shadowOffset: {
+      height: 2,
+      width: 0.3
+    },
+    justifyContent: 'flex-start'
+  },
+  myPageBottomNavigationBar: {
+    position: 'absolute',
+    flexDirection: 'row',
+    height: HEIGHT * 0.096,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: '#7F7A72',
     shadowColor: '#000000',
     shadowOpacity: 0.2,
     shadowRadius: 4,
@@ -56,8 +75,10 @@ const styles = StyleSheet.create({
 class Footer extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
-      bottomTabHeight: HEIGHT * 0.096
+      bottomTabHeight: HEIGHT * 0.096,
+      myPage: false
     };
   }
 
@@ -67,11 +88,20 @@ class Footer extends Component {
     } else {
       this.setState({bottomTabHeight: HEIGHT * 0.096});
     }
+
+    if (nextProps.isOpen) {
+      this.setState({myPage: true});
+    } else {
+      this.setState({myPage: false});
+    }
   }
 
   renderMyProfile() {
     return (
-      <TouchableOpacity style={styles.profileContainer}>
+      <TouchableOpacity
+          onPress={() => {Actions.get('drawer').ref.toggle()}}
+          style={styles.profileContainer}
+      >
         <Text style={styles.profileText}>
           REC
           <Text style={{color: 'white'}}>
@@ -93,7 +123,19 @@ class Footer extends Component {
     );
   }
 
+  renderMyPageFooter() {
+    return (
+      <View style={styles.myPageBottomNavigationBar}>
+        {this.renderMyProfile()}
+      </View>
+    );
+  }
+
   render() {
+    if (this.state.myPage) {
+      return this.renderMyPageFooter();
+    }
+
     return (
         <Animated.View style={[styles.bottomNavigationBar, {height: this.state.bottomTabHeight}]}>
           {this.renderMyProfile()}
