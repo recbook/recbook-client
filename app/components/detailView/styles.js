@@ -144,6 +144,48 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: 'Calibri',
     color: '#929292'
+  },
+  detailViewDropDown: {
+    height: HEIGHT * 0.254,
+    width: WIDTH * 0.415,
+    position: 'absolute',
+    top: HEIGHT * 288 / 667 + 7,
+    left: 16,
+    flexDirection: 'column',
+    shadowColor: '#000000',
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+    shadowOffset: {
+      height: 2,
+      width: 0.3
+    }
+  },
+  dropDownOuterContainer: {
+    position: 'absolute',
+    left: 0,
+    top: 0,
+    width: WIDTH,
+    height: HEIGHT
+  },
+  dropDownContainer: {
+    backgroundColor: 'transparent',
+    flex: 1
+  },
+  textDropdown: {
+    backgroundColor: 'transparent',
+    alignSelf: 'flex-start',
+    marginLeft: 14,
+    color: '#AAAAAA',
+    fontWeight: 'bold'
+  },
+  textDropdownContainer: {
+    flex: 1,
+    justifyContent: 'flex-start',
+    flexDirection: 'row'
+  },
+  textDropdownInnerContainer: {
+    flex: 1,
+    justifyContent: 'center'
   }
 });
 

@@ -12,13 +12,22 @@ import Styles from './styles';
 import imgJump from './../../resources/jump.png';
 import imgMediaShown from './../../resources/media shown.png';
 import imgBack from './../../resources/backDetail.png';
+import imgDropdown from './../../resources/dropdown.png';
+
+const SORT_CONSTANT = {
+  RECENT: 'Recent',
+  POPULAR: 'Popular',
+  PAGE: 'Page'
+};
 
 export default class DetailView extends Component {
   constructor() {
     super();
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
-      dataSource: ds.cloneWithRows(['row 1', 'row 2'])
+      dataSource: ds.cloneWithRows(['row 1', 'row 2']),
+      modalVisible: false,
+      currentSort: SORT_CONSTANT.RECENT
     };
   }
 
@@ -113,7 +122,14 @@ export default class DetailView extends Component {
             {(this.props.viewSwitch) ? null :
               <View style={{flexDirection: 'row', marginLeft: 24}}>
                 <Text style={{fontSize: 14, fontFamily: 'Calibri-Italic', color: '#fff'}}>Sort by</Text>
-                <Text style={{fontSize: 14, fontFamily: 'Calibri-bold', color: '#f2c94c', marginLeft: 9}}>Recent</Text>
+                <TouchableOpacity
+                  onPress={() => this.setState({modalVisible: !this.state.modalVisible})}
+                  activeOpacity={1}
+                >
+                  <Text style={{fontSize: 14, fontFamily: 'Calibri-bold', color: '#f2c94c', marginLeft: 9}}>
+                    {this.state.currentSort}
+                  </Text>
+                </TouchableOpacity>
               </View>
             }
           </View>
@@ -149,6 +165,51 @@ export default class DetailView extends Component {
     );
   }
 
+  // todo: refactor the following dropdown rendering functions which is duplicate from app.js
+  renderDropDownText(text, style) {
+    return (
+      <View style={Styles.textDropdownContainer}>
+        <View style={{width: 4}}/>
+        <TouchableOpacity
+          style={[Styles.textDropdownInnerContainer, (style) ? style : {}]}
+          activeOpacity={1}
+          onPress={() => this.setState({currentSort: text})}
+        >
+          <Text style={[Styles.textDropdown, {color: (text === this.state.currentSort) ? '#000' : '#AAA'}]}>{text}</Text>
+        </TouchableOpacity>
+        <View style={{width: 4}}/>
+      </View>
+    );
+  }
+
+  renderDropDown() {
+    return (
+      <TouchableOpacity
+        style={Styles.dropDownOuterContainer}
+        activeOpacity={1}
+        onPress={() => {
+          this.setState({modalVisible: false});
+        }}
+      >
+        <Image
+          style={Styles.detailViewDropDown}
+          source={imgDropdown}
+          resizeMode={'stretch'}
+        >
+          <View style={Styles.dropDownContainer}>
+            <View style={{flex: 1}}/>
+            <View style={{flex: 13, flexDirection: 'column'}}>
+              {this.renderDropDownText('Recent', {borderBottomWidth: 1, borderColor: '#e7e7e7'})}
+              {this.renderDropDownText('Popular', {borderBottomWidth: 1, borderColor: '#e7e7e7'})}
+              {this.renderDropDownText('Saved')}
+            </View>
+            <View style={{flex: 0.5}}/>
+          </View>
+        </Image>
+      </TouchableOpacity>
+    );
+  }
+
   render() {
     return (
       <View style={{flex: 1, backgroundColor: (this.props.viewSwitch) ? '#605C56' : '#fff'}}>
@@ -157,6 +218,7 @@ export default class DetailView extends Component {
         {this.renderTop()}
         {this.renderBook()}
         {this.renderBottom()}
+        {(this.state.modalVisible) ? this.renderDropDown() : null}
       </View>
     );
   }
