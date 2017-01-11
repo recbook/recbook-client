@@ -113,10 +113,7 @@ export default class App extends React.Component {
     const createNavBarButtons = (route) => {
       let { sceneKey } = route;
       return (
-        <View
-          style=
-            {Styles.navBarButtonContainer}
-        >
+        <View style={Styles.navBarButtonContainer}>
           {(sceneKey === 'detailView') ? null :
             <TouchableOpacity
               style={Styles.dropDownButtonContainer}
