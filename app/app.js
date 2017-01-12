@@ -141,7 +141,6 @@ export default class App extends React.Component {
             />
           </TouchableOpacity>
           <TouchableOpacity
-
             style={Styles.searchButton}>
             <Image
               style={Styles.searchImage}
