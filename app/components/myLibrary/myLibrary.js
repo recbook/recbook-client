@@ -179,7 +179,7 @@ export default Relay.createContainer(MyLibrary, {
     user: () => {
       return Relay.QL `
           fragment on User {
-              _id,
+              id,
               email,
               name,
               createdAt
