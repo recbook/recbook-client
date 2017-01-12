@@ -8,6 +8,7 @@ import {
   View
 } from 'react-native';
 import Relay from 'react-relay';
+import { Actions } from 'react-native-router-flux';
 import Styles from './styles';
 import Footer from '../../footer';
 
@@ -77,6 +78,7 @@ export class MyLibrary extends Component {
 
   handleOnPressBookTransition() {
     // todo: implement scene transition on book press here
+    Actions.detailView();
   }
 
   renderRow(content, index, col) {
