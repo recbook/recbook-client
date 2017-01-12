@@ -22,7 +22,7 @@ class MyPageContent extends Component {
     this.setState({isDrawerOpen: nextProps.isOpen});
   }
 
-  render(){
+  render() {
     return (
         <View style={Styles.container}>
           <View style={Styles.profileContainer}>
@@ -49,7 +49,7 @@ class MyPageContent extends Component {
           </View>
           <View style={Styles.reminderContainer}>
             <Text style={Styles.subjectName}>Receive Reminder Emails</Text>
-            <Switch style={Styles.switchButton}></Switch>
+            <Switch style={Styles.switchButton}/>
           </View>
           <Footer isOpen={this.state.isDrawerOpen}/>
         </View>

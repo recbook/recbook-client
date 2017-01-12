@@ -12,6 +12,8 @@ import RelayRenderer from './shared/relayComponentRenderer';
 import MyLibrary from './components/myLibrary/myLibrary';
 import MyPage from './components/myPage/myPage';
 import Snippet from './components/snippet/snippet';
+import Camera from './components/camera/camera';
+import Crop from './components/camera/crop';
 
 import imgViewChange01 from './resources/view change01.png';
 import imgViewChange02 from './resources/view change02.png';
@@ -138,7 +140,9 @@ export default class App extends React.Component {
               source={(this.state.viewSwitch) ? imgViewChange01 : imgViewChange02}
             />
           </TouchableOpacity>
-          <TouchableOpacity style={Styles.searchButton}>
+          <TouchableOpacity
+
+            style={Styles.searchButton}>
             <Image
               style={Styles.searchImage}
               source={require("./resources/search.png")}
@@ -175,6 +179,17 @@ export default class App extends React.Component {
               duration={0}
               type="replace"
               queries={{user: () => Relay.QL`query { viewer } `}}
+            />
+            <Scene
+              key="camera"
+              component={Camera}
+              hideNavBar={true}
+              direction="vertical"
+            />
+            <Scene
+              key="crop"
+              component={Crop}
+              hideNavBar={true}
             />
           </Scene>
         </Scene>
