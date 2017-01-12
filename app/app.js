@@ -10,6 +10,7 @@ import {
 } from 'react-native-router-flux';
 import RelayRenderer from './shared/relayComponentRenderer';
 import MyLibrary from './components/myLibrary/myLibrary';
+import FlipCardDetailView from './components/detailView/flipCard';
 import MyPage from './components/myPage/myPage';
 import Snippet from './components/snippet/snippet';
 import Expanded from './components/expanded/expanded';
@@ -111,41 +112,48 @@ export default class App extends React.Component {
   }
 
   render() {
-    const createNavBarButtons = () => {
+    const createNavBarButtons = (route) => {
+      let { sceneKey } = route;
       return (
         <View style={Styles.navBarButtonContainer}>
-          <TouchableOpacity
-            style={Styles.dropDownButtonContainer}
-            onPress={() => {
-              this.setState({modalVisible: !this.state.modalVisible});
-              Actions.refresh();
-            }}
-          >
-            <Text style={Styles.dropDownText}>My Library</Text>
-            <Image
-              style={Styles.dropDownArrowImage}
-              source={(this.state.modalVisible) ? imgArrowUp : imgArrowDown}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={Styles.changeButton}
-            onPress={() => {
-              this.setState({viewSwitch: !this.state.viewSwitch});
-              (this.state.viewSwitch) ? Actions.snippet() : Actions.pop();
-            }}
-            activeOpacity={1}
-          >
-            <Image
-              style={Styles.changeImage}
-              source={(this.state.viewSwitch) ? imgViewChange01 : imgViewChange02}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity style={Styles.searchButton}>
-            <Image
-              style={Styles.searchImage}
-              source={require("./resources/search.png")}
-            />
-          </TouchableOpacity>
+          {(sceneKey === 'detailView') ? null :
+            <TouchableOpacity
+              style={Styles.dropDownButtonContainer}
+              onPress={() => {
+                this.setState({modalVisible: !this.state.modalVisible});
+                Actions.refresh();
+              }}
+            >
+              <Text style={Styles.dropDownText}>My Library</Text>
+              <Image
+                style={Styles.dropDownArrowImage}
+                source={(this.state.modalVisible) ? imgArrowUp : imgArrowDown}
+              />
+            </TouchableOpacity>
+          }
+          {(sceneKey === 'detailView') ? null :
+            <TouchableOpacity
+              style={Styles.changeButton}
+              onPress={() => {
+                this.setState({viewSwitch: !this.state.viewSwitch});
+                (this.state.viewSwitch) ? Actions.snippet() : Actions.pop();
+              }}
+              activeOpacity={1}
+            >
+              <Image
+                style={Styles.changeImage}
+                source={(this.state.viewSwitch) ? imgViewChange01 : imgViewChange02}
+              />
+            </TouchableOpacity>
+          }
+          {(sceneKey === 'detailView') ? null :
+            <TouchableOpacity style={Styles.searchButton}>
+              <Image
+                style={Styles.searchImage}
+                source={require("./resources/search.png")}
+              />
+            </TouchableOpacity>
+          }
           {(this.state.modalVisible) ? this.renderDropDown() : null}
         </View>
       );
@@ -180,6 +188,13 @@ export default class App extends React.Component {
               key="expanded"
               component={Expanded}
               hideNavBar={true}
+            />
+            <Scene
+              key="detailView"
+              navigationBarStyle={Styles.navBarSceneDetailView}
+              component={FlipCardDetailView}
+              hideNavBar={true}
+              renderRightButton={createNavBarButtons}
             />
           </Scene>
         </Scene>

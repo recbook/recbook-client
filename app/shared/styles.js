@@ -9,8 +9,8 @@ const { StatusBarManager } = NativeModules;
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
-const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : StatusBarManager.HEIGHT;
-const HEADER_HEIGHT = 63.5;
+export const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : StatusBarManager.HEIGHT;
+export const HEADER_HEIGHT = 63.5;
 
 const styles = StyleSheet.create({
   navBar: {
@@ -31,6 +31,19 @@ const styles = StyleSheet.create({
       height: 2,
       width: 0.3
     }
+  },
+  navBarSceneDetailView: {
+    ...Platform.select({
+      ios: {
+        height: HEADER_HEIGHT + STATUSBAR_HEIGHT
+      },
+      android: {
+        height: HEIGHT * 0.08
+      }
+    }),
+    backgroundColor: '#fff',
+    borderBottomColor: '#fff',
+    shadowOpacity: 0
   },
   navBarButtonContainer: {
     width: WIDTH,
