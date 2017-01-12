@@ -10,6 +10,7 @@ import {
 } from 'react-native-router-flux';
 import RelayRenderer from './shared/relayComponentRenderer';
 import MyLibrary from './components/myLibrary/myLibrary';
+import MyPage from './components/myPage/myPage';
 import Snippet from './components/snippet/snippet';
 
 import imgViewChange01 from './resources/view change01.png';
@@ -150,29 +151,40 @@ export default class App extends React.Component {
     };
 
     return (
-      <Router createReducer={reducerCreate} sceneStyle={{flex: 1}} wrapBy={RelayRenderer()}>
-        <Scene
-          key="root"
-          navigationBarStyle={Styles.navBar}
-        >
+      <Router drawerImage={null} createReducer={reducerCreate} sceneStyle={{flex: 1}} wrapBy={RelayRenderer()}>
+        <Scene key="drawer" component={MyPage} open={false}>
           <Scene
-            key="myLibrary"
-            component={MyLibrary}
-            hideNavBar={false}
-            renderRightButton={createNavBarButtons}
-            duration={0}
-            queries={{user: () => Relay.QL`query { viewer } `}}
-          />
-          <Scene
-            key="snippet"
-            component={Snippet}
-            hideNavBar={false}
-            renderRightButton={createNavBarButtons}
-            renderBackButton={()=>{}}
-            duration={0}
-            queries={{user: () => Relay.QL`query { viewer } `}}
-            initial
-          />
+            key="root" 
+            navigationBarStyle={Styles.navBar}
+            hideNavBar={true}
+          >
+            <Scene
+              key="myLibrary"
+              component={MyLibrary}
+              hideNavBar={false}
+              initial={true}
+              renderRightButton={createNavBarButtons}
+              queries={{user: () => Relay.QL`query { viewer } `}}
+            />
+           <Scene>
+             key="myLibrary"
+             component={MyLibrary}
+             hideNavBar={false}
+             renderRightButton={createNavBarButtons}
+             duration={0}
+             queries={{user: () => Relay.QL`query { viewer } `}}
+           />
+           <Scene
+             key="snippet"
+             component={Snippet}
+             hideNavBar={false}
+             renderRightButton={createNavBarButtons}
+             renderBackButton={()=>{}}
+             duration={0}
+             queries={{user: () => Relay.QL`query { viewer } `}}
+             initial
+           />
+         </Scene>
         </Scene>
       </Router>
     );
