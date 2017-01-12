@@ -14,18 +14,11 @@ import MyPage from './components/myPage/myPage';
 import Snippet from './components/snippet/snippet';
 import Camera from './components/camera/camera';
 import Crop from './components/camera/crop';
-
-import imgViewChange01 from './resources/view change01.png';
-import imgViewChange02 from './resources/view change02.png';
-
 import FlipCardDetailView from './components/detailView/flipCard';
-import MyPage from './components/myPage/myPage';
-import Snippet from './components/snippet/snippet';
 import Expanded from './components/expanded/expanded';
 
 import imgViewChange01 from './resources/view change01.png';
 import imgViewChange02 from './resources/view change02.png';
-
 import imgArrowDown from './resources/arrow_down.png';
 import imgArrowUp from './resources/arrow_up.png';
 
