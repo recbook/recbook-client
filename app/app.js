@@ -16,6 +16,7 @@ import Camera from './components/camera/camera';
 import Crop from './components/camera/crop';
 import FlipCardDetailView from './components/detailView/flipCard';
 import Expanded from './components/expanded/expanded';
+import SearchBar from './components/search/search';
 
 import imgViewChange01 from './resources/view change01.png';
 import imgViewChange02 from './resources/view change02.png';
@@ -144,6 +145,7 @@ export default class App extends React.Component {
             />
           </TouchableOpacity>
           <TouchableOpacity
+            onPress={() => Actions.search()}
             style={Styles.searchButton}>
             <Image
               style={Styles.searchImage}
@@ -230,6 +232,7 @@ export default class App extends React.Component {
               key="crop"
               component={Crop}
               hideNavBar={true}
+              direction="fade"
               queries={{user: () => Relay.QL`query { viewer } `}}
             />
             <Scene
@@ -243,6 +246,11 @@ export default class App extends React.Component {
               component={FlipCardDetailView}
               hideNavBar={true}
               renderRightButton={createNavBarButtons}
+            />
+            <Scene
+              key="search"
+              component={SearchBar}
+              hideNavBar={true}
             />
           </Scene>
         </Scene>
