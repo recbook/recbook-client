@@ -6,12 +6,13 @@ import {
   TouchableOpacity,
   View,
   Modal,
-  Text,
+  Text
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Styles from './styles';
 
 import imgBackButton from '../../resources/back.png';
+import imgSearchButton from '../../resources/search.png';
 
 class Search extends Component {
   constructor(props) {
@@ -19,15 +20,32 @@ class Search extends Component {
 
     this.state = {
       message: undefined,
-      messageLength: 0
+      count: 0
     };
   }
 
   onChangeSearch(message) {
     this.setState({
-      message: message,
-      messageLength: message.length
+      message: message
     });
+  }
+
+  searchBook() {
+    let baseURL = 'https://www.googleapis.com/books/v1/volumes?q=';
+    if (this.state.message !== undefined) {
+      baseURL += encodeURIComponent('intitle:' + this.state.message);
+    }
+
+    fetch(baseURL)
+      .then((response) => response.json())
+      .then((responseData) => {
+        this.setState({
+          count: responseData.totalItems
+        });
+      })
+      .catch(error =>
+        console.log(error)
+      ).done();
   }
 
   render() {
@@ -51,7 +69,13 @@ class Search extends Component {
         />
       </View>
         <View style={Styles.resultContainer}>
-        <Text style={Styles.resultText}>{this.state.messageLength} result of 'Facebook'</Text>
+        <Text style={Styles.resultText}>{this.state.count} result of {this.state.message}</Text>
+          <TouchableOpacity onPress={() => this.searchBook()}>
+            <Image
+              source={imgSearchButton}
+              style={Styles.backButton}
+            />
+          </TouchableOpacity>
         </View>
         <StatusBar hidden={true}/>
       </Modal>
