@@ -3,11 +3,11 @@ import {
   StyleSheet
 } from 'react-native';
 
-const WIDTH = Dimensions.get('window').width;
-const HEIGHT = Dimensions.get('window').height;
+export const WIDTH = Dimensions.get('window').width;
+export const HEIGHT = Dimensions.get('window').height;
 
 const styles = StyleSheet.create({
-  container: {
+  myLibraryContainer: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -18,15 +18,10 @@ const styles = StyleSheet.create({
     borderRadius: 7,
     height: HEIGHT * 0.477
   },
-  leftColumn: {
-    paddingBottom: 100,
-    marginLeft: WIDTH * 0.064,
-    width: WIDTH * 0.433
-  },
-  rightColumn: {
-    paddingTop: HEIGHT * 0.187,
-    marginRight: WIDTH * 0.064,
-    width: WIDTH * 0.433
+  myLibraryBox: {
+    height: HEIGHT * 0.477,
+    width: WIDTH * 0.433,
+    position: 'absolute'
   },
   book: {
     marginTop: HEIGHT * 0.0195,
@@ -85,5 +80,12 @@ const styles = StyleSheet.create({
     position: 'absolute'
   }
 });
+
+export const generateRandomColor = () => {
+  // eslint-disable-next-line
+  return '#' + (function co(lor){ return (lor +=
+      [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'a', 'b', 'c', 'd', 'e', 'f'][Math.floor(Math.random() * 16)])
+    && (lor.length === 6) ? lor : co(lor); })('');
+};
 
 export default styles;

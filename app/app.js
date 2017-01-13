@@ -39,7 +39,7 @@ export function setNetworkLayer() {
   let options = {};
 
   // Access Token
-  const authToken = '';
+  const authToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjF5Y1o0SDl5OXVjWm5GVmo4M0taZnZTWTdUeDEiLCJlbWFpbCI6ImhjamxAZ21haWwuY29tIiwibmFtZSI6ImNoYW4iLCJpYXQiOjE0ODQxOTgxMjF9.yC2UQH0drdWsuVozpCRgUF2kZ4vq0E6ISP_i2Dz5_hw';
   options.headers = {
     Authorization: authToken
   };
