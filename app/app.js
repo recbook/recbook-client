@@ -10,14 +10,15 @@ import {
 } from 'react-native-router-flux';
 import RelayRenderer from './shared/relayComponentRenderer';
 import MyLibrary from './components/myLibrary/myLibrary';
-import FlipCardDetailView from './components/detailView/flipCard';
 import MyPage from './components/myPage/myPage';
 import Snippet from './components/snippet/snippet';
+import Camera from './components/camera/camera';
+import Crop from './components/camera/crop';
+import FlipCardDetailView from './components/detailView/flipCard';
 import Expanded from './components/expanded/expanded';
 
 import imgViewChange01 from './resources/view change01.png';
 import imgViewChange02 from './resources/view change02.png';
-
 import imgArrowDown from './resources/arrow_down.png';
 import imgArrowUp from './resources/arrow_up.png';
 
@@ -116,6 +117,39 @@ export default class App extends React.Component {
       let { sceneKey } = route;
       return (
         <View style={Styles.navBarButtonContainer}>
+          <TouchableOpacity
+            style={Styles.dropDownButtonContainer}
+            onPress={() => {
+              this.setState({modalVisible: !this.state.modalVisible});
+              Actions.refresh();
+            }}
+          >
+            <Text style={Styles.dropDownText}>My Library</Text>
+            <Image
+              style={Styles.dropDownArrowImage}
+              source={(this.state.modalVisible) ? imgArrowUp : imgArrowDown}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={Styles.changeButton}
+            onPress={() => {
+              this.setState({viewSwitch: !this.state.viewSwitch});
+              (this.state.viewSwitch) ? Actions.snippet() : Actions.myLibrary();
+            }}
+            activeOpacity={1}
+          >
+            <Image
+              style={Styles.changeImage}
+              source={(this.state.viewSwitch) ? imgViewChange01 : imgViewChange02}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={Styles.searchButton}>
+            <Image
+              style={Styles.searchImage}
+              source={require("./resources/search.png")}
+            />
+          </TouchableOpacity>
           {(sceneKey === 'detailView') ? null :
             <TouchableOpacity
               style={Styles.dropDownButtonContainer}
@@ -163,7 +197,7 @@ export default class App extends React.Component {
       <Router drawerImage={null} createReducer={reducerCreate} sceneStyle={{flex: 1}} wrapBy={RelayRenderer()}>
         <Scene key="drawer" component={MyPage} open={false}>
           <Scene
-            key="root" 
+            key="root"
             navigationBarStyle={Styles.navBar}
             hideNavBar={true}
           >
@@ -171,6 +205,7 @@ export default class App extends React.Component {
               key="myLibrary"
               component={MyLibrary}
               hideNavBar={false}
+              type="replace"
               initial
               renderRightButton={createNavBarButtons}
               queries={{user: () => Relay.QL`query { viewer } `}}
@@ -182,6 +217,19 @@ export default class App extends React.Component {
               renderRightButton={createNavBarButtons}
               renderBackButton={()=>{}}
               duration={0}
+              type="replace"
+              queries={{user: () => Relay.QL`query { viewer } `}}
+            />
+            <Scene
+              key="camera"
+              component={Camera}
+              hideNavBar={true}
+              direction="vertical"
+            />
+            <Scene
+              key="crop"
+              component={Crop}
+              hideNavBar={true}
               queries={{user: () => Relay.QL`query { viewer } `}}
             />
             <Scene

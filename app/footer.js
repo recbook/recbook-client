@@ -6,7 +6,7 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 
@@ -78,7 +78,8 @@ class Footer extends Component {
 
     this.state = {
       bottomTabHeight: HEIGHT * 0.096,
-      myPage: false
+      myPage: false,
+      image: null
     };
   }
 
@@ -114,7 +115,10 @@ class Footer extends Component {
 
   renderCamera() {
     return (
-        <TouchableOpacity style={styles.cameraContainer}>
+        <TouchableOpacity
+          style={styles.cameraContainer}
+          onPress={()=>Actions.camera()}
+        >
           <Image
               style={styles.cameraImage}
               source={require("./resources/camera.png")}

@@ -31,18 +31,18 @@ class MyPage extends Component {
 
     return (
         <Drawer
-            ref="navigation"
-            open={state.open}
-            onOpen={()=>Actions.refresh({key: state.key, open: true})}
-            onClose={()=>Actions.refresh({key: state.key, open: false})}
-            type="displace"
-            content={<MyPageContent isOpen={this.state.isDrawerOpen}/>}
-            tapToClose={true}
-            openDrawerOffset={0.05}
-            panCloseMask={0.05}
-            negotiatePan={true}
-            tweenHandler={Drawer.tweenPresets.parallax}
-            >
+          ref="navigation"
+          open={state.open}
+          onOpen={()=>Actions.refresh({key: state.key, open: true})}
+          onClose={()=>Actions.refresh({key: state.key, open: false})}
+          type="displace"
+          content={<MyPageContent isOpen={this.state.isDrawerOpen}/>}
+          tapToClose={true}
+          openDrawerOffset={0.05}
+          panCloseMask={0.05}
+          negotiatePan={true}
+          tweenHandler={Drawer.tweenPresets.parallax}
+        >
           <DefaultRenderer navigationState={children[0]} onNavigate={this.props.onNavigate} />
         </Drawer>
     );
