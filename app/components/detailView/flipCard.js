@@ -12,7 +12,8 @@ export default class FlipCardDetailView extends Component {
   }
 
   static propTypes = {
-    prevScene: PropTypes.string
+    prevScene: PropTypes.string,
+    bookInfo: PropTypes.any
   };
 
   handleSwitch() {
@@ -34,11 +35,13 @@ export default class FlipCardDetailView extends Component {
             viewSwitch={false}
             prevScene={this.props.prevScene}
             handleSwitch={this.handleSwitch.bind(this)}
+            bookInfo={this.props.bookInfo}
           />
           <DetailView
             viewSwitch={true}
             prevScene={this.props.prevScene}
             handleSwitch={this.handleSwitch.bind(this)}
+            bookInfo={this.props.bookInfo}
           />
         </FlipCard>
       );
@@ -49,6 +52,7 @@ export default class FlipCardDetailView extends Component {
           viewSwitch={true}
           prevScene={this.props.prevScene}
           handleSwitch={()=>{}}
+          bookInfo={this.props.bookInfo}
         />
       )
     }
@@ -58,6 +62,7 @@ export default class FlipCardDetailView extends Component {
           viewSwitch={false}
           prevScene={this.props.prevScene}
           handleSwitch={()=>{}}
+          bookInfo={this.props.bookInfo}
         />
       )
     }

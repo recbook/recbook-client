@@ -7,7 +7,8 @@ import {
   ListView
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import Styles, { WIDTH } from './styles';
+import Styles from './styles';
+import { save } from './../../mutations/save';
 
 import imgJump from './../../resources/jump.png';
 import imgMediaShown from './../../resources/media shown.png';
@@ -38,7 +39,8 @@ export default class DetailView extends Component {
   static propTypes = {
     viewSwitch: PropTypes.bool,
     handleSwitch: PropTypes.func,
-    prevScene: PropTypes.string
+    prevScene: PropTypes.string,
+    bookInfo: PropTypes.any
   };
 
   handleBtnViewSwitch() {
@@ -46,8 +48,8 @@ export default class DetailView extends Component {
   }
 
   renderHeader() {
-    const { prevScene } = this.props;
-    const { MY_LIBRARY, SAVED } = SCENE_CONSTANT;
+    const { prevScene, bookInfo } = this.props;
+    const { MY_LIBRARY, SAVED, RECOMMENDED } = SCENE_CONSTANT;
     return (
       <View style={[Styles.detailViewHeaderContainer,
         {justifyContent: (prevScene === MY_LIBRARY) ? 'flex-start' : 'space-between'}]}>
@@ -64,7 +66,11 @@ export default class DetailView extends Component {
         {(prevScene === MY_LIBRARY) ? null :
           <TouchableOpacity
             style={Styles.detailViewHeaderBtnContainer}
-            onPress={() => Actions.pop()}
+            onPress={() => {
+              if (prevScene === RECOMMENDED) {
+                save(bookInfo.title, bookInfo.isbn);
+              }
+            }}
             activeOpacity={0.9}
           >
             <Image

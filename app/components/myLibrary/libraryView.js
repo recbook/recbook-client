@@ -77,9 +77,9 @@ export default class LibraryView extends Component {
     this.animateFadeRow();
   }
 
-  handleOnPressBookTransition() {
+  handleOnPressBookTransition(bookInfo) {
     // todo: implement scene transition on book press here
-    Actions.detailView({prevScene: this.props.prevScene});
+    Actions.detailView({prevScene: this.props.prevScene, bookInfo: bookInfo.node});
   }
 
   renderRow(content, index, col) {
@@ -101,7 +101,7 @@ export default class LibraryView extends Component {
         <TouchableOpacity
           style={Styles.row}
           onPressIn={() => this.handleOnPressBookStyle(index, col)}
-          onPress={() => this.handleOnPressBookTransition()}
+          onPress={() => this.handleOnPressBookTransition(content.data)}
           activeOpacity={1}
         >
           <View style={[Styles.book, {backgroundColor: content.color}]}/>

@@ -35,6 +35,7 @@ export default Relay.createContainer(Recommended, {
                           title
                           author
                           publishedAt
+                          isbn
                       }
                   }
               }
