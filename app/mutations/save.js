@@ -1,24 +1,5 @@
 import Relay from 'react-relay';
 
-export function save(title, isbn) {
-  return new Promise((resolve, reject) => {
-    Relay.Store.commitUpdate(new SaveMutation({
-      input: {
-        title,
-        isbn
-      }
-    }), {
-      onSuccess: (res) => {
-        console.log(res);
-        resolve(res);
-      },
-      onFailure: (transaction) => {
-        reject(transaction.getError().message);
-      }
-    });
-  })
-}
-
 export default class SaveMutation extends Relay.Mutation {
   static initialVariables = {
     input: null
@@ -61,4 +42,22 @@ export default class SaveMutation extends Relay.Mutation {
       `]
     }];
   }
+}
+
+export function save(title, isbn) {
+  return new Promise((resolve, reject) => {
+    Relay.Store.commitUpdate(new SaveMutation({
+      input: {
+        title,
+        isbn
+      }
+    }), {
+      onSuccess: (res) => {
+        resolve(res);
+      },
+      onFailure: (transaction) => {
+        reject(transaction.getError().message);
+      }
+    });
+  });
 }
