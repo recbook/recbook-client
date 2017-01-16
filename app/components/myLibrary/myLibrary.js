@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { View } from 'react-native';
 import Relay from 'react-relay';
 import LibraryView from './libraryView';
+import { SCENE_CONSTANT } from './../../app';
 
 export class MyLibrary extends Component {
   constructor(props) {
@@ -10,7 +11,10 @@ export class MyLibrary extends Component {
   render() {
     return (
       <View style={{flex: 1}}>
-        <LibraryView libraryList={this.props.user.myLibraryBooks.edges}/>
+        <LibraryView
+          libraryList={this.props.user.myLibraryBooks.edges}
+          prevScene={SCENE_CONSTANT.MY_LIBRARY}
+        />
       </View>
     );
   }

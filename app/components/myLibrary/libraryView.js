@@ -43,13 +43,10 @@ export default class LibraryView extends Component {
     }
   }
 
-  componentDidMount() {
-    console.log(this.props.libraryList);
-  }
-
   static propTypes = {
     user: PropTypes.object,
-    libraryList: PropTypes.any
+    libraryList: PropTypes.any,
+    prevScene: PropTypes.string
   };
 
   animateFadeRow() {
@@ -82,7 +79,7 @@ export default class LibraryView extends Component {
 
   handleOnPressBookTransition() {
     // todo: implement scene transition on book press here
-    Actions.detailView();
+    Actions.detailView({prevScene: this.props.prevScene});
   }
 
   renderRow(content, index, col) {
