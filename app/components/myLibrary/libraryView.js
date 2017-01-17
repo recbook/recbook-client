@@ -6,24 +6,19 @@ import {
   Text,
   TouchableOpacity,
   View,
-  Image
+  Image,
+  PanResponder,
+  LayoutAnimation
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import Styles from './styles';
+import Styles, { HEIGHT, WIDTH } from './styles';
 import Footer from '../../footer';
 
-const COLUMN_CONSTANT = {
-  LEFT: 'left',
-  RIGHT: 'right'
-};
-
-const HEIGHT = Dimensions.get('window').height;
-
-const generateRandomColor = () => {
-  // eslint-disable-next-line
-  return '#' + (function co(lor){ return (lor +=
-      [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'a', 'b', 'c', 'd', 'e', 'f'][Math.floor(Math.random() * 16)])
-    && (lor.length === 6) ? lor : co(lor); })('');
+const compareLists = (a, b) => {
+  if (a && b) {
+    return (a.toString() !== b.toString());
+  }
+  return (a || b);
 };
 
 export default class LibraryView extends Component {
@@ -33,22 +28,45 @@ export default class LibraryView extends Component {
     this.state = {
       dataSource: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
       onPressedBookIndex: undefined,
-      onPressedColumn: undefined,
-      initialBookColor: [],
       fadeAnimRow: new Animated.Value(0),
       offset: 0,
-      direction: undefined
+      direction: undefined,
+      pan: new Animated.ValueXY()
     };
-    for (let i = 0; i < this.state.dataSource.length; i = i + 1) {
-      this.state.initialBookColor.push(generateRandomColor());
-    }
+    this.panResponder = PanResponder.create({
+      onStartShouldSetPanResponder: () => {console.log('touched');},
+      onPanResponderMove: Animated.event([null, {
+        dx: this.state.pan.x,
+        dy: this.state.pan.y
+      }]),
+      onPanResponderRelease : (e, gesture) => {}
+    });
+    this.renderAbsoluteRow = this.renderAbsoluteRow.bind(this);
   }
 
   static propTypes = {
     user: PropTypes.object,
     libraryList: PropTypes.any,
-    prevScene: PropTypes.string
+    prevScene: PropTypes.string,
+    coordinate: PropTypes.array,
+    initialBookColor: PropTypes.array,
+    sortRows: PropTypes.func
   };
+
+  shouldComponentUpdate(nextState) {
+    let {
+      dataSource,
+      direction,
+      fadeAnimRow,
+      offset
+    } = this.state;
+    return (
+    (fadeAnimRow !== nextState.fadeAnimRow) ||
+    (offset !== nextState.offset) ||
+    (direction !== nextState.direction) ||
+    (compareLists(dataSource, nextState.dataSource)) ||
+    (compareLists(refs, nextState.refs)));
+  }
 
   animateFadeRow() {
     Animated.sequence([
@@ -129,28 +147,76 @@ export default class LibraryView extends Component {
     );
   }
 
-  filterDataSourceUponColumn(start) {
-    let dataSource = [];
-    for (let i = start; i < this.props.libraryList.length; i = i + 2) {
-      dataSource.push({data: this.props.libraryList[i], color: this.state.initialBookColor[i]});
-    }
-    return dataSource;
-  }
-
-  renderLeftColumn() {
-    const leftDataSource = this.filterDataSourceUponColumn(0);
+  renderRowContent(node, i) {
+    const { initialBookColor } = this.props;
     return (
-      <View style={Styles.leftColumn}>
-        {leftDataSource.map((t, i) => this.renderRow(t, i, COLUMN_CONSTANT.LEFT))}
+      <View style={[Styles.row, {backgroundColor: 'transparent'}]}>
+        <TouchableOpacity
+          style={Styles.row}
+          onPress={this.handleOnPressBookTransition.bind(this)}
+          onLongPress={this.handleOnLongPress.bind(this)}
+          activeOpacity={0.8}
+        >
+          {(node.thumbnail) ?
+            <Image
+              source={{uri: node.thumbnail}}
+              style={Styles.book}
+            />
+            :
+            <View style={[Styles.book, {backgroundColor: initialBookColor[i]}]}/>
+          }
+          <View style={Styles.textContainerTitle}>
+            <Text style={Styles.textBookTitle}>BOOK{'\n'}Example #{i}</Text>
+            <View style={Styles.snippetCountContainer}>
+              <View style={Styles.snippetCountBox}>
+                <Text style={Styles.textSnippetCount}>{i}</Text>
+              </View>
+            </View>
+          </View>
+          <View style={Styles.textContainerInfo}>
+            <Text style={Styles.textBookInfo}>author: {i} bibbid vav sust reandsaf asdf lkdasdfas kds</Text>
+          </View>
+        </TouchableOpacity>
       </View>
     );
   }
 
-  renderRightColumn() {
-    const rightDataSource = this.filterDataSourceUponColumn(1);
+  renderAbsoluteRow(node, i) {
+    const { coordinate } = this.props;
     return (
-      <View style={Styles.rightColumn}>
-        {rightDataSource.map((t, i) => this.renderRow(t, i, COLUMN_CONSTANT.RIGHT))}
+      <View
+        key={i}
+        style={[{
+          top: coordinate[i].top,
+          left: coordinate[i].left,
+          height: HEIGHT * 0.477,
+          width: WIDTH * 0.433,
+          position: 'absolute',
+          borderRadius: 7,
+          zIndex: 10
+        }]}>
+        {this.renderRowContent(node, i)}
+      </View>
+    );
+  }
+
+  handleOnLongPress() {
+    this.props.sortRows();
+  }
+
+  renderAbsoluteBoxes() {
+    const { libraryList } = this.props;
+    const height = HEIGHT * 0.477;
+    return (
+      <View
+        style={{
+          width: WIDTH,
+          height: (libraryList.length - 1) * height / 2 + height + HEIGHT * 0.096,
+          marginLeft: WIDTH * 0.064,
+          flexDirection: 'column'
+        }}
+      >
+        {libraryList.map((content, index) => this.renderAbsoluteRow(content.node, index))}
       </View>
     );
   }
@@ -172,9 +238,8 @@ export default class LibraryView extends Component {
           onScroll={this.onScroll.bind(this)}
           style={{flex: 1, marginTop: HEIGHT * 0.11}}
         >
-          <View style={Styles.container}>
-            {this.renderLeftColumn()}
-            {this.renderRightColumn()}
+          <View style={Styles.myLibraryContainer}>
+            {this.renderAbsoluteBoxes()}
           </View>
         </ScrollView>
         <Footer status={this.state.direction}/>
