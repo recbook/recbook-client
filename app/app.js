@@ -43,7 +43,7 @@ export function setNetworkLayer() {
   let options = {};
 
   // Access Token
-  const authToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxcmlPZmhVWFdTU3BQVHJOUWJrWGNrS1N3dDEiLCJlbWFpbCI6IjEyM0AxMjMuY29tIiwibmFtZSI6IuygnOyYgeywrCIsImlhdCI6MTQ4NDU2OTQyMn0.ROpx-5bQFAK2Q4bnogu9p2dr82KhZgD_-sXHFhNGI5w';
+  const authToken = '';
   options.headers = {
     Authorization: authToken
   };
@@ -79,11 +79,9 @@ export default class App extends React.Component {
             Actions.refresh();
             if (text === SCENE_CONSTANT.MY_LIBRARY) {
               Actions.myLibrary({prevScene: text});
-            }
-            else if (text === SCENE_CONSTANT.SAVED) {
+            } else if (text === SCENE_CONSTANT.SAVED) {
               Actions.saved({prevScene: text});
-            }
-            else {
+            } else {
               Actions.recommended({prevScene: text});
             }
           }}

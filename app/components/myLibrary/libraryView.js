@@ -5,7 +5,8 @@ import {
   ScrollView,
   Text,
   TouchableOpacity,
-  View
+  View,
+  Image
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Styles from './styles';
@@ -104,7 +105,14 @@ export default class LibraryView extends Component {
           onPress={() => this.handleOnPressBookTransition(content.data)}
           activeOpacity={1}
         >
-          <View style={[Styles.book, {backgroundColor: content.color}]}/>
+          {(node.thumbnail) ?
+            <Image
+              source={{uri: node.thumbnail}}
+              style={Styles.book}
+            />
+            :
+            <View style={[Styles.book, {backgroundColor: content.color}]}/>
+          }
           <View style={Styles.textContainerTitle}>
             <Text style={Styles.textBookTitle}>BOOK{'\n'}{node.title}</Text>
             <View style={Styles.snippetCountContainer}>

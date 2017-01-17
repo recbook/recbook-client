@@ -8,6 +8,7 @@ export class Saved extends Component {
   constructor(props) {
     super(props);
   }
+
   render() {
     return (
       <View style={{flex: 1}}>
@@ -34,7 +35,6 @@ export default Relay.createContainer(Saved, {
                           id
                           title
                           author
-                          publishedAt
                           isbn
                       }
                   }

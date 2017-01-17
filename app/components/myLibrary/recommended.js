@@ -8,6 +8,7 @@ export class Recommended extends Component {
   constructor(props) {
     super(props);
   }
+
   render() {
     return (
       <View style={{flex: 1}}>
@@ -28,14 +29,14 @@ export default Relay.createContainer(Recommended, {
     user: () => {
       return Relay.QL `
           fragment on User {
-              recommendedBooks(first: 10) {
+              recommendedBooks(first: 100) {
                   edges{
                       node {
                           id
                           title
                           author
-                          publishedAt
                           isbn
+                          thumbnail
                       }
                   }
               }
