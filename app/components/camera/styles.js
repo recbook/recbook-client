@@ -50,13 +50,15 @@ const styles = StyleSheet.create({
     color: '#605C56',
     fontSize: 20
   },
-  cropButton: {
+  cropButtonContainer: {
     position: 'absolute',
-    left: WIDTH * 0.39,
-    top: HEIGHT * 0.31,
-    width: 54,
-    height: 54,
+    left: WIDTH * 0.79,
+    top: HEIGHT * 0.61,
     zIndex: 1
+  },
+  cropButton: {
+    width: 54,
+    height: 54
   }
 });
 
