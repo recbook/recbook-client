@@ -38,6 +38,20 @@ class Crop extends Component {
       .catch(error => console.log(error.message));
   }
 
+  renderCropButton() {
+    return (
+      <View style={Styles.cropButtonContainer}>
+        <TouchableOpacity
+          onPress={()=>Actions.pop()}
+        >
+          <Image
+            style={Styles.cropButton}
+            source={imgCropButton}/>
+        </TouchableOpacity>
+      </View>
+    );
+  }
+
   renderBottom() {
     return (
       <View style={Styles.captureButtonContainer}>
@@ -69,14 +83,10 @@ class Crop extends Component {
             style={Styles.cancelButton}
             source={imgCancelButton}/>
         </TouchableOpacity>
-        <TouchableOpacity style={Styles.cropButton}>
-          <Image
-            style={Styles.cropButton}
-            source={imgCropButton}/>
-        </TouchableOpacity>
         <Image
           style={Styles.window}
           source={{uri: this.props.imgPath}}/>
+        {this.renderCropButton()}
         {this.renderBottom()}
       </View>
     );

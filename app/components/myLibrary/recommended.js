@@ -5,6 +5,10 @@ import LibraryView from './libraryView';
 import { SCENE_CONSTANT } from './../../app';
 
 export class Recommended extends Component {
+  static propTypes = {
+    user: PropTypes.object
+  };
+
   constructor(props) {
     super(props);
   }
@@ -36,7 +40,6 @@ export default Relay.createContainer(Recommended, {
                           title
                           author
                           isbn
-                          thumbnail
                       }
                   }
               }
