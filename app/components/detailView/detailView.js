@@ -8,11 +8,16 @@ import {
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Styles from './styles';
+import { save } from './../../mutations/save';
 
 import imgJump from './../../resources/jump.png';
 import imgMediaShown from './../../resources/media shown.png';
 import imgBack from './../../resources/backDetail.png';
 import imgDropdown from './../../resources/dropdown.png';
+import imgSaved from './../../resources/saved.png';
+import imgUnSaved from './../../resources/unsaved.png';
+
+import { SCENE_CONSTANT } from './../../app';
 
 const SORT_CONSTANT = {
   RECENT: 'Recent',
@@ -33,7 +38,9 @@ export default class DetailView extends Component {
 
   static propTypes = {
     viewSwitch: PropTypes.bool,
-    handleSwitch: PropTypes.func
+    handleSwitch: PropTypes.func,
+    prevScene: PropTypes.string,
+    bookInfo: PropTypes.any
   };
 
   handleBtnViewSwitch() {
@@ -41,9 +48,13 @@ export default class DetailView extends Component {
   }
 
   renderHeader() {
+    const { prevScene, bookInfo } = this.props;
+    const { MY_LIBRARY, SAVED, RECOMMENDED } = SCENE_CONSTANT;
     return (
-      <View style={Styles.detailViewHeaderContainer}>
+      <View style={[Styles.detailViewHeaderContainer,
+        {justifyContent: (prevScene === MY_LIBRARY) ? 'flex-start' : 'space-between'}]}>
         <TouchableOpacity
+          style={Styles.detailViewHeaderBtnContainer}
           onPress={() => Actions.pop()}
           activeOpacity={0.9}
         >
@@ -52,6 +63,22 @@ export default class DetailView extends Component {
             source={imgBack}
           />
         </TouchableOpacity>
+        {(prevScene === MY_LIBRARY) ? null :
+          <TouchableOpacity
+            style={Styles.detailViewHeaderBtnContainer}
+            onPress={() => {
+              if (prevScene === RECOMMENDED) {
+                save(bookInfo.title, bookInfo.isbn);
+              }
+            }}
+            activeOpacity={0.9}
+          >
+            <Image
+              style={{height: 27, width: 27}}
+              source={(prevScene === SAVED) ? imgSaved : imgUnSaved}
+            />
+          </TouchableOpacity>
+        }
       </View>
     );
   }
@@ -140,13 +167,15 @@ export default class DetailView extends Component {
             >
               <Text style={Styles.textDetailViewVisitOtherSnippets}>Visit Other's snippets</Text>
               <Image
-                style={{top: 19}}
+                style={{top: 19, height: 16, width: 16}}
                 source={imgJump}
               />
             </TouchableOpacity>
             {(this.props.viewSwitch) ? null :
               <View style={Styles.detailViewImgMediaShownContainer}>
-                <Image source={imgMediaShown}/>
+                <Image
+                  style={{height: 18, width: 18}}
+                  source={imgMediaShown}/>
               </View>
             }
           </View>

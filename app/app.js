@@ -10,6 +10,8 @@ import {
 } from 'react-native-router-flux';
 import RelayRenderer from './shared/relayComponentRenderer';
 import MyLibrary from './components/myLibrary/myLibrary';
+import Recommended from './components/myLibrary/recommended';
+import Saved from './components/myLibrary/saved';
 import MyPage from './components/myPage/myPage';
 import Snippet from './components/snippet/snippet';
 import Camera from './components/camera/camera';
@@ -31,7 +33,7 @@ const reducerCreate = (params) => {
   };
 };
 
-const SCENE_CONSTANT = {
+export const SCENE_CONSTANT = {
   MY_LIBRARY: 'My Library',
   SAVED: 'Saved',
   RECOMMENDED: 'Recommended'
@@ -75,6 +77,13 @@ export default class App extends React.Component {
           onPress={() => {
             this.setState({currentScene: text});
             Actions.refresh();
+            if (text === SCENE_CONSTANT.MY_LIBRARY) {
+              Actions.myLibrary({prevScene: text});
+            } else if (text === SCENE_CONSTANT.SAVED) {
+              Actions.saved({prevScene: text});
+            } else {
+              Actions.recommended({prevScene: text});
+            }
           }}
         >
           <Text style={[Styles.textDropdown, {color: (text === this.state.currentScene) ? '#000' : '#AAA'}]}>{text}</Text>
@@ -209,6 +218,22 @@ export default class App extends React.Component {
               hideNavBar={false}
               type="replace"
               initial
+              renderRightButton={createNavBarButtons}
+              queries={{user: () => Relay.QL`query { viewer } `}}
+            />
+            <Scene
+              key="saved"
+              component={Saved}
+              hideNavBar={false}
+              type="replace"
+              renderRightButton={createNavBarButtons}
+              queries={{user: () => Relay.QL`query { viewer } `}}
+            />
+            <Scene
+              key="recommended"
+              component={Recommended}
+              hideNavBar={false}
+              type="replace"
               renderRightButton={createNavBarButtons}
               queries={{user: () => Relay.QL`query { viewer } `}}
             />

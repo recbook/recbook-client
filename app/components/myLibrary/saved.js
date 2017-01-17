@@ -4,23 +4,24 @@ import Relay from 'react-relay';
 import LibraryView from './libraryView';
 import { SCENE_CONSTANT } from './../../app';
 
-export class MyLibrary extends Component {
+export class Saved extends Component {
   constructor(props) {
     super(props);
   }
+
   render() {
     return (
       <View style={{flex: 1}}>
         <LibraryView
-          libraryList={this.props.user.myLibraryBooks.edges}
-          prevScene={SCENE_CONSTANT.MY_LIBRARY}
+          libraryList={this.props.user.savedBooks.edges}
+          prevScene={SCENE_CONSTANT.SAVED}
         />
       </View>
     );
   }
 }
 
-export default Relay.createContainer(MyLibrary, {
+export default Relay.createContainer(Saved, {
   initialVariables: {
     orderBy: null
   },
@@ -28,7 +29,7 @@ export default Relay.createContainer(MyLibrary, {
     user: () => {
       return Relay.QL `
           fragment on User {
-              myLibraryBooks(first: 10) {
+              savedBooks(first: 10) {
                   edges{
                       node {
                           id

@@ -4,7 +4,7 @@ import {
 } from 'react-native';
 import { HEADER_HEIGHT, STATUSBAR_HEIGHT } from './../../shared/styles';
 
-const WIDTH = Dimensions.get('window').width;
+export const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
 
 const styles = StyleSheet.create({
@@ -14,10 +14,13 @@ const styles = StyleSheet.create({
     left: 0,
     height: HEIGHT * 74 / 667 + 20,
     width: WIDTH,
+    alignItems: 'center',
+    zIndex: 10,
+    flexDirection: 'row'
+  },
+  detailViewHeaderBtnContainer: {
     paddingLeft: 24,
-    justifyContent: 'center',
-    alignItems: 'flex-start',
-    zIndex: 10
+    paddingRight: 24
   },
   detailViewMarginTop: {
     height: HEADER_HEIGHT + STATUSBAR_HEIGHT
