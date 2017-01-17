@@ -5,6 +5,10 @@ import LibraryView from './libraryView';
 import { SCENE_CONSTANT } from './../../app';
 
 export class MyLibrary extends Component {
+  static propTypes = {
+    user: PropTypes.object
+  };
+
   constructor(props) {
     super(props);
   }
