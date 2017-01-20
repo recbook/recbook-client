@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, Text, TouchableOpacity, View } from 'react-native';
+import { AsyncStorage, Image, Text, TouchableOpacity, View } from 'react-native';
 import Styles from './shared/styles';
 import Relay from 'react-relay';
 import {
@@ -19,6 +19,8 @@ import Crop from './components/camera/crop';
 import FlipCardDetailView from './components/detailView/flipCard';
 import Expanded from './components/expanded/expanded';
 import SearchBar from './components/search/search';
+import Register from './components/signIn/register';
+import Login from './components/signIn/login';
 
 import imgViewChange01 from './resources/view change01.png';
 import imgViewChange02 from './resources/view change02.png';
@@ -40,16 +42,28 @@ export const SCENE_CONSTANT = {
 };
 
 export function setNetworkLayer() {
-  let options = {};
+  return new Promise((resolve, reject) => {
+    AsyncStorage.getItem('currentUser', (err, res) => {
+      let store = JSON.parse(res);
+      let options = {};
+      // Access Token
+      const authToken = store.authToken;
+      if (store) {
+        options.headers = {
+          Authorization: authToken
+        };
+      } else {
+        Actions.register();
+        options.headers = {};
+      }
 
-  // Access Token
-  const authToken = '';
-  options.headers = {
-    Authorization: authToken
-  };
-  Relay.injectNetworkLayer(
-    new Relay.DefaultNetworkLayer('http://52.79.112.162/graphql', options)
-  );
+      Relay.injectNetworkLayer(
+        new Relay.DefaultNetworkLayer('http://52.79.112.162/graphql', options)
+      );
+      resolve(options);
+      Actions.myLibrary();
+    });
+  });
 }
 
 export default class App extends React.Component {
@@ -213,11 +227,22 @@ export default class App extends React.Component {
             hideNavBar={true}
           >
             <Scene
+              key="register"
+              component={Register}
+              hideNavBar={true}
+            />
+            <Scene
+              key="login"
+              component={Login}
+              hideNavBar={true}
+              initial
+            />
+            <Scene
               key="myLibrary"
               component={MyLibrary}
               hideNavBar={false}
               type="replace"
-              initial
+              initial={false}
               renderRightButton={createNavBarButtons}
               queries={{user: () => Relay.QL`query { viewer } `}}
             />

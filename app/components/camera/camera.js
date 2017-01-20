@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {
   Image,
+  StatusBar,
   TouchableOpacity,
   View
 } from 'react-native';
@@ -50,6 +51,7 @@ class Camera extends Component {
           captureTarget={CustomCamera.constants.CaptureTarget.temp}
           aspect={CustomCamera.constants.Aspect.fill}/>
         {this.renderBottom()}
+        <StatusBar hidden={true}/>
       </View>
     );
   }
