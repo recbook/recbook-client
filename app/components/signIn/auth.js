@@ -40,5 +40,3 @@ export function register(email, name, password) {
     });
   });
 }
-
-
