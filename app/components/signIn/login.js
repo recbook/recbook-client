@@ -28,7 +28,13 @@ class Login extends Component {
         let loggedInUser = {
           authToken: result.getToken.accessToken
         };
-        App.setNetworkLayer({ Authorization: loggedInUser.authToken });
+        const options = {};
+        options.headers = {
+          Authorization: loggedInUser.authToken
+        };
+
+        App.setNetworkLayer(options);
+
         AsyncStorage.setItem("currentUser", JSON.stringify(loggedInUser), () => {
           Actions.myLibrary();
         });

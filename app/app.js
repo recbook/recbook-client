@@ -69,30 +69,6 @@ export default class App extends React.Component {
     this.renderDropDown = this.renderDropDown.bind(this);
   }
 
-  componentDidMount() {
-    getCurrentUser()
-      .then((authToken) => {
-        const options = {};
-        if (authToken) {
-          options.headers = {
-            Authorization: authToken
-          };
-        }
-        setNetworkLayer(options);
-        return authToken;
-      })
-      .then((authToken) => {
-        if (authToken) {
-          Actions.myLibrary();
-        } else {
-          Actions.register();
-        }
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  }
-
   renderDropDownText(text, style) {
     return (
       <View style={Styles.textDropdownContainer}>
@@ -241,12 +217,14 @@ export default class App extends React.Component {
               key="register"
               component={Register}
               hideNavBar={true}
+              type="replace"
               initial
             />
             <Scene
               key="login"
               component={Login}
               hideNavBar={true}
+              type="replace"
             />
             <Scene
               key="myLibrary"

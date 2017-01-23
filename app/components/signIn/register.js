@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import Styles from './styles';
 import * as Auth from './auth';
+import * as App from '../../app';
 import { Actions } from 'react-native-router-flux';
 
 class Register extends Component {
@@ -20,6 +21,28 @@ class Register extends Component {
       registerUserName: undefined,
       registerPassword: undefined
     };
+  }
+
+  componentDidMount() {
+    App.getCurrentUser()
+      .then((authToken) => {
+        const options = {};
+        if (authToken) {
+          options.headers = {
+            Authorization: authToken
+          };
+        }
+        App.setNetworkLayer(options);
+        return authToken;
+      })
+      .then((authToken) => {
+        if (authToken) {
+          Actions.myLibrary();
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 
   registerUser() {
@@ -64,7 +87,7 @@ class Register extends Component {
         />
         <TextInput
           style={Styles.passwordTextInput}
-          placeholder=" Password"
+          placeholder="Password"
           onChangeText={this.handleRegisterPassword.bind(this)}
           secureTextEntry={true}
         />
