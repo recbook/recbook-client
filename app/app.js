@@ -41,27 +41,19 @@ export const SCENE_CONSTANT = {
   RECOMMENDED: 'Recommended'
 };
 
-export function setNetworkLayer() {
-  return new Promise((resolve, reject) => {
-    AsyncStorage.getItem('currentUser', (err, res) => {
-      let store = JSON.parse(res);
-      let options = {};
-      // Access Token
-      const authToken = store.authToken;
-      if (store) {
-        options.headers = {
-          Authorization: authToken
-        };
-      } else {
-        Actions.register();
-        options.headers = {};
-      }
+const API_URL = 'http://52.79.112.162/graphql';
+export function setNetworkLayer(options) {
+  Relay.injectNetworkLayer(
+    new Relay.DefaultNetworkLayer(API_URL, options)
+  );
+}
 
-      Relay.injectNetworkLayer(
-        new Relay.DefaultNetworkLayer('http://52.79.112.162/graphql', options)
-      );
-      resolve(options);
-      Actions.myLibrary();
+export function getCurrentUser() {
+  return new Promise((resolve) => {
+    AsyncStorage.getItem('currentUser', (err, res) => {
+      const store = JSON.parse(res);
+      const authToken = store ? store.authToken : null;
+      resolve(authToken);
     });
   });
 }
@@ -78,7 +70,27 @@ export default class App extends React.Component {
   }
 
   componentDidMount() {
-    setNetworkLayer();
+    getCurrentUser()
+      .then((authToken) => {
+        const options = {};
+        if (authToken) {
+          options.headers = {
+            Authorization: authToken
+          };
+        }
+        setNetworkLayer(options);
+        return authToken;
+      })
+      .then((authToken) => {
+        if (authToken) {
+          Actions.myLibrary();
+        } else {
+          Actions.register();
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 
   renderDropDownText(text, style) {
@@ -229,12 +241,12 @@ export default class App extends React.Component {
               key="register"
               component={Register}
               hideNavBar={true}
+              initial
             />
             <Scene
               key="login"
               component={Login}
               hideNavBar={true}
-              initial
             />
             <Scene
               key="myLibrary"

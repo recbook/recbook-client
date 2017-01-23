@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import Styles from './styles';
 import * as Auth from './auth';
+import * as App from '../../app';
 import { Actions } from 'react-native-router-flux';
 
 class Login extends Component {
@@ -27,7 +28,7 @@ class Login extends Component {
         let loggedInUser = {
           authToken: result.getToken.accessToken
         };
-
+        App.setNetworkLayer({ Authorization: loggedInUser.authToken });
         AsyncStorage.setItem("currentUser", JSON.stringify(loggedInUser), () => {
           Actions.myLibrary();
         });
