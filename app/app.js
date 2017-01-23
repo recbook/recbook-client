@@ -89,8 +89,7 @@ export default class App extends React.Component {
           style={[Styles.textDropdownInnerContainer, (style) ? style : {}]}
           activeOpacity={1}
           onPress={() => {
-            this.setState({currentScene: text});
-            Actions.refresh();
+            Actions.refresh(this.setState({currentScene: text}));
             if (text === SCENE_CONSTANT.MY_LIBRARY) {
               Actions.myLibrary({prevScene: text});
             } else if (text === SCENE_CONSTANT.SAVED) {
@@ -148,7 +147,7 @@ export default class App extends React.Component {
               Actions.refresh();
             }}
           >
-            <Text style={Styles.dropDownText}>My Library</Text>
+            <Text style={Styles.dropDownText}>{this.state.currentScene}</Text>
             <Image
               style={Styles.dropDownArrowImage}
               source={(this.state.modalVisible) ? imgArrowUp : imgArrowDown}
