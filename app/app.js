@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, Text, TouchableOpacity, View } from 'react-native';
+import { AsyncStorage, Image, Text, TouchableOpacity, View } from 'react-native';
 import Styles from './shared/styles';
 import Relay from 'react-relay';
 import {
@@ -19,6 +19,8 @@ import Crop from './components/camera/crop';
 import FlipCardDetailView from './components/detailView/flipCard';
 import Expanded from './components/expanded/expanded';
 import SearchBar from './components/search/search';
+import Register from './components/signIn/register';
+import Login from './components/signIn/login';
 
 import imgViewChange01 from './resources/view change01.png';
 import imgViewChange02 from './resources/view change02.png';
@@ -39,17 +41,21 @@ export const SCENE_CONSTANT = {
   RECOMMENDED: 'Recommended'
 };
 
-export function setNetworkLayer() {
-  let options = {};
-
-  // Access Token
-  const authToken = '';
-  options.headers = {
-    Authorization: authToken
-  };
+const API_URL = 'http://52.79.112.162/graphql';
+export function setNetworkLayer(options) {
   Relay.injectNetworkLayer(
-    new Relay.DefaultNetworkLayer('http://52.79.112.162/graphql', options)
+    new Relay.DefaultNetworkLayer(API_URL, options)
   );
+}
+
+export function getCurrentUser() {
+  return new Promise((resolve) => {
+    AsyncStorage.getItem('currentUser', (err, res) => {
+      const store = JSON.parse(res);
+      const authToken = store ? store.authToken : null;
+      resolve(authToken);
+    });
+  });
 }
 
 export default class App extends React.Component {
@@ -63,10 +69,6 @@ export default class App extends React.Component {
     this.renderDropDown = this.renderDropDown.bind(this);
   }
 
-  componentDidMount() {
-    setNetworkLayer();
-  }
-
   renderDropDownText(text, style) {
     return (
       <View style={Styles.textDropdownContainer}>
@@ -75,8 +77,7 @@ export default class App extends React.Component {
           style={[Styles.textDropdownInnerContainer, (style) ? style : {}]}
           activeOpacity={1}
           onPress={() => {
-            this.setState({currentScene: text});
-            Actions.refresh();
+            Actions.refresh(this.setState({currentScene: text}));
             if (text === SCENE_CONSTANT.MY_LIBRARY) {
               Actions.myLibrary({prevScene: text});
             } else if (text === SCENE_CONSTANT.SAVED) {
@@ -134,7 +135,7 @@ export default class App extends React.Component {
               Actions.refresh();
             }}
           >
-            <Text style={Styles.dropDownText}>My Library</Text>
+            <Text style={Styles.dropDownText}>{this.state.currentScene}</Text>
             <Image
               style={Styles.dropDownArrowImage}
               source={(this.state.modalVisible) ? imgArrowUp : imgArrowDown}
@@ -213,11 +214,24 @@ export default class App extends React.Component {
             hideNavBar={true}
           >
             <Scene
+              key="register"
+              component={Register}
+              hideNavBar={true}
+              type="replace"
+              initial
+            />
+            <Scene
+              key="login"
+              component={Login}
+              hideNavBar={true}
+              type="replace"
+            />
+            <Scene
               key="myLibrary"
               component={MyLibrary}
               hideNavBar={false}
               type="replace"
-              initial
+              initial={false}
               renderRightButton={createNavBarButtons}
               queries={{user: () => Relay.QL`query { viewer } `}}
             />

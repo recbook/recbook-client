@@ -1,6 +1,6 @@
 import Relay from 'react-relay';
 
-export default class RegisterMutation extends Relay.Mutation {
+export default class LoginMutation extends Relay.Mutation {
   static initialVariables = {
     input: null
   };
@@ -8,7 +8,7 @@ export default class RegisterMutation extends Relay.Mutation {
   getMutation() {
     return Relay.QL`
         mutation {
-            createUser
+            getToken
         }
     `;
   }
@@ -16,17 +16,16 @@ export default class RegisterMutation extends Relay.Mutation {
   getVariables() {
     return {
       email: this.props.input.email,
-      name: this.props.input.name,
       password: this.props.input.password
     };
   }
 
   getFatQuery() {
     return Relay.QL`
-        fragment on createUserPayload {
+        fragment on getTokenPayload {
             accessToken,
             clientMutationId
-         }
+        }
     `;
   }
 
@@ -34,7 +33,7 @@ export default class RegisterMutation extends Relay.Mutation {
     return [{
       type: 'REQUIRED_CHILDREN',
       children: [Relay.QL `
-          fragment on createUserPayload {
+          fragment on getTokenPayload {
               accessToken,
               clientMutationId
           }
