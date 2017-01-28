@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     marginRight: WIDTH * 0.064,
     width: WIDTH * 0.433
   },
-  book: {
+  bookContainer: {
     marginTop: HEIGHT * 0.0195,
     marginBottom: HEIGHT * 0.0178 - 2,
     height: HEIGHT * 0.3,
@@ -42,6 +42,12 @@ const styles = StyleSheet.create({
       height: 1,
       width: 1
     }
+  },
+  book: {
+    height: HEIGHT * 0.3,
+    width: WIDTH * 0.368,
+    borderRadius: 7,
+    alignSelf: 'center'
   },
   textBookTitle: {
     fontSize: 18,
