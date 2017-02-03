@@ -128,6 +128,12 @@ export default class App extends React.Component {
       let { sceneKey } = route;
       return (
         <View style={Styles.navBarButtonContainer}>
+          <TouchableOpacity onPress={() => {Actions.get('drawer').ref.toggle()}}>
+            <Image
+              style={Styles.drawerButton}
+              source={require("./resources/mypage.png")}
+            />
+          </TouchableOpacity>
           <TouchableOpacity
             style={Styles.dropDownButtonContainer}
             onPress={() => {
@@ -151,7 +157,7 @@ export default class App extends React.Component {
           >
             <Image
               style={Styles.changeImage}
-              source={(this.state.viewSwitch) ? imgViewChange01 : imgViewChange02}
+              source={(this.state.viewSwitch) ? imgViewChange02 : imgViewChange01}
             />
           </TouchableOpacity>
           <TouchableOpacity

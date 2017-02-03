@@ -38,8 +38,8 @@ class MyPage extends Component {
           type="displace"
           content={<MyPageContent isOpen={this.state.isDrawerOpen}/>}
           tapToClose={true}
-          openDrawerOffset={0.05}
-          panCloseMask={0.05}
+          openDrawerOffset={0.10}
+          panCloseMask={0.10}
           negotiatePan={true}
           tweenHandler={Drawer.tweenPresets.parallax}
         >
