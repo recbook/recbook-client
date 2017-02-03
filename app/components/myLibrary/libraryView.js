@@ -106,12 +106,14 @@ export default class LibraryView extends Component {
           activeOpacity={1}
         >
           {(node.thumbnail) ?
-            <Image
-              source={{uri: node.thumbnail}}
-              style={Styles.book}
-            />
+            <View style={Styles.bookContainer}>
+              <Image
+                source={{uri: node.thumbnail}}
+                style={Styles.book}
+              />
+            </View>
             :
-            <View style={[Styles.book, {backgroundColor: content.color}]}/>
+            <View style={[Styles.bookContainer, {backgroundColor: content.color}]}/>
           }
           <View style={Styles.textContainerTitle}>
             <Text style={Styles.textBookTitle}>BOOK{'\n'}{node.title}</Text>
