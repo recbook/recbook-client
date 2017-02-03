@@ -157,7 +157,7 @@ export default class App extends React.Component {
           >
             <Image
               style={Styles.changeImage}
-              source={(this.state.viewSwitch) ? imgViewChange01 : imgViewChange02}
+              source={(this.state.viewSwitch) ? imgViewChange02 : imgViewChange01}
             />
           </TouchableOpacity>
           <TouchableOpacity
