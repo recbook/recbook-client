@@ -128,6 +128,12 @@ export default class App extends React.Component {
       let { sceneKey } = route;
       return (
         <View style={Styles.navBarButtonContainer}>
+          <TouchableOpacity onPress={() => {Actions.get('drawer').ref.toggle()}}>
+            <Image
+              style={Styles.drawerButton}
+              source={require("./resources/mypage.png")}
+            />
+          </TouchableOpacity>
           <TouchableOpacity
             style={Styles.dropDownButtonContainer}
             onPress={() => {

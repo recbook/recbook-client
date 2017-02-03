@@ -1,73 +1,36 @@
 import React, { Component } from 'react';
 import {
-  Animated,
   Dimensions,
   Image,
   StyleSheet,
-  Text,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 
-const WIDTH = Dimensions.get('window').width;
+import imgCameraButton from './resources/rec_btn.png';
+
 const HEIGHT = Dimensions.get('window').height;
 const styles = StyleSheet.create({
-  bottomNavigationBar: {
-    position: 'absolute',
-    flexDirection: 'row',
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: '#605C56',
-    shadowColor: '#000000',
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    shadowOffset: {
-      height: 2,
-      width: 0.3
-    },
-    justifyContent: 'flex-start'
-  },
-  myPageBottomNavigationBar: {
-    position: 'absolute',
-    flexDirection: 'row',
-    height: HEIGHT * 0.096,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: '#7F7A72',
-    shadowColor: '#000000',
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    shadowOffset: {
-      height: 2,
-      width: 0.3
-    },
-    justifyContent: 'flex-start'
-  },
-  profileContainer: {
-    backgroundColor: 'transparent',
-    justifyContent: 'center',
-    marginLeft: WIDTH * 0.067,
-    marginRight: WIDTH * 0.18,
-    alignSelf: 'center'
-  },
-  profileText: {
-    fontSize: 12,
-    color: '#D20058',
-    fontWeight: 'bold',
-    letterSpacing: 1
-  },
   cameraContainer: {
     backgroundColor: 'transparent',
     justifyContent: 'center',
-    alignSelf: 'center'
+    borderColor: '#ff5722',
+    alignItems: 'center',
+    position: 'absolute',
+    bottom: 24,
+    right: 24,
+    shadowColor: '#000000',
+    shadowOpacity: 0.4,
+    shadowRadius: 2,
+    shadowOffset: {
+      height: 1,
+      width: 0
+    }
   },
   cameraImage: {
     width: HEIGHT * 0.074,
     height: HEIGHT * 0.074,
-    backgroundColor: 'transparent',
     resizeMode: 'contain'
   }
 });
@@ -97,55 +60,25 @@ class Footer extends Component {
     }
   }
 
-  renderMyProfile() {
-    return (
-      <TouchableOpacity
-          onPress={() => {Actions.get('drawer').ref.toggle()}}
-          style={styles.profileContainer}
-      >
-        <Text style={styles.profileText}>
-          REC
-          <Text style={{color: 'white'}}>
-            BOOK
-          </Text>
-        </Text>
-      </TouchableOpacity>
-    );
-  }
-
   renderCamera() {
     return (
-        <TouchableOpacity
-          style={styles.cameraContainer}
-          onPress={()=>Actions.camera()}
-        >
+      <View style={styles.cameraContainer}>
+        <TouchableOpacity onPress={()=>Actions.camera()}>
           <Image
               style={styles.cameraImage}
-              source={require("./resources/camera.png")}
+              source={imgCameraButton}
           />
         </TouchableOpacity>
-    );
-  }
-
-  renderMyPageFooter() {
-    return (
-      <View style={styles.myPageBottomNavigationBar}>
-        {this.renderMyProfile()}
       </View>
     );
   }
 
   render() {
     if (this.state.myPage) {
-      return this.renderMyPageFooter();
+      return null;
     }
 
-    return (
-        <Animated.View style={[styles.bottomNavigationBar, {height: this.state.bottomTabHeight}]}>
-          {this.renderMyProfile()}
-          {this.renderCamera()}
-        </Animated.View>
-    );
+    return this.renderCamera();
   }
 }
 
