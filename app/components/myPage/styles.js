@@ -8,7 +8,7 @@ const HEIGHT = Dimensions.get('window').height;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FCFCFC',
+    backgroundColor: '#E5E5E5',
     flexDirection: 'column'
   },
   profileContainer: {
