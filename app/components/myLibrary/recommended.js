@@ -40,6 +40,10 @@ export default Relay.createContainer(Recommended, {
                           title
                           author
                           isbn
+                          thumbnail
+                          publisher
+                          publishedDate
+                          snippets
                       }
                   }
               }

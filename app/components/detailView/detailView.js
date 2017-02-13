@@ -26,11 +26,12 @@ const SORT_CONSTANT = {
 };
 
 export default class DetailView extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    const pages = this.props.bookInfo.snippets;
     this.state = {
-      dataSource: ds.cloneWithRows(['row 1', 'row 2']),
+      dataSource: ds.cloneWithRows(pages === null ? ['row'] : pages),
       modalVisible: false,
       currentSort: SORT_CONSTANT.RECENT
     };
@@ -86,16 +87,16 @@ export default class DetailView extends Component {
   renderTop() {
     return (
       <View style={[Styles.detailViewTopContainer, {backgroundColor: (this.props.viewSwitch) ? '#605C56' : '#fff'}]}>
-        <View style={Styles.detailViewTopTextContainer}>
+          <View style={Styles.detailViewTopTextContainer}>
           <View style={{flex: 153}}>
             <Text style={[Styles.textDetailViewTopTitle, {color: (this.props.viewSwitch) ? '#fff' : '#000'}]}>
-              Danish Architecture
+              {this.props.bookInfo.title}
             </Text>
             <Text style={[Styles.textDetailViewTopInfo, {color: (this.props.viewSwitch) ? '#e1e1e1' : '#484848'}]}>
-              by Kjeld Kindum, Kristoffer L. Weiss
+              by {this.props.bookInfo.author}
             </Text>
             <Text style={[Styles.textDetailViewTopInfo, {color: (this.props.viewSwitch) ? '#e1e1e1' : '#484848'}]}>
-              1st edition (2012)
+              {this.props.bookInfo.publishedDate}
             </Text>
           </View>
           <View style={Styles.detailViewTopRightCntContainer}>
@@ -111,22 +112,47 @@ export default class DetailView extends Component {
 
   renderBook() {
     return (
-      <View style={Styles.detailViewBookContainer}/>
+      this.props.bookInfo.thumbnail ?
+        <Image
+          style={Styles.detailViewBookContainer}
+          source={{uri: this.props.bookInfo.thumbnail}}/> :
+        <View style={Styles.detailViewBookContainer}/>
     );
   }
-
-  renderRow() {
+  
+  renderRow(rowData) {
+    console.log(rowData);
+    let prefix = [];
+    Object.keys(rowData).forEach((key) => {
+      if (rowData[key].previous === undefined) {
+        prefix.push(key);
+      }
+    });
+    let sentence = prefix[0];
+    let idx = 0;
+    let renderText = [];
+    //prefix.forEach((sentence) => {});
+    while (rowData[sentence].next !== undefined) {
+      renderText[idx] = {
+        fontSize: 22*(rowData[sentence].count/2),
+        text: sentence,
+      };
+      sentence = rowData[sentence].next;
+      idx++;
+    }
+    renderText[idx] = {
+      fontSize: 22*rowData[sentence].count,
+      text: sentence,
+    };
     return (
       <View style={Styles.detailViewSnippetContainer}>
         <View style={Styles.detailViewSnippetDateContainer}>
           <Text style={Styles.textDetailViewSnippetDate}>26 Oct 2016</Text>
         </View>
         <View style={Styles.detailViewSnippetSlideContainer}>
-          <Text style={Styles.textDetailViewSnippetSlide}>
-            A sunflower seed and a solar system are the same thing; they both are whole systems. I find it easier to
-            pay attention to the complexities of the smaller than to pay attention to the complexities of the larger.
-            That..
-          </Text>
+          {renderText.map((arr) =>
+            <Text style={{fontSize: arr.fontSize}}>{arr.text}</Text>
+          )}
         </View>
         <View style={{alignItems: 'flex-end', marginTop: 12, marginRight: 20}}>
           <Text style={Styles.textSnippetSlidePageNum}>P.102</Text>
@@ -184,7 +210,7 @@ export default class DetailView extends Component {
         <View style={Styles.detailViewBottomBottomContainer}>
           <ListView
             dataSource={this.state.dataSource}
-            renderRow={this.renderRow}
+            renderRow={this.renderRow.bind(this)}
             style={Styles.detailViewListView}
             contentContainerStyle={{alignItems: 'center'}}
             horizontal

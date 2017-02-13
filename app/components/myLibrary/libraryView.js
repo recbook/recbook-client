@@ -133,6 +133,7 @@ export default class LibraryView extends Component {
     let dataSource = [];
     for (let i = start; i < this.props.libraryList.length; i = i + 2) {
       dataSource.push({data: this.props.libraryList[i], color: this.state.initialBookColor[i]});
+      console.log(this.props.libraryList[i]);
     }
     return dataSource;
   }
