@@ -15,7 +15,7 @@ export default class FlipCardDetailView extends Component {
     prevScene: PropTypes.string,
     bookInfo: PropTypes.any
   };
-  
+
   handleSwitch() {
     this.setState({flip: !this.state.flip});
   }
