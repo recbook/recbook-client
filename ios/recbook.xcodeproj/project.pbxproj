@@ -31,7 +31,6 @@
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		9B520A450A92486E8AC6D93F /* libRCTCamera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F197E374CF7D442BA13D0205 /* libRCTCamera.a */; };
-		E9FE89721E519F1900430B76 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E9FE89711E519F1900430B76 /* Default-568h@2x.png */; };
 		F1EC595EF70F41C08D2AC771 /* libRNFS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1505338D12C4F2DB7DFD333 /* libRNFS.a */; };
 /* End PBXBuildFile section */
 
@@ -190,6 +189,20 @@
 			remoteGlobalIDString = 58B5119B1A9E6C1200147676;
 			remoteInfo = RCTText;
 		};
+		AAE15A941E320C5700CFF8F9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0FBE5855F8BB4A4197DA4238 /* RCTCamera.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4107012F1ACB723B00C6AA39;
+			remoteInfo = RCTCamera;
+		};
+		AAE15AA91E320C5800CFF8F9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D940329601354AA8A852AEC9 /* RNFS.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F12AFB9B1ADAF8F800E0535D;
+			remoteInfo = RNFS;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -202,6 +215,7 @@
 		00E356EE1AD99517003FC87E /* recbookTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = recbookTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* recbookTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = recbookTests.m; sourceTree = "<group>"; };
+		0FBE5855F8BB4A4197DA4238 /* RCTCamera.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTCamera.xcodeproj; path = "../node_modules/react-native-camera/ios/RCTCamera.xcodeproj"; sourceTree = "<group>"; };
 		139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSettings.xcodeproj; path = "../node_modules/react-native/Libraries/Settings/RCTSettings.xcodeproj"; sourceTree = "<group>"; };
 		139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWebSocket.xcodeproj; path = "../node_modules/react-native/Libraries/WebSocket/RCTWebSocket.xcodeproj"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* recbook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = recbook.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -224,7 +238,6 @@
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		CC9127CF67F84901852B713D /* RNFS.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNFS.xcodeproj; path = "../node_modules/react-native-fs/RNFS.xcodeproj"; sourceTree = "<group>"; };
 		E1505338D12C4F2DB7DFD333 /* libRNFS.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNFS.a; sourceTree = "<group>"; };
-		E9FE89711E519F1900430B76 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		F197E374CF7D442BA13D0205 /* libRCTCamera.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTCamera.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -241,6 +254,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA8BB1951E321665001585AE /* libRNFS.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
@@ -439,7 +453,6 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				E9FE89711E519F1900430B76 /* Default-568h@2x.png */,
 				176090571E2386B30023E332 /* Resource */,
 				13B07FAE1A68108700A75B9A /* recbook */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
@@ -455,6 +468,22 @@
 			children = (
 				13B07F961A680F5B00A75B9A /* recbook.app */,
 				00E356EE1AD99517003FC87E /* recbookTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AAE15A8E1E320C5700CFF8F9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AAE15A951E320C5700CFF8F9 /* libRCTCamera.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AAE15AA61E320C5700CFF8F9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AAE15AAA1E320C5800CFF8F9 /* libRNFS.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -753,7 +782,6 @@
 			files = (
 				176090631E2386C40023E332 /* calibriz.ttf in Resources */,
 				176090611E2386C40023E332 /* calibril.ttf in Resources */,
-				E9FE89721E519F1900430B76 /* Default-568h@2x.png in Resources */,
 				176090601E2386C40023E332 /* calibrii.ttf in Resources */,
 				1760905F1E2386C40023E332 /* calibrib.ttf in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
@@ -762,6 +790,20 @@
 				176090621E2386C40023E332 /* calibrili.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AAE15A951E320C5700CFF8F9 /* libRCTCamera.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTCamera.a;
+			remoteRef = AAE15A941E320C5700CFF8F9 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AAE15AAA1E320C5800CFF8F9 /* libRNFS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNFS.a;
+			remoteRef = AAE15AA91E320C5800CFF8F9 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXResourcesBuildPhase section */
 
@@ -903,7 +945,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.recbook.recbook;
 				PRODUCT_NAME = recbook;
-				SDKROOT = iphoneos10.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -932,7 +973,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.recbook.recbook;
 				PRODUCT_NAME = recbook;
-				SDKROOT = iphoneos10.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
