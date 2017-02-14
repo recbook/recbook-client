@@ -4,8 +4,8 @@ import {
 } from 'react-native';
 import { HEADER_HEIGHT, STATUSBAR_HEIGHT } from './../../shared/styles';
 
-export const WIDTH = Dimensions.get('window').width;
-export const HEIGHT = Dimensions.get('window').height;
+const WIDTH = Dimensions.get('window').width;
+const HEIGHT = Dimensions.get('window').height;
 
 const styles = StyleSheet.create({
   detailViewHeaderContainer: {
