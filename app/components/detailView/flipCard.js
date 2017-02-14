@@ -15,7 +15,7 @@ export default class FlipCardDetailView extends Component {
     prevScene: PropTypes.string,
     bookInfo: PropTypes.any
   };
-
+  
   handleSwitch() {
     this.setState({flip: !this.state.flip});
   }
@@ -32,13 +32,13 @@ export default class FlipCardDetailView extends Component {
           clickable={false}
         >
           <DetailView
-            viewSwitch={false}
+            viewOthers={false}
             prevScene={this.props.prevScene}
             handleSwitch={this.handleSwitch.bind(this)}
             bookInfo={this.props.bookInfo}
           />
           <DetailView
-            viewSwitch={true}
+            viewOthers={true}
             prevScene={this.props.prevScene}
             handleSwitch={this.handleSwitch.bind(this)}
             bookInfo={this.props.bookInfo}
@@ -48,18 +48,33 @@ export default class FlipCardDetailView extends Component {
     }
     else if (this.props.prevScene === SCENE_CONSTANT.SAVED) {
       return (
-        <DetailView
-          viewSwitch={true}
-          prevScene={this.props.prevScene}
-          handleSwitch={()=>{}}
-          bookInfo={this.props.bookInfo}
-        />
+        <FlipCard
+          flip={this.state.flip}
+          flipHorizontal={true}
+          flipVertical={false}
+          friction={10}
+          style={{flex: 1, borderWidth: 0}}
+          clickable={false}
+        >
+          <DetailView
+            viewOthers={true}
+            prevScene={this.props.prevScene}
+            handleSwitch={this.handleSwitch.bind(this)}
+            bookInfo={this.props.bookInfo}
+          />
+          <DetailView
+            viewOthers={false}
+            prevScene={this.props.prevScene}
+            handleSwitch={this.handleSwitch.bind(this)}
+            bookInfo={this.props.bookInfo}
+          />
+        </FlipCard>
       )
     }
     else {
       return (
         <DetailView
-          viewSwitch={false}
+          viewOthers={false}
           prevScene={this.props.prevScene}
           handleSwitch={()=>{}}
           bookInfo={this.props.bookInfo}

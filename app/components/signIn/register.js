@@ -96,6 +96,11 @@ class Register extends Component {
         >
           <Text style={Styles.signInButton}>SignIn</Text>
         </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => Actions.login()}
+        >
+          <Text style={Styles.signInButton}>Already have account? SignIn</Text>
+        </TouchableOpacity>
       </View>
     );
   }

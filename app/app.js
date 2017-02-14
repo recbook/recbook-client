@@ -62,7 +62,7 @@ export default class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      viewSwitch: true,
+      viewOthers: true,
       modalVisible: false,
       currentScene: SCENE_CONSTANT.MY_LIBRARY
     };
@@ -128,6 +128,12 @@ export default class App extends React.Component {
       let { sceneKey } = route;
       return (
         <View style={Styles.navBarButtonContainer}>
+          <TouchableOpacity onPress={() => {Actions.get('drawer').ref.toggle()}}>
+            <Image
+              style={Styles.drawerButton}
+              source={require("./resources/mypage.png")}
+            />
+          </TouchableOpacity>
           <TouchableOpacity
             style={Styles.dropDownButtonContainer}
             onPress={() => {
@@ -144,14 +150,14 @@ export default class App extends React.Component {
           <TouchableOpacity
             style={Styles.changeButton}
             onPress={() => {
-              this.setState({viewSwitch: !this.state.viewSwitch});
-              (this.state.viewSwitch) ? Actions.snippet() : Actions.myLibrary();
+              this.setState({viewOthers: !this.state.viewOthers});
+              (this.state.viewOthers) ? Actions.snippet() : Actions.myLibrary();
             }}
             activeOpacity={1}
           >
             <Image
               style={Styles.changeImage}
-              source={(this.state.viewSwitch) ? imgViewChange01 : imgViewChange02}
+              source={(this.state.viewOthers) ? imgViewChange02 : imgViewChange01}
             />
           </TouchableOpacity>
           <TouchableOpacity
@@ -181,14 +187,14 @@ export default class App extends React.Component {
             <TouchableOpacity
               style={Styles.changeButton}
               onPress={() => {
-                this.setState({viewSwitch: !this.state.viewSwitch});
-                (this.state.viewSwitch) ? Actions.snippet() : Actions.pop();
+                this.setState({viewOthers: !this.state.viewOthers});
+                (this.state.viewOthers) ? Actions.snippet() : Actions.pop();
               }}
               activeOpacity={1}
             >
               <Image
                 style={Styles.changeImage}
-                source={(this.state.viewSwitch) ? imgViewChange01 : imgViewChange02}
+                source={(this.state.viewOthers) ? imgViewChange01 : imgViewChange02}
               />
             </TouchableOpacity>
           }

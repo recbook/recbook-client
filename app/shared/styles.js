@@ -51,13 +51,19 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     top: 10 // eslint-disable-line todo: change magic num 10 to relative value
   },
+  drawerButton: {
+    marginLeft: 20,
+    width: 20,
+    height: 20,
+    backgroundColor: 'transparent'
+  },
   dropDownButtonContainer: {
     width: 150,
     height: 25,
     flexDirection: 'row',
     backgroundColor: 'transparent',
     marginLeft: 30,
-    marginRight: 120
+    marginRight: 80
   },
   dropDownText: {
     color: '#6F6F6F',

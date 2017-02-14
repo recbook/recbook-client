@@ -44,6 +44,7 @@ export default Relay.createContainer(Recommended, {
                           publisher
                           publishedDate
                           snippets
+                          isSaved
                       }
                   }
               }

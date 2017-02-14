@@ -41,6 +41,9 @@ export default Relay.createContainer(MyLibrary, {
                           isbn
                           thumbnail
                           publisher
+                          publishedDate
+                          snippets
+                          isSaved
                       }
                   }
               }
