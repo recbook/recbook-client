@@ -116,15 +116,20 @@ export default class LibraryView extends Component {
             <View style={[Styles.bookContainer, {backgroundColor: content.color}]}/>
           }
           <View style={Styles.textContainerTitle}>
-            <Text style={Styles.textBookTitle}>BOOK{'\n'}{node.title}</Text>
+            <Text style={Styles.textBookTitle}>{node.title}</Text>
             <View style={Styles.snippetCountContainer}>
-              <View style={Styles.snippetCountBox}>
-                <Text style={Styles.textSnippetCount}>11</Text>
-              </View>
+              {(this.props.prevScene) === 'Recommended' ? null :
+                <View style={Styles.snippetCountBox}>
+                  <Text style={Styles.textSnippetCount}>{node.mySnippets.length}</Text>
+                </View>
+              }
             </View>
           </View>
           <View style={Styles.textContainerInfo}>
-            <Text style={Styles.textBookInfo}>author: {node.author} bibbid vav sust reandsaf asdf lkdasdfas kds</Text>
+            <Text style={Styles.textBookInfo}>by {node.author}</Text>
+            <Text style={Styles.textBookInfo}>
+              ({node.publishedDate ? node.publishedDate.substring(0,4) : ''})
+            </Text>
           </View>
         </TouchableOpacity>
       </Animated.View>
