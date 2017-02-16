@@ -49,6 +49,7 @@ export default Relay.createContainer(Recommended, {
                               id
                               contents
                               page
+                              createdDate
                           }
                       }
                   }

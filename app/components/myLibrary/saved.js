@@ -45,6 +45,7 @@ export default Relay.createContainer(Saved, {
                               id
                               contents
                               page
+                              createdDate
                           }
                       }
                   }

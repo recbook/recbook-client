@@ -48,6 +48,7 @@ export default Relay.createContainer(MyLibrary, {
                               id
                               contents
                               page
+                              createdDate
                           }
                       }
                   }

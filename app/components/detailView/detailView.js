@@ -101,9 +101,11 @@ export default class DetailView extends Component {
             </Text>
           </View>
           <View style={Styles.detailViewTopRightCntContainer}>
-            {(this.props.viewOthers) ? null :
+            {(!this.props.viewOthers) ? null :
               <View style={Styles.detailViewTopRightCntBox}>
-                <Text style={Styles.textDetailViewTopRightCnt}>11</Text>
+                <Text style={Styles.textDetailViewTopRightCnt}>
+                  {this.props.bookInfo.mySnippets.length}
+                </Text>
               </View>}
           </View>
         </View>
@@ -191,9 +193,6 @@ export default class DetailView extends Component {
       return (
         <View style={Styles.detailViewSnippetContainer}>
           <View style={Styles.detailViewSnippetSlideContainer}>
-            <View style={Styles.detailViewSnippetDateContainer}>
-              <Text style={Styles.textDetailViewSnippetDate}>date</Text>
-            </View>
             <Text
               numberOfLines={5}
               onPress={() => this.handleOnPressContentsTransition(rowData)}
@@ -203,7 +202,10 @@ export default class DetailView extends Component {
             </Text>
           </View>
           <View style={Styles.detailViewBottom}>
-            <Text style={Styles.textSnippetSlidePageNum}>p.{rowData.page}</Text>
+            <View style={Styles.detailViewSnippetDateContainer}>
+              <Text style={Styles.textDetailViewSnippetDate}>{rowData.createdDate}</Text>
+              <Text style={Styles.textSnippetSlidePageNum}>p.{rowData.page}</Text>
+            </View>
             <View style={Styles.borderBottomLine}/>
             <View style={{marginBottom: 20, marginLeft: 20}}>
               <Image

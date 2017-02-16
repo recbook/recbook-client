@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
   },
   detailViewBottom: {
     alignItems: 'flex-end',
-    width: WIDTH * 300 / 376,
+    width: WIDTH * 320 / 376,
     height: HEIGHT * 132 / 667,
   },
   detailViewBottomContainer: {
@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: 'Calibri',
     color: '#929292',
-    textAlign: 'right',
+    textAlign: 'left',
   },
   textDetailViewSnippetSlide: {
     fontSize: 22,
@@ -175,7 +175,7 @@ const styles = StyleSheet.create({
   textSnippetSlidePageNum: {
     fontSize: 14,
     fontFamily: 'Calibri',
-    color: '#929292'
+    color: '#929292',
   },
   borderBottomLine: {
     borderBottomWidth: 10,
