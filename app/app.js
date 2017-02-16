@@ -19,6 +19,7 @@ import Crop from './components/camera/crop';
 import FlipCardDetailView from './components/detailView/flipCard';
 import Expanded from './components/expanded/expanded';
 import SearchBar from './components/search/search';
+import FirstPage from './components/signIn/first';
 import Register from './components/signIn/register';
 import Login from './components/signIn/login';
 
@@ -219,6 +220,12 @@ export default class App extends React.Component {
             navigationBarStyle={Styles.navBar}
             hideNavBar={true}
           >
+            <Scene
+              key="first"
+              component={FirstPage}
+              hideNavBar={true}
+              type="replace"
+            />
             <Scene
               key="register"
               component={Register}

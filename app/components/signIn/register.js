@@ -2,20 +2,22 @@ import React, { Component } from 'react';
 import {
   Alert,
   AsyncStorage,
-  View,
+  Image,
   Text,
   TextInput,
-  TouchableOpacity
+  TouchableOpacity,
+  View
 } from 'react-native';
 import Styles from './styles';
 import * as Auth from './auth';
 import * as App from '../../app';
 import { Actions } from 'react-native-router-flux';
 
+import imgLogo from '../../resources/splash_logo_new.png';
+
 class Register extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       registerEmail: undefined,
       registerUserName: undefined,
@@ -38,6 +40,8 @@ class Register extends Component {
       .then((authToken) => {
         if (authToken) {
           Actions.myLibrary();
+        } else {
+          Actions.first();
         }
       })
       .catch(err => {
@@ -75,31 +79,48 @@ class Register extends Component {
   render() {
     return (
       <View style={Styles.container}>
-        <TextInput
-          style={Styles.emailTextInput}
-          placeholder="Email"
-          onChangeText={this.handleRegisterEmail.bind(this)}
+        <Image
+          style={Styles.registerLogoImage}
+          source={imgLogo}
         />
-        <TextInput
-          style={Styles.nameTextInput}
-          placeholder="Name"
-          onChangeText={this.handleRegisterUserName.bind(this)}
-        />
-        <TextInput
-          style={Styles.passwordTextInput}
-          placeholder="Password"
-          onChangeText={this.handleRegisterPassword.bind(this)}
-          secureTextEntry={true}
-        />
+        <View style={Styles.textInputContainer}>
+          <Text style={Styles.inputTextTitle}>NAME</Text>
+          <TextInput
+            style={Styles.nameTextInput}
+            autoCapitalize="none"
+            autoFocus={true}
+            onChangeText={this.handleRegisterUserName.bind(this)}
+          />
+        </View>
+        <View style={Styles.textInputContainer}>
+          <Text style={Styles.inputTextTitle}>E-MAIL</Text>
+          <TextInput
+            style={Styles.emailTextInput}
+            autoCapitalize="none"
+            keyboardType="email-address"
+            onChangeText={this.handleRegisterEmail.bind(this)}
+          />
+        </View>
+        <View style={Styles.textInputContainer}>
+          <Text style={Styles.inputTextTitle}>PASSWORD</Text>
+          <TextInput
+            style={Styles.passwordTextInput}
+            autoCapitalize="none"
+            onChangeText={this.handleRegisterPassword.bind(this)}
+            secureTextEntry={true}
+          />
+        </View>
         <TouchableOpacity
+          style={Styles.signUpButtonContainer}
           onPress={() => this.registerUser()}
         >
-          <Text style={Styles.signInButton}>SignIn</Text>
+          <Text style={Styles.signUpButtonText}>SIGN UP</Text>
         </TouchableOpacity>
         <TouchableOpacity
+          style={Styles.returnButtonContainer}
           onPress={() => Actions.login()}
         >
-          <Text style={Styles.signInButton}>Already have account? SignIn</Text>
+          <Text style={Styles.returnButtonText}>Return to Log in</Text>
         </TouchableOpacity>
       </View>
     );
