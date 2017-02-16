@@ -32,13 +32,13 @@ export default class FlipCardDetailView extends Component {
           clickable={false}
         >
           <DetailView
-            viewOthers={false}
+            viewOthers={true}
             prevScene={this.props.prevScene}
             handleSwitch={this.handleSwitch.bind(this)}
             bookInfo={this.props.bookInfo}
           />
           <DetailView
-            viewOthers={true}
+            viewOthers={false}
             prevScene={this.props.prevScene}
             handleSwitch={this.handleSwitch.bind(this)}
             bookInfo={this.props.bookInfo}

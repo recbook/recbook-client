@@ -30,11 +30,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff'
   },
   detailViewBottom: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    width: WIDTH * 328 / 376,
-    height: 100
+    alignItems: 'flex-end',
+    width: WIDTH * 300 / 376,
+    height: HEIGHT * 132 / 667,
   },
   detailViewBottomContainer: {
     height: HEIGHT * (667 - 201) / 667,
@@ -110,7 +108,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderWidth: 1,
     borderRadius: 4,
-    flexDirection: 'column'
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    flex: 1,
   },
   detailViewSnippetContainerWithOutSnippet: {
     height: HEIGHT * 359 / 376,
@@ -120,14 +120,14 @@ const styles = StyleSheet.create({
   },
   detailViewSnippetDateContainer: {
     height: HEIGHT * 37 / 667,
-    justifyContent: 'flex-end',
     alignItems: 'flex-end',
     marginRight: WIDTH * 20 / 376
   },
   detailViewSnippetSlideContainer: {
     paddingTop: 20,
     paddingRight: 19,
-    marginLeft: 19
+    marginLeft: 19,
+    alignItems: 'flex-start'
   },
   textDetailViewTopTitle: {
     fontSize: 28,
@@ -156,7 +156,8 @@ const styles = StyleSheet.create({
   textDetailViewSnippetDate: {
     fontSize: 14,
     fontFamily: 'Calibri',
-    color: '#929292'
+    color: '#929292',
+    textAlign: 'right',
   },
   textDetailViewSnippetSlide: {
     fontSize: 22,
@@ -175,6 +176,13 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: 'Calibri',
     color: '#929292'
+  },
+  borderBottomLine: {
+    borderBottomWidth: 10,
+    borderColor: '#dadada',
+    marginBottom: 6,
+    marginRight: 20,
+    marginLeft: 20
   },
   detailViewDropDown: {
     height: HEIGHT * 0.254,

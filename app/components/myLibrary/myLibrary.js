@@ -44,6 +44,11 @@ export default Relay.createContainer(MyLibrary, {
                           publishedDate
                           snippets
                           isSaved
+                          mySnippets {
+                              id
+                              contents
+                              page
+                          }
                       }
                   }
               }

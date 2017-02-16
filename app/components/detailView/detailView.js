@@ -4,7 +4,7 @@ import {
   TouchableOpacity,
   View,
   Image,
-  ListView
+  ListView,
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Styles from './styles';
@@ -13,7 +13,6 @@ import { save } from './../../mutations/save';
 import imgJump from './../../resources/jump.png';
 import imgMediaShown from './../../resources/media shown.png';
 import imgBack from './../../resources/backDetail.png';
-import imgDropdown from './../../resources/dropdown.png';
 import imgBookmarked from './../../resources/bookmark_selected.png';
 import imgUnBookmarked from './../../resources/bookmark.png';
 import Footer from '../../footer';
@@ -31,8 +30,10 @@ export default class DetailView extends Component {
     super(props);
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     const pages = this.props.bookInfo.snippets;
+    const snippets = this.props.bookInfo.mySnippets;
     this.state = {
-      dataSource: ds.cloneWithRows(pages === null ? [''] : pages),
+      dataSourceOtherSnippets: ds.cloneWithRows(pages === null ? [''] : pages),
+      dataSourceMySnippets: ds.cloneWithRows(snippets.length === 0 ? [''] : snippets),
       currentSort: SORT_CONSTANT.RECENT
     };
   }
@@ -100,7 +101,7 @@ export default class DetailView extends Component {
             </Text>
           </View>
           <View style={Styles.detailViewTopRightCntContainer}>
-            {!(this.props.viewOthers) ? null :
+            {(this.props.viewOthers) ? null :
               <View style={Styles.detailViewTopRightCntBox}>
                 <Text style={Styles.textDetailViewTopRightCnt}>11</Text>
               </View>}
@@ -120,10 +121,14 @@ export default class DetailView extends Component {
     );
   }
   
+  handleOnPressContentsTransition(data) {
+    Actions.expanded({data: data, viewOthers: this.props.viewOthers});
+  }
+  
   renderRow(rowData) {
     if (rowData === '') {
       return (
-        <View>
+        <View style={{flex: 1}}>
           <View style={Styles.detailViewSnippetContainerWithOutSnippet}>
             <Text style={Styles.textDetailViewSnippetSlideWithOutSnippets}>
               No snippet yet.{'\n'}
@@ -136,55 +141,86 @@ export default class DetailView extends Component {
         </View>
       );
     }
-    let prefix = [];
-    Object.keys(rowData).forEach((key) => {
-      if (rowData[key].previous === undefined) {
-        prefix.push(key);
+    else if (!this.props.viewOthers) {
+      let prefix = [];
+      Object.keys(rowData).forEach((key) => {
+        if (rowData[key].previous === undefined) {
+          prefix.push(key);
+        }
+      });
+      let sentence = prefix[0];
+      let idx = 0;
+      let renderText = [];
+  
+      // TODO: Need to iterate prefix array.
+      while (rowData[sentence].next !== undefined) {
+        renderText[idx] = {
+          fontWeight: this.calculateWeight(rowData[sentence].count),
+          text: sentence,
+        };
+        sentence = rowData[sentence].next;
+        idx++;
       }
-    });
-    let sentence = prefix[0];
-    let idx = 0;
-    let renderText = [];
-    
-    // TODO: Need to iterate prefix array.
-    while (rowData[sentence].next !== undefined) {
       renderText[idx] = {
-        fontSize: 22*(rowData[sentence].count/2),
+        fontWeight: this.calculateWeight(rowData[sentence].count),
         text: sentence,
       };
-      sentence = rowData[sentence].next;
-      idx++;
-    }
-    renderText[idx] = {
-      fontSize: 22*rowData[sentence].count,
-      text: sentence,
-    };
-    return (
-      <View style={Styles.detailViewSnippetContainer}>
-        <View style={Styles.detailViewSnippetDateContainer}>
-          {(this.props.viewOthers) ?
-            <Text style={Styles.textDetailViewSnippetDate}>26 Oct 2016</Text> : null}
-        </View>
-        <View style={Styles.detailViewSnippetSlideContainer}>
-          <Text style={Styles.textDetailViewSnippetSlide}>
-            {renderText.map((arr) => arr.text + ". ")}
-          </Text>
-        </View>
-        <View style={Styles.detailViewBottom}>
-          <View style={{alignItems: 'flex-end', marginBottom: 12, marginRight: 20}}>
-            <Text style={Styles.textSnippetSlidePageNum}>P.102</Text>
+      return (
+        <View style={Styles.detailViewSnippetContainer}>
+          <View style={Styles.detailViewSnippetSlideContainer}>
+            <Text
+              numberOfLines={5}
+              onPress={() => this.handleOnPressContentsTransition(rowData)}
+              ellipsizeMode='tail'>
+              {renderText.map((arr) =>
+                <Text
+                  style={[Styles.textDetailViewSnippetSlide, {fontWeight: (arr.fontWeight)}]}>
+                  {arr.text}{'. '}
+                </Text>
+              )}
+            </Text>
           </View>
-          <View
-            style={{borderBottomWidth: 1, borderColor: '#dadada', marginBottom: 6, marginRight: 20, marginLeft: 20}}/>
-          {(this.props.viewOthers) ?
+          <View style={Styles.detailViewBottom}>
+            <Text style={Styles.textSnippetSlidePageNum}>P.102</Text>
+            <View
+              style={{borderBottomWidth: 1, borderColor: 'red', marginBottom: 6, marginRight: 20, marginLeft: 20}}/>
+          </View>
+        </View>
+      );
+    } else {
+      return (
+        <View style={Styles.detailViewSnippetContainer}>
+          <View style={Styles.detailViewSnippetSlideContainer}>
+            <View style={Styles.detailViewSnippetDateContainer}>
+              <Text style={Styles.textDetailViewSnippetDate}>date</Text>
+            </View>
+            <Text
+              numberOfLines={5}
+              onPress={() => this.handleOnPressContentsTransition(rowData)}
+              ellipsizeMode='tail'
+              style={Styles.textDetailViewSnippetSlide}>
+              {rowData.contents}
+            </Text>
+          </View>
+          <View style={Styles.detailViewBottom}>
+            <Text style={Styles.textSnippetSlidePageNum}>p.{rowData.page}</Text>
+            <View style={Styles.borderBottomLine}/>
             <View style={{marginBottom: 20, marginLeft: 20}}>
               <Image
                 source={require('./../../resources/originalImg.png')}
               />
-            </View> : null}
+            </View>
+          </View>
         </View>
-      </View>
-    );
+      );
+    }
+  }
+  
+  calculateWeight(count) {
+    const weight = [
+      '100', '200', '300', '400', '500', '600', '700', '800', '900'
+    ];
+    return (count > weight.length ? weight[weight.length - 1] : weight[count - 1]);
   }
 
   renderBottom() {
@@ -220,13 +256,22 @@ export default class DetailView extends Component {
           <View style={{flex: 24}}/>
         </View>
         <View style={Styles.detailViewBottomBottomContainer}>
-          <ListView
-            dataSource={this.state.dataSource}
-            renderRow={this.renderRow.bind(this)}
-            style={Styles.detailViewListView}
-            contentContainerStyle={{alignItems: 'center'}}
-            horizontal
-          />
+          {!(this.props.viewOthers) ?
+            <ListView
+              dataSource={this.state.dataSourceOtherSnippets}
+              renderRow={this.renderRow.bind(this)}
+              style={Styles.detailViewListView}
+              contentContainerStyle={{alignItems: 'center'}}
+              horizontal
+            /> :
+            <ListView
+              dataSource={this.state.dataSourceMySnippets}
+              renderRow={this.renderRow.bind(this)}
+              style={Styles.detailViewListView}
+              contentContainerStyle={{alignItems: 'center'}}
+              horizontal
+            />
+          }
         </View>
       </View>
     );

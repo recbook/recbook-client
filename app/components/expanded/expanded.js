@@ -25,9 +25,11 @@ const PRESSED_CONSTANT = {
 };
 
 export default class Expanded extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
+      viewOthers: this.props.viewOthers,
+      data: this.props.data,
       onScrollcontentOffsetY: 0,
       pressed: undefined
     };
@@ -71,7 +73,8 @@ export default class Expanded extends Component {
             source={imgXBtn}
           />
         </TouchableOpacity>
-        <Text style={Styles.textExpandedHeaderSave}>Save</Text>
+        {(this.props.viewOthers) ?
+          <Text style={Styles.textExpandedHeaderSave}>Edit</Text> : null}
       </Animated.View>
       <View style={{
         paddingTop: 83.5,
@@ -83,10 +86,14 @@ export default class Expanded extends Component {
           scrollEventThrottle={16}
         >
           <Text style={Styles.textExpandedContent}>
-            " A sunflower seed and a solar system are the same thing; they both are whole systems. I find it easier to
-            pay attention to the complexities of the smaller than to pay attention to the complexities of the larger.
-            That, as much as anything, is why I'm a craftsman. It's a small discipline, but you can put an awful lot
-            into it."{'\n'}ADAM SMITH, KNIFEMAKER
+            {(this.props.viewOthers) ?
+              this.state.data.contents :
+            "A sunflower seed and a solar system are the same thing;" +
+            " they both are whole systems. I find it easier to pay attention" +
+            " to the complexities of the smaller than to pay attention to the" +
+            " complexities of the larger. That, as much as anything, is why I'm a craftsman." +
+            " It's a small discipline, but you can put an awful lot into it.{'\n'}ADAM SMITH, KNIFEMAKER"
+            }
           </Text>
         </ScrollView>
       </View>

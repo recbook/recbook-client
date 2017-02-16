@@ -118,9 +118,11 @@ export default class LibraryView extends Component {
           <View style={Styles.textContainerTitle}>
             <Text style={Styles.textBookTitle}>{node.title}</Text>
             <View style={Styles.snippetCountContainer}>
-              <View style={Styles.snippetCountBox}>
-                <Text style={Styles.textSnippetCount}>11</Text>
-              </View>
+              {(this.props.prevScene) === 'Recommended' ? null :
+                <View style={Styles.snippetCountBox}>
+                  <Text style={Styles.textSnippetCount}>{node.mySnippets.length}</Text>
+                </View>
+              }
             </View>
           </View>
           <View style={Styles.textContainerInfo}>
