@@ -28,7 +28,7 @@ export default class Expanded extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      viewOthers: this.props.viewOthers,
+      viewMyLibrary: this.props.viewMyLibrary,
       data: this.props.data,
       onScrollcontentOffsetY: 0,
       pressed: undefined
@@ -73,7 +73,7 @@ export default class Expanded extends Component {
             source={imgXBtn}
           />
         </TouchableOpacity>
-        {(this.props.viewOthers) ?
+        {(!this.props.viewMyLibrary) ?
           <Text style={Styles.textExpandedHeaderSave}>Edit</Text> : null}
       </Animated.View>
       <View style={{
@@ -86,7 +86,7 @@ export default class Expanded extends Component {
           scrollEventThrottle={16}
         >
           <Text style={Styles.textExpandedContent}>
-            {(this.props.viewOthers) ?
+            {(!this.props.viewMyLibrary) ?
               this.state.data.contents :
             "A sunflower seed and a solar system are the same thing;" +
             " they both are whole systems. I find it easier to pay attention" +

@@ -11,6 +11,7 @@ import {
 import { Actions } from 'react-native-router-flux';
 import Styles from './styles';
 import Footer from '../../footer';
+import emptyImg from './../../resources/Empty Library Img.png';
 
 const COLUMN_CONSTANT = {
   LEFT: 'left',
@@ -97,7 +98,7 @@ export default class LibraryView extends Component {
             backgroundColor: (this.state.onPressedBookIndex === index && this.state.onPressedColumn === col) ? color : 'white'
           }
         ]}
-        key={node.id}
+        key={index}
       >
         <TouchableOpacity
           style={Styles.row}
@@ -120,7 +121,7 @@ export default class LibraryView extends Component {
             <View style={Styles.snippetCountContainer}>
               {(this.props.prevScene) === 'Recommended' ? null :
                 <View style={Styles.snippetCountBox}>
-                  <Text style={Styles.textSnippetCount}>{node.mySnippets.length}</Text>
+                  <Text style={Styles.textSnippetCount}>{node.mySnippets.length || 0}</Text>
                 </View>
               }
             </View>
@@ -177,9 +178,15 @@ export default class LibraryView extends Component {
         <ScrollView
           scrollEventThrottle={16}
           onScroll={this.onScroll.bind(this)}
-          style={{flex: 1, marginTop: HEIGHT * 0.11}}
+          style={{
+            flex: 1,
+            marginTop: (this.props.prevScene) === 'Recommended' ? -20 : HEIGHT * 0.11}}
         >
           <View style={Styles.container}>
+            {(this.props.libraryList.length === 0) ?
+              <Image
+                source={emptyImg}
+                style={Styles.empty}/> : null}
             {this.renderLeftColumn()}
             {this.renderRightColumn()}
           </View>

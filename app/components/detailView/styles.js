@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
   detailViewBottom: {
     alignItems: 'flex-end',
     width: WIDTH * 320 / 376,
-    height: HEIGHT * 132 / 667,
+    height: HEIGHT * 30 / 667,
   },
   detailViewBottomContainer: {
     height: HEIGHT * (667 - 201) / 667,
@@ -113,14 +113,14 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   detailViewSnippetContainerWithOutSnippet: {
-    height: HEIGHT * 359 / 376,
+    height: HEIGHT * 300 / 376,
     width: WIDTH * 328 / 376,
     marginRight: WIDTH * 10 / 376,
     flexDirection: 'column'
   },
   detailViewSnippetDateContainer: {
-    height: HEIGHT * 37 / 667,
-    alignItems: 'flex-end',
+    width: WIDTH * 280 / 375,
+    height: HEIGHT * 20 / 667,
     marginRight: WIDTH * 20 / 376
   },
   detailViewSnippetSlideContainer: {
@@ -157,7 +157,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: 'Calibri',
     color: '#929292',
-    textAlign: 'left',
   },
   textDetailViewSnippetSlide: {
     fontSize: 22,
@@ -170,7 +169,8 @@ const styles = StyleSheet.create({
     height: HEIGHT * 359 / 376,
     color: '#FFF',
     fontFamily: 'Calibri',
-    bottom: -HEIGHT * 288 / 667 + 16,
+    bottom: -HEIGHT * 288 / 667,
+    marginLeft: 20
   },
   textSnippetSlidePageNum: {
     fontSize: 14,
@@ -178,9 +178,9 @@ const styles = StyleSheet.create({
     color: '#929292',
   },
   borderBottomLine: {
-    borderBottomWidth: 10,
+    borderBottomWidth: 1,
     borderColor: '#dadada',
-    marginBottom: 6,
+    marginBottom: 30,
     marginRight: 20,
     marginLeft: 20
   },

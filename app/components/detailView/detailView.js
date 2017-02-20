@@ -13,6 +13,7 @@ import { save } from './../../mutations/save';
 import imgJump from './../../resources/jump.png';
 import imgMediaShown from './../../resources/media shown.png';
 import imgBack from './../../resources/backDetail.png';
+import imgCancel from './../../resources/x btn _ white.png';
 import imgBookmarked from './../../resources/bookmark_selected.png';
 import imgUnBookmarked from './../../resources/bookmark.png';
 import Footer from '../../footer';
@@ -39,7 +40,7 @@ export default class DetailView extends Component {
   }
 
   static propTypes = {
-    viewOthers: PropTypes.bool,
+    viewMyLibrary: PropTypes.bool,
     handleSwitch: PropTypes.func,
     prevScene: PropTypes.string,
     bookInfo: PropTypes.any
@@ -60,10 +61,15 @@ export default class DetailView extends Component {
           onPress={() => Actions.pop()}
           activeOpacity={0.9}
         >
-          <Image
-            style={{height: 27, width: 15}}
-            source={imgBack}
-          />
+          {(prevScene === MY_LIBRARY) ?
+            <Image
+              style={{height: 27, width: 15}}
+              source={imgBack}
+            /> :
+            <Image
+              style={{height: 27, width: 27}}
+              source={imgCancel}
+            />}
         </TouchableOpacity>
         {(prevScene === MY_LIBRARY) ? null :
           <TouchableOpacity
@@ -87,26 +93,26 @@ export default class DetailView extends Component {
 
   renderTop() {
     return (
-      <View style={[Styles.detailViewTopContainer, {backgroundColor: !(this.props.viewOthers) ? '#605C56' : '#fff'}]}>
+      <View style={[Styles.detailViewTopContainer, {backgroundColor: (!this.props.viewMyLibrary) ? '#605C56' : '#fff'}]}>
           <View style={Styles.detailViewTopTextContainer}>
           <View style={{flex: 153}}>
-            <Text style={[Styles.textDetailViewTopTitle, {color: !(this.props.viewOthers) ? '#fff' : '#000'}]}>
+            <Text style={[Styles.textDetailViewTopTitle, {color: (!this.props.viewMyLibrary) ? '#fff' : '#000'}]}>
               {this.props.bookInfo.title}
             </Text>
-            <Text style={[Styles.textDetailViewTopInfo, {color: !(this.props.viewOthers) ? '#e1e1e1' : '#484848'}]}>
+            <Text style={[Styles.textDetailViewTopInfo, {color: (!this.props.viewMyLibrary) ? '#e1e1e1' : '#484848'}]}>
               by {this.props.bookInfo.author}
             </Text>
-            <Text style={[Styles.textDetailViewTopInfo, {color: !(this.props.viewOthers) ? '#e1e1e1' : '#484848'}]}>
+            <Text style={[Styles.textDetailViewTopInfo, {color: (!this.props.viewMyLibrary) ? '#e1e1e1' : '#484848'}]}>
               ({this.props.bookInfo.publishedDate ? this.props.bookInfo.publishedDate.substring(0,4) : ''})
             </Text>
           </View>
           <View style={Styles.detailViewTopRightCntContainer}>
-            {(!this.props.viewOthers) ? null :
+            {(this.props.viewMyLibrary) ?
               <View style={Styles.detailViewTopRightCntBox}>
                 <Text style={Styles.textDetailViewTopRightCnt}>
                   {this.props.bookInfo.mySnippets.length}
                 </Text>
-              </View>}
+              </View>: null}
           </View>
         </View>
       </View>
@@ -124,7 +130,7 @@ export default class DetailView extends Component {
   }
   
   handleOnPressContentsTransition(data) {
-    Actions.expanded({data: data, viewOthers: this.props.viewOthers});
+    Actions.expanded({data: data, viewMyLibrary: !this.props.viewMyLibrary});
   }
   
   renderRow(rowData) {
@@ -137,59 +143,13 @@ export default class DetailView extends Component {
               What about adding your own snippets?
             </Text>
           </View>
-          <View style={{position: 'absolute', bottom: 72, right: 24}}>
+          <View style={{position: 'absolute', bottom: 77, right: 34}}>
             <Footer />
           </View>
         </View>
       );
     }
-    else if (!this.props.viewOthers) {
-      let prefix = [];
-      Object.keys(rowData).forEach((key) => {
-        if (rowData[key].previous === undefined) {
-          prefix.push(key);
-        }
-      });
-      let sentence = prefix[0];
-      let idx = 0;
-      let renderText = [];
-  
-      // TODO: Need to iterate prefix array.
-      while (rowData[sentence].next !== undefined) {
-        renderText[idx] = {
-          fontWeight: this.calculateWeight(rowData[sentence].count),
-          text: sentence,
-        };
-        sentence = rowData[sentence].next;
-        idx++;
-      }
-      renderText[idx] = {
-        fontWeight: this.calculateWeight(rowData[sentence].count),
-        text: sentence,
-      };
-      return (
-        <View style={Styles.detailViewSnippetContainer}>
-          <View style={Styles.detailViewSnippetSlideContainer}>
-            <Text
-              numberOfLines={5}
-              onPress={() => this.handleOnPressContentsTransition(rowData)}
-              ellipsizeMode='tail'>
-              {renderText.map((arr) =>
-                <Text
-                  style={[Styles.textDetailViewSnippetSlide, {fontWeight: (arr.fontWeight)}]}>
-                  {arr.text}{'. '}
-                </Text>
-              )}
-            </Text>
-          </View>
-          <View style={Styles.detailViewBottom}>
-            <Text style={Styles.textSnippetSlidePageNum}>P.102</Text>
-            <View
-              style={{borderBottomWidth: 1, borderColor: 'red', marginBottom: 6, marginRight: 20, marginLeft: 20}}/>
-          </View>
-        </View>
-      );
-    } else {
+    else if (this.props.viewMyLibrary) {
       return (
         <View style={Styles.detailViewSnippetContainer}>
           <View style={Styles.detailViewSnippetSlideContainer}>
@@ -201,16 +161,77 @@ export default class DetailView extends Component {
               {rowData.contents}
             </Text>
           </View>
-          <View style={Styles.detailViewBottom}>
-            <View style={Styles.detailViewSnippetDateContainer}>
-              <Text style={Styles.textDetailViewSnippetDate}>{rowData.createdDate}</Text>
-              <Text style={Styles.textSnippetSlidePageNum}>p.{rowData.page}</Text>
+          <View>
+            <View style={Styles.detailViewBottom}>
+              <View style={Styles.detailViewSnippetDateContainer}>
+                <Text>
+                  <Text style={Styles.textDetailViewSnippetDate}>{rowData.createdDate}</Text>
+                  <Text style={{fontSize: 20}}>{'                                 '}</Text>
+                  <Text style={Styles.textSnippetSlidePageNum}>p.{rowData.page}</Text>
+                </Text>
+              </View>
             </View>
             <View style={Styles.borderBottomLine}/>
             <View style={{marginBottom: 20, marginLeft: 20}}>
               <Image
                 source={require('./../../resources/originalImg.png')}
               />
+            </View>
+          </View>
+        </View>
+      );
+    } else {
+      let prefix = [];
+      Object.keys(rowData).forEach((key) => {
+        if (rowData[key].previous === undefined) {
+          prefix.push(key);
+        }
+      });
+      let bundleIdx = 0;
+      let bundle = [];
+      while (bundleIdx !== prefix.length) {
+        let sentence = prefix[bundleIdx];
+        let idx = 0;
+        let renderText = [];
+        while (rowData[sentence].next !== undefined) {
+          renderText[idx] = {
+            fontWeight: this.calculateWeight(rowData[sentence].count),
+            text: sentence,
+            key: idx,
+          };
+          sentence = rowData[sentence].next;
+          idx++;
+        }
+        renderText[idx] = {
+          fontWeight: this.calculateWeight(rowData[sentence].count),
+          text: sentence,
+          key: idx,
+        };
+        bundle.push(renderText);
+        bundleIdx++;
+      }
+      return (
+        <View style={Styles.detailViewSnippetContainer}>
+          <View style={Styles.detailViewSnippetSlideContainer}>
+            <Text
+              numberOfLines={5}
+              onPress={() => this.handleOnPressContentsTransition(rowData)}
+              ellipsizeMode='tail'>
+              {bundle.map((renderText) => this.renderText(renderText))}
+            </Text>
+          </View>
+          <View>
+            <View style={Styles.detailViewBottom}>
+              <View style={Styles.detailViewSnippetDateContainer}>
+                <Text>
+                  <Text style={{fontSize: 20}}>{'                          '}</Text>
+                  <Text style={{fontSize: 20}}>{'                          '}</Text>
+                  <Text style={Styles.textSnippetSlidePageNum}>P.102</Text>
+                </Text>
+              </View>
+            </View>
+            <View style={Styles.borderBottomLine}/>
+            <View style={{marginBottom: 37, marginLeft: 20}}>
             </View>
           </View>
         </View>
@@ -224,7 +245,19 @@ export default class DetailView extends Component {
     ];
     return (count > weight.length ? weight[weight.length - 1] : weight[count - 1]);
   }
-
+  
+  renderText(array) {
+    return (
+      array.map((arr) =>
+        <Text
+          key={arr.key}
+          style={[Styles.textDetailViewSnippetSlide, {fontWeight: (arr.fontWeight)}]}>
+          {arr.text}{'. '}
+        </Text>
+      )
+    );
+  }
+  
   renderBottom() {
     return (
       <View style={Styles.detailViewBottomContainer}>
@@ -234,20 +267,22 @@ export default class DetailView extends Component {
               style={{flexDirection: 'row', justifyContent: 'flex-end'}}
               onPress={this.handleBtnViewOther.bind(this)}
             >
-              {(this.props.viewOthers) ?
+              {(this.props.viewMyLibrary) ?
                 <Text style={Styles.textDetailViewVisit}>
                   Visit Other's snippets
-                </Text> : (this.props.bookInfo.isSaved) ?
-                <Text style={Styles.textDetailViewVisit}>
-                  Go to my snippets
-                </Text> : null}
-              {(this.props.bookInfo.isSaved) ?
+                </Text> :
+                this.props.prevScene === 'Recommended' ? null :
+                  <Text style={Styles.textDetailViewVisit}>
+                    Go to my snippets
+                  </Text>
+              }
+              {this.props.prevScene === 'Recommended' ? null :
                 <Image
                   style={Styles.detailViewImgJump}
                   source={imgJump}
-                /> : null}
+                />}
             </TouchableOpacity>
-            {!(this.props.viewOthers) ? null :
+            {(this.props.viewMyLibrary) ? null :
               <View style={Styles.detailViewImgMediaShownContainer}>
                 <Image
                   style={{height: 18, width: 18, opacity: 0.4}}
@@ -258,16 +293,16 @@ export default class DetailView extends Component {
           <View style={{flex: 24}}/>
         </View>
         <View style={Styles.detailViewBottomBottomContainer}>
-          {!(this.props.viewOthers) ?
+          {(this.props.viewMyLibrary) ?
             <ListView
-              dataSource={this.state.dataSourceOtherSnippets}
+              dataSource={this.state.dataSourceMySnippets}
               renderRow={this.renderRow.bind(this)}
               style={Styles.detailViewListView}
               contentContainerStyle={{alignItems: 'center'}}
               horizontal
             /> :
             <ListView
-              dataSource={this.state.dataSourceMySnippets}
+              dataSource={this.state.dataSourceOtherSnippets}
               renderRow={this.renderRow.bind(this)}
               style={Styles.detailViewListView}
               contentContainerStyle={{alignItems: 'center'}}
@@ -281,7 +316,7 @@ export default class DetailView extends Component {
 
   render() {
     return (
-      <View style={{flex: 1, backgroundColor: !(this.props.viewOthers) ? '#605C56' : '#fff'}}>
+      <View style={{flex: 1, backgroundColor: (!this.props.viewMyLibrary) ? '#605C56' : '#fff'}}>
         {this.renderHeader()}
         <View style={Styles.detailViewMarginTop}/>
         {this.renderTop()}

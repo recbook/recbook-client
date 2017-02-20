@@ -8,13 +8,23 @@ import {
   Modal,
   Text
 } from 'react-native';
-import { Actions } from 'react-native-router-flux';
+import { Actions, ActionConst } from 'react-native-router-flux';
+import { SCENE_CONSTANT } from './../../app';
 import Styles from './styles';
+import LibraryView from '../myLibrary/libraryView';
+import { PropTypes } from 'react';
+import Relay from 'react-relay';
 
 import imgBackButton from '../../resources/back.png';
 import imgSearchButton from '../../resources/search.png';
 
 class Search extends Component {
+  static propTypes = {
+    user: PropTypes.object,
+    libraryList: PropTypes.any,
+    prevScene: PropTypes.string
+  };
+  
   constructor(props) {
     super(props);
 
@@ -23,7 +33,7 @@ class Search extends Component {
       count: 0
     };
   }
-
+  
   onChangeSearch(message) {
     this.setState({
       message: message
@@ -50,37 +60,91 @@ class Search extends Component {
 
   render() {
     return (
-      <Modal
+      <View
         animationType={"fade"}
         style={Styles.container}
       >
         <View style={Styles.searchBarContainer}>
-        <TouchableOpacity onPress={() => Actions.pop()}>
+        <TouchableOpacity onPress={() => Actions.myLibrary({type: ActionConst.POP_AND_REPLACE})}>
           <Image
             source={imgBackButton}
             style={Styles.backButton}
           />
         </TouchableOpacity>
-        <TextInput
-          style={Styles.searchBar}
-          underlineColorAndroid="transparent"
-          onChangeText={this.onChangeSearch.bind(this)}
-          placeholder="Search snippets, books"
-        />
+        <TouchableOpacity onPress={() => this.searchBook()}>
+          <TextInput
+            style={Styles.searchBar}
+            underlineColorAndroid="transparent"
+            onChangeText={this.onChangeSearch.bind(this)}
+            placeholder="        Search snippets, books"
+          >
+            {(this.state.message === ""
+            || this.state.message === undefined) ?
+            null :
+              <Image
+                source={imgSearchButton}
+                style={{
+                  width: 20,
+                  height: 20,
+                  marginTop: 12,
+                  marginRight: 10,
+                  opacity: 0.4
+                }}
+              />}
+          </TextInput>
+        </TouchableOpacity>
       </View>
         <View style={Styles.resultContainer}>
-        <Text style={Styles.resultText}>{this.state.count} result of {this.state.message}</Text>
-          <TouchableOpacity onPress={() => this.searchBook()}>
-            <Image
-              source={imgSearchButton}
-              style={Styles.backButton}
-            />
-          </TouchableOpacity>
+        <Text style={Styles.resultText}>
+          {this.props.prevScene === 'Recommended' ?
+            " " : "RECOMMENDED BOOKS "
+          }
+          {this.state.count} result of {this.state.message}
+        </Text>
         </View>
         <StatusBar hidden={true}/>
-      </Modal>
+        <View style={{flex: 1}}>
+          <LibraryView
+            libraryList={this.props.user.recommendedBooks.edges}
+            prevScene={SCENE_CONSTANT.RECOMMENDED}
+          />
+        </View>
+      </View>
     );
   }
 }
 
-export default Search;
+export default Relay.createContainer(Search, {
+  initialVariables: {
+    orderBy: null
+  },
+  fragments: {
+    user: () => {
+      return Relay.QL `
+          fragment on User {
+              recommendedBooks(first: 20) {
+                  edges{
+                      node {
+                          id
+                          title
+                          author
+                          isbn
+                          thumbnail
+                          publisher
+                          publishedDate
+                          snippets
+                          isSaved
+                          mySnippets {
+                              id
+                              contents
+                              page
+                              createdDate
+                          }
+                      }
+                  }
+              }
+          }
+      `;
+    }
+  }
+});
