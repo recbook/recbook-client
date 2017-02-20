@@ -24,7 +24,7 @@ class Search extends Component {
     libraryList: PropTypes.any,
     prevScene: PropTypes.string
   };
-  
+
   constructor(props) {
     super(props);
 
