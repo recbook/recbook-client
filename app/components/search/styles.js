@@ -34,13 +34,14 @@ const styles = StyleSheet.create({
     marginRight: 10
   },
   resultContainer: {
-    height: HEIGHT * 0.13,
+    height: HEIGHT * 0.08,
     justifyContent: 'center',
-    borderBottomWidth: 1,
+    borderBottomWidth: 0.5,
     borderBottomColor: '#ececec'
   },
   resultText: {
     fontSize: 15,
+    fontFamily: 'Calibri',
     marginLeft: WIDTH * 0.065
   }
 });
