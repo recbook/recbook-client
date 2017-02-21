@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
       }
     }),
     backgroundColor: '#fff',
-    borderBottomColor: '#fff',
+    borderBottomColor: '#fff'
   },
   navBarButtonContainer: {
     width: WIDTH,
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     height: 25,
     flexDirection: 'row',
     backgroundColor: 'transparent',
-    marginLeft: WIDTH * 10 / 375,
+    marginLeft: WIDTH * 10 / 375
   },
   dropDownText: {
     color: '#6F6F6F',
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     width: 20,
     height: 20,
     backgroundColor: 'transparent',
-    resizeMode: 'contain',
+    resizeMode: 'contain'
   },
   searchButton: {
     width: 20,
