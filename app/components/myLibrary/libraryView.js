@@ -6,7 +6,8 @@ import {
   Text,
   TouchableOpacity,
   View,
-  Image
+  Image,
+  PanResponder
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Styles from './styles';
@@ -51,6 +52,10 @@ export default class LibraryView extends Component {
     prevScene: PropTypes.string
   };
 
+  handlePanResponderRelease() {
+
+  }
+
   animateFadeRow() {
     Animated.sequence([
       Animated.timing(
@@ -82,20 +87,23 @@ export default class LibraryView extends Component {
   handleOnPressBookTransition(bookInfo) {
     // todo: implement scene transition on book press here
     Actions.detailView({prevScene: this.props.prevScene, bookInfo: bookInfo.node});
+    setTimeout(()=>{
+      this.setState({
+        onPressedBookIndex: undefined,
+        onPressedColumn: undefined
+      })
+    }, 800)
   }
 
   renderRow(content, index, col) {
-    const color = this.state.fadeAnimRow.interpolate({
-      inputRange: [0, 1],
-      outputRange: ['rgba(255, 255, 255, 1)', 'rgba(236, 236, 236, 1)']
-    });
     const { node } = content.data;
     return (
       <Animated.View
         style={[
           Styles.row,
           {
-            backgroundColor: (this.state.onPressedBookIndex === index && this.state.onPressedColumn === col) ? color : 'white'
+            backgroundColor: (this.state.onPressedBookIndex === index && this.state.onPressedColumn === col) ?
+              'rgba(236, 236, 236, 1)' : 'white'
           }
         ]}
         key={index}
