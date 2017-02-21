@@ -52,10 +52,6 @@ export default class LibraryView extends Component {
     prevScene: PropTypes.string
   };
 
-  handlePanResponderRelease() {
-
-  }
-
   animateFadeRow() {
     Animated.sequence([
       Animated.timing(
@@ -87,6 +83,7 @@ export default class LibraryView extends Component {
   handleOnPressBookTransition(bookInfo) {
     // todo: implement scene transition on book press here
     Actions.detailView({prevScene: this.props.prevScene, bookInfo: bookInfo.node});
+    // this changing the color back to white after transition animation is done
     setTimeout(()=>{
       this.setState({
         onPressedBookIndex: undefined,
