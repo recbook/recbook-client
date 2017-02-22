@@ -11,7 +11,6 @@ class MyPage extends Component {
 
   constructor(props) {
     super(props);
-
     this.state = {
       isDrawerOpen: false
     };
@@ -25,7 +24,7 @@ class MyPage extends Component {
     this.setState({isDrawerOpen: nextProps.open});
   }
 
-  render(){
+  render() {
     const state = this.props.navigationState;
     const children = state.children;
 
