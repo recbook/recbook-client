@@ -48,6 +48,8 @@
 		<string>calibril.ttf</string>
 		<string>calibrili.ttf</string>
 	</array>
+<key>UILaunchStoryboardName</key>
+<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>

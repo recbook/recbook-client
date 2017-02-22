@@ -73,14 +73,16 @@ export default class App extends React.Component {
       let { sceneKey } = route;
       return (
         <View style={Styles.navBarButtonContainer}>
-          <TouchableOpacity onPress={() => {
-            Actions.get('drawer').ref.toggle()
-          }}>
-            <Image
-              style={Styles.drawerButton}
-              source={require("./resources/mypage.png")}
-            />
-          </TouchableOpacity>
+          <View style={Styles.drawerContainer}>
+            <TouchableOpacity onPress={() => {
+              Actions.get('drawer').ref.toggle()
+            }}>
+              <Image
+                style={Styles.drawerButton}
+                source={require("./resources/mypage.png")}
+              />
+            </TouchableOpacity>
+          </View>
           {(sceneKey === 'detailView') ? null :
             <View style={Styles.dropDownButtonContainer}>
               <Text style={Styles.dropDownText}>My Library</Text>

@@ -46,10 +46,6 @@ const styles = StyleSheet.create({
     height: HEIGHT * 377 / 667
   },
   detailViewBookContainer: {
-    height: HEIGHT * 165 / 667,
-    width: WIDTH * 112 / 376,
-    borderRadius: 7,
-    alignSelf: 'center',
     shadowColor: '#000000',
     shadowOpacity: 0.3,
     shadowRadius: 3,
@@ -62,13 +58,20 @@ const styles = StyleSheet.create({
     top: HEADER_HEIGHT + STATUSBAR_HEIGHT,
     marginTop: 0.5,
     left: WIDTH * 38 / 376,
+    borderRadius: 7,
+  },
+  book: {
+    height: HEIGHT * 165 / 667,
+    width: WIDTH * 112 / 376,
+    borderRadius: 7,
+    alignSelf: 'center',
   },
   detailViewTopTextContainer: {
     backgroundColor: 'transparent',
     left: WIDTH * (38 + 14 + 112) / 376,
     width: WIDTH * 186 / 376,
     position: 'absolute',
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   detailViewTopRightCntContainer: {
     flex: 33,
@@ -115,7 +118,8 @@ const styles = StyleSheet.create({
   detailViewSnippetContainerWithOutSnippet: {
     height: HEIGHT * 300 / 376,
     width: WIDTH * 328 / 376,
-    marginRight: WIDTH * 10 / 376,
+    marginRight: WIDTH * 24 / 376,
+    marginLeft: - WIDTH * 14 / 376,
     flexDirection: 'column'
   },
   detailViewSnippetDateContainer: {
@@ -130,7 +134,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start'
   },
   textDetailViewTopTitle: {
-    fontSize: 28,
+    fontSize: 26,
     fontFamily: 'Calibri-bold',
     lineHeight: 21,
     paddingTop: 7
@@ -164,7 +168,8 @@ const styles = StyleSheet.create({
     color: '#000'
   },
   textDetailViewSnippetSlideWithOutSnippets: {
-    fontSize: 14,
+    fontSize: 17,
+    fontWeight: 'bold',
     width: WIDTH * 328 / 376,
     height: HEIGHT * 359 / 376,
     color: '#FFF',
