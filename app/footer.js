@@ -29,8 +29,8 @@ const styles = StyleSheet.create({
     }
   },
   cameraImage: {
-    width: HEIGHT * 0.074,
-    height: HEIGHT * 0.074,
+    width: HEIGHT * 0.08,
+    height: HEIGHT * 0.08,
     resizeMode: 'contain'
   }
 });

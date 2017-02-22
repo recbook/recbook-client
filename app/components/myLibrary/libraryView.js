@@ -103,21 +103,25 @@ export default class LibraryView extends Component {
             :
             <View style={[Styles.bookContainer, {backgroundColor: content.color}]}/>
           }
-          <View style={Styles.textContainerTitle}>
-            <Text style={Styles.textBookTitle}>{node.title}</Text>
-            <View style={Styles.snippetCountContainer}>
-              {(this.props.prevScene) === 'Recommended' ? null :
-                <View style={Styles.snippetCountBox}>
-                  <Text style={Styles.textSnippetCount}>{node.mySnippets.length || 0}</Text>
-                </View>
-              }
-            </View>
-          </View>
           <View style={Styles.textContainerInfo}>
-            <Text style={Styles.textBookInfo}>by {node.author}</Text>
-            <Text style={Styles.textBookInfo}>
-              ({node.publishedDate ? node.publishedDate.substring(0,4) : ''})
-            </Text>
+            <View style={Styles.textContainerTitle}>
+              <Text style={Styles.textBookTitle}
+                    numberOfLines={3}
+                    ellipsizeMode='tail'>
+                {node.title}
+              </Text>
+              <View style={Styles.snippetCountContainer}>
+                {(this.props.prevScene) === 'Recommended' ? null :
+                  <View style={Styles.snippetCountBox}>
+                    <Text style={Styles.textSnippetCount}>{node.mySnippets.length || 0}</Text>
+                  </View>
+                }
+              </View>
+            </View>
+            <View style={Styles.textContainerDetail}>
+              <Text style={Styles.textBookInfo}>by {node.author} ({node.publishedDate ? node.publishedDate.substring(0,4) : ''})
+              </Text>
+            </View>
           </View>
         </TouchableOpacity>
       </Animated.View>
@@ -167,7 +171,7 @@ export default class LibraryView extends Component {
           onScroll={this.onScroll.bind(this)}
           style={{
             flex: 1,
-            marginTop: (this.props.prevScene) === 'Recommended' ? -20 : HEIGHT * 0.11}}
+            marginTop: (this.props.prevScene) === 'Recommended' ? -20 : HEIGHT * 0.125}}
         >
           <View style={Styles.container}>
             {(this.props.libraryList.length === 0) ?

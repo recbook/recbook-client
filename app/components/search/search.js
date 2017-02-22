@@ -80,7 +80,6 @@ class Search extends Component {
           >
             {(this.state.message === ""
             || this.state.message === undefined) ?
-            null :
               <Image
                 source={imgSearchButton}
                 style={{
@@ -90,7 +89,7 @@ class Search extends Component {
                   marginRight: 10,
                   opacity: 0.4
                 }}
-              />}
+              /> : null}
           </TextInput>
         </TouchableOpacity>
       </View>

@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center'
   },
   textBookTitle: {
-    fontSize: 18,
+    fontSize: 17,
     fontWeight: 'bold',
     color: '#282828',
     flex: 4,
@@ -70,14 +70,16 @@ const styles = StyleSheet.create({
   textContainerTitle: {
     marginLeft: WIDTH * 0.0326,
     marginRight: 10,
-    height: HEIGHT * 0.0628,
     flexDirection: 'row',
     justifyContent: 'space-between'
   },
-  textContainerInfo: {
+  textContainerDetail: {
     marginLeft: WIDTH * 0.0326,
     marginRight: 10,
-    marginBottom: HEIGHT * 0.019
+    marginTop: 6
+  },
+  textContainerInfo: {
+    height: HEIGHT * 0.1256
   },
   textSnippetCount: {
     alignSelf: 'center',

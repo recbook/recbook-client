@@ -13,7 +13,7 @@ import { save } from './../../mutations/save';
 import imgJump from './../../resources/jump.png';
 import imgMediaShown from './../../resources/media shown.png';
 import imgBack from './../../resources/backDetail.png';
-import imgCancel from './../../resources/x btn _ white.png';
+import imgBackWhite from './../../resources/back_white.png';
 import imgBookmarked from './../../resources/bookmark_selected.png';
 import imgUnBookmarked from './../../resources/bookmark.png';
 import Footer from '../../footer';
@@ -67,8 +67,8 @@ export default class DetailView extends Component {
               source={imgBack}
             /> :
             <Image
-              style={{height: 27, width: 27}}
-              source={imgCancel}
+              style={{height: 27, width: 15}}
+              source={imgBackWhite}
             />}
         </TouchableOpacity>
         {(prevScene === MY_LIBRARY) ? null :
@@ -100,9 +100,7 @@ export default class DetailView extends Component {
               {this.props.bookInfo.title}
             </Text>
             <Text style={[Styles.textDetailViewTopInfo, {color: (!this.props.viewMyLibrary) ? '#e1e1e1' : '#484848'}]}>
-              by {this.props.bookInfo.author}
-            </Text>
-            <Text style={[Styles.textDetailViewTopInfo, {color: (!this.props.viewMyLibrary) ? '#e1e1e1' : '#484848'}]}>
+              by {this.props.bookInfo.author}{' '}
               ({this.props.bookInfo.publishedDate ? this.props.bookInfo.publishedDate.substring(0,4) : ''})
             </Text>
           </View>
@@ -121,11 +119,12 @@ export default class DetailView extends Component {
 
   renderBook() {
     return (
-      this.props.bookInfo.thumbnail ?
+      <View style={Styles.detailViewBookContainer}>
+        {this.props.bookInfo.thumbnail ?
         <Image
-          style={Styles.detailViewBookContainer}
-          source={{uri: this.props.bookInfo.thumbnail}}/> :
-        <View style={Styles.detailViewBookContainer}/>
+          style={Styles.book}
+          source={{uri: this.props.bookInfo.thumbnail}}/> : null}
+      </View>
     );
   }
   
@@ -282,13 +281,13 @@ export default class DetailView extends Component {
                   source={imgJump}
                 />}
             </TouchableOpacity>
-            {(this.props.viewMyLibrary) ? null :
+            {(this.props.viewMyLibrary) ?
+              (this.props.bookInfo.mySnippets.length !== 0) ?
               <View style={Styles.detailViewImgMediaShownContainer}>
                 <Image
                   style={{height: 18, width: 18, opacity: 0.4}}
                   source={imgMediaShown}/>
-              </View>
-            }
+              </View> : null : null}
           </View>
           <View style={{flex: 24}}/>
         </View>

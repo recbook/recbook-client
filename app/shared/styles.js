@@ -10,7 +10,7 @@ const { StatusBarManager } = NativeModules;
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
 export const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : StatusBarManager.HEIGHT;
-export const HEADER_HEIGHT = 63.5;
+export const HEADER_HEIGHT = 75;
 
 const styles = StyleSheet.create({
   navBar: {
@@ -50,10 +50,15 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     top: 10 // eslint-disable-line todo: change magic num 10 to relative value
   },
+  drawerContainer: {
+    width: WIDTH * 28 / 375,
+    height: HEIGHT * 28 / 667,
+    marginLeft: WIDTH * 12 / 375
+  },
   drawerButton: {
+    width: WIDTH * 28 / 375,
+    height: HEIGHT * 28 / 667,
     marginLeft: WIDTH * 24 / 375,
-    width: 20,
-    height: 20,
     backgroundColor: 'transparent'
   },
   dropDownButtonContainer: {
@@ -61,11 +66,11 @@ const styles = StyleSheet.create({
     height: 25,
     flexDirection: 'row',
     backgroundColor: 'transparent',
-    marginLeft: WIDTH * 10 / 375
+    marginLeft: WIDTH * 34 / 375
   },
   dropDownText: {
-    color: '#6F6F6F',
-    fontSize: 17,
+    color: '#212121',
+    fontSize: 22,
     marginRight: 5,
     fontWeight: 'bold',
     backgroundColor: 'transparent'
@@ -81,7 +86,8 @@ const styles = StyleSheet.create({
     height: 20,
     backgroundColor: 'transparent',
     marginRight: 20,
-    left: WIDTH * 0.3
+    marginTop: 5,
+    left: WIDTH * 0.32 - WIDTH * 24 / 376
   },
   changeImage: {
     width: 20,
@@ -94,7 +100,8 @@ const styles = StyleSheet.create({
     height: 20,
     backgroundColor: 'transparent',
     marginRight: 20,
-    left: WIDTH * 0.3
+    marginTop: 5,
+    left: WIDTH * 0.32 - WIDTH * 24 / 376
   },
   searchImage: {
     width: 20,
