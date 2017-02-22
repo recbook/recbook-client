@@ -64,14 +64,14 @@ const styles = StyleSheet.create({
     height: HEIGHT * 165 / 667,
     width: WIDTH * 112 / 376,
     borderRadius: 7,
-    alignSelf: 'center',
+    alignSelf: 'center'
   },
   detailViewTopTextContainer: {
     backgroundColor: 'transparent',
     left: WIDTH * (38 + 14 + 112) / 376,
     width: WIDTH * 186 / 376,
     position: 'absolute',
-    flexDirection: 'row',
+    flexDirection: 'row'
   },
   detailViewTopRightCntContainer: {
     flex: 33,

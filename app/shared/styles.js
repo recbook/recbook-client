@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
   drawerContainer: {
     width: WIDTH * 28 / 375,
     height: HEIGHT * 28 / 667,
-    marginLeft: WIDTH * 12 / 375,
+    marginLeft: WIDTH * 12 / 375
   },
   drawerButton: {
     width: WIDTH * 28 / 375,
