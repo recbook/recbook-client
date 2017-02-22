@@ -3,61 +3,93 @@ import {
   StyleSheet
 } from 'react-native';
 
+const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#E5E5E5',
+    backgroundColor: '#585550',
     flexDirection: 'column'
   },
   profileContainer: {
     marginTop: HEIGHT * 0.067,
-    borderBottomWidth: 2,
-    borderColor: '#e7e7e7',
-    paddingBottom: 40
+    paddingBottom: 40,
+    backgroundColor: '#585550',
+    paddingLeft: WIDTH * 0.064
   },
   profileImage: {
     backgroundColor: '#C4C4C4',
     width: HEIGHT * 0.114,
     height: HEIGHT * 0.114,
-    borderRadius: HEIGHT * 0.114 / 2,
-    alignSelf: 'center'
+    borderRadius: HEIGHT * 0.114 / 2
   },
   userName: {
     fontSize: 24,
-    alignSelf: 'center',
+    fontFamily: 'Calibri',
+    color: '#FFFFFF',
     marginTop: HEIGHT * 0.02
   },
-  nickName: {
+  subjectName: {
+    color: '#FFFFFF',
     fontSize: 16,
     alignSelf: 'center',
-    marginTop: HEIGHT * 0.007
+    fontFamily: 'Calibri'
   },
-  subjectName: {
-    color: '#000000',
-    fontSize: 16,
-    alignSelf: 'center'
+  trashContainer: {
+    backgroundColor: '#605C56',
+    flexDirection: 'row'
+  },
+  backupContainer: {
+    backgroundColor: '#605C56',
+    flexDirection: 'row'
   },
   themeContainer: {
-    flexDirection: 'row',
-    borderBottomWidth: 2,
-    borderColor: '#e7e7e7',
-    paddingBottom: 20,
-    marginTop: 20,
-    paddingLeft: 30
+    backgroundColor: '#605C56',
+    flexDirection: 'row'
   },
   reminderContainer: {
-    flexDirection: 'row',
-    borderBottomWidth: 2,
-    borderColor: '#e7e7e7',
-    paddingBottom: 20,
-    paddingLeft: 30,
-    marginTop: 20
+    backgroundColor: '#605C56',
+    flexDirection: 'row'
   },
   switchButton: {
-    marginLeft: 40,
+    marginLeft: 100,
     alignSelf: 'center'
+  },
+  signOutContainer: {
+    backgroundColor: '#605C56',
+    flexDirection: 'row'
+  },
+  signOutText: {
+    color: '#F2C94C',
+    fontSize: 16,
+    fontFamily: 'Calibri',
+    marginTop: HEIGHT * 0.04
+  },
+  arrowContainer: {
+    flex: 1,
+    alignItems: 'flex-end'
+  },
+  arrowText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontFamily: 'Calibri'
+  },
+  contentsRow: {
+    backgroundColor: '#605C56',
+    height: HEIGHT * 0.097,
+    borderBottomWidth: 1,
+    borderColor: '#585550',
+    paddingLeft: WIDTH * 0.064,
+    paddingRight: WIDTH * 0.085,
+    justifyContent: 'center'
+  },
+  signOutRow: {
+    flex: 1,
+    backgroundColor: '#605C56',
+    borderBottomWidth: 1,
+    borderColor: '#585550',
+    paddingLeft: WIDTH * 0.064
   }
 });
 

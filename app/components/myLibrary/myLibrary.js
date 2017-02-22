@@ -12,6 +12,7 @@ export class MyLibrary extends Component {
   constructor(props) {
     super(props);
   }
+
   render() {
     return (
       <View style={{flex: 1}}>

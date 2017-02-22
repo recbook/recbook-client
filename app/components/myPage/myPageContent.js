@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {
   Image,
+  StatusBar,
   Switch,
   Text,
   TouchableOpacity,
@@ -9,10 +10,11 @@ import {
 import Styles from './styles';
 import Footer from '../../footer'
 
+import imgDefaultProfile from '../../resources/default.png';
+
 class MyPageContent extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       isDrawerOpen: false
     };
@@ -20,6 +22,12 @@ class MyPageContent extends Component {
 
   componentWillReceiveProps(nextProps) {
     this.setState({isDrawerOpen: nextProps.isOpen});
+
+    if (nextProps.isOpen) {
+      StatusBar.setHidden(true);
+    } else {
+      StatusBar.setHidden(false);
+    }
   }
 
   render() {
@@ -28,28 +36,51 @@ class MyPageContent extends Component {
           <View style={Styles.profileContainer}>
             <Image
               style={Styles.profileImage}
+              source={imgDefaultProfile}
             />
             <Text style={Styles.userName}>Dan Kim</Text>
-            <Text style={Styles.nickName}>Bookworm</Text>
           </View>
-          <View style={Styles.themeContainer}>
-            <Text style={Styles.subjectName}>Color Theme</Text>
-            <TouchableOpacity style={{flexDirection: 'column', marginLeft: 20}}>
-              <Image style={{backgroundColor: 'yellow', width: 44, height: 44}}/>
-              <Text>CLASSIC</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={{flexDirection: 'column', marginLeft: 10}}>
-              <Image style={{backgroundColor: 'grey', width: 44, height: 44}}/>
-              <Text>LIGHT</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={{flexDirection: 'column', marginLeft: 20}}>
-              <Image style={{backgroundColor: 'red', width: 44, height: 44}}/>
-              <Text>DARK</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={Styles.reminderContainer}>
-            <Text style={Styles.subjectName}>Receive Reminder Emails</Text>
-            <Switch style={Styles.switchButton}/>
+          <TouchableOpacity style={Styles.contentsRow}>
+            <View style={Styles.trashContainer}>
+              <Text style={Styles.subjectName}>Trash</Text>
+              <View style={Styles.arrowContainer}>
+                <Text style={Styles.arrowText}>{">"}</Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity style={Styles.contentsRow}>
+            <View style={Styles.backupContainer}>
+              <Text style={Styles.subjectName}>Backup with</Text>
+              <View style={Styles.arrowContainer}>
+                <Text style={Styles.arrowText}>{">"}</Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity style={Styles.contentsRow}>
+            <View style={Styles.themeContainer}>
+              <Text style={Styles.subjectName}>Color Theme</Text>
+              <View style={Styles.arrowContainer}>
+                <Text style={Styles.arrowText}>{">"}</Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity style={Styles.contentsRow}>
+            <View style={Styles.reminderContainer}>
+              <Text style={Styles.subjectName}>Receive Reminder Emails</Text>
+              <View style={Styles.arrowContainer}>
+                <Switch
+                  onTintColor="#C4C4C4"
+                  thumbTintColor="#FFFFFF"
+                  tintColor="#C4C4C4"
+                  style={Styles.switchButton}
+                />
+              </View>
+            </View>
+          </TouchableOpacity>
+          <View style={Styles.signOutRow}>
+            <View style={Styles.signOutContainer}>
+              <Text style={Styles.signOutText}>Sign Out</Text>
+            </View>
           </View>
           <Footer isOpen={this.state.isDrawerOpen}/>
         </View>

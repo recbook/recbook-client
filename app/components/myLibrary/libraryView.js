@@ -29,9 +29,14 @@ const generateRandomColor = () => {
 };
 
 export default class LibraryView extends Component {
+  static propTypes = {
+    user: PropTypes.object,
+    libraryList: PropTypes.any,
+    prevScene: PropTypes.string
+  };
+
   constructor(props) {
     super(props);
-
     this.state = {
       dataSource: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
       onPressedBookIndex: undefined,
@@ -45,12 +50,6 @@ export default class LibraryView extends Component {
     }
     this.resetBookBackgroundColor = this.resetBookBackgroundColor.bind(this);
   }
-
-  static propTypes = {
-    user: PropTypes.object,
-    libraryList: PropTypes.any,
-    prevScene: PropTypes.string
-  };
 
   handleOnPressBookStyle(index, col) {
     // todo: implement this.
