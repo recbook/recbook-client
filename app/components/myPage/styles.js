@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   switchButton: {
-    marginLeft: 70,
+    marginLeft: 100,
     alignSelf: 'center'
   },
   signOutContainer: {

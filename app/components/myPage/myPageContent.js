@@ -67,12 +67,14 @@ class MyPageContent extends Component {
           <TouchableOpacity style={Styles.contentsRow}>
             <View style={Styles.reminderContainer}>
               <Text style={Styles.subjectName}>Receive Reminder Emails</Text>
-              <Switch
-                onTintColor="#C4C4C4"
-                thumbTintColor="#FFFFFF"
-                tintColor="#C4C4C4"
-                style={Styles.switchButton}
-              />
+              <View style={Styles.arrowContainer}>
+                <Switch
+                  onTintColor="#C4C4C4"
+                  thumbTintColor="#FFFFFF"
+                  tintColor="#C4C4C4"
+                  style={Styles.switchButton}
+                />
+              </View>
             </View>
           </TouchableOpacity>
           <View style={Styles.signOutRow}>
