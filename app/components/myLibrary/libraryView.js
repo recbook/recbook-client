@@ -6,7 +6,8 @@ import {
   Text,
   TouchableOpacity,
   View,
-  Image
+  Image,
+  PanResponder
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Styles from './styles';
@@ -36,13 +37,13 @@ export default class LibraryView extends Component {
       onPressedBookIndex: undefined,
       onPressedColumn: undefined,
       initialBookColor: [],
-      fadeAnimRow: new Animated.Value(0),
       offset: 0,
       direction: undefined
     };
     for (let i = 0; i < this.state.dataSource.length; i = i + 1) {
       this.state.initialBookColor.push(generateRandomColor());
     }
+    this.resetBookBackgroundColor = this.resetBookBackgroundColor.bind(this);
   }
 
   static propTypes = {
@@ -51,51 +52,37 @@ export default class LibraryView extends Component {
     prevScene: PropTypes.string
   };
 
-  animateFadeRow() {
-    Animated.sequence([
-      Animated.timing(
-        this.state.fadeAnimRow,
-        {
-          toValue: 0,
-          duration: 0
-        }
-      ),
-      Animated.timing(
-        this.state.fadeAnimRow,
-        {
-          toValue: 1,
-          duration: 300
-        }
-      )
-    ]).start();
-  }
-
   handleOnPressBookStyle(index, col) {
     // todo: implement this.
     this.setState({
       onPressedBookIndex: index,
       onPressedColumn: col
     });
-    this.animateFadeRow();
   }
 
   handleOnPressBookTransition(bookInfo) {
     // todo: implement scene transition on book press here
     Actions.detailView({prevScene: this.props.prevScene, bookInfo: bookInfo.node});
+    // this changing the color back to white after transition animation is done
+    setTimeout(()=>{this.resetBookBackgroundColor()}, 800);
+  }
+
+  resetBookBackgroundColor() {
+    this.setState({
+      onPressedBookIndex: undefined,
+      onPressedColumn: undefined
+    });
   }
 
   renderRow(content, index, col) {
-    const color = this.state.fadeAnimRow.interpolate({
-      inputRange: [0, 1],
-      outputRange: ['rgba(255, 255, 255, 1)', 'rgba(236, 236, 236, 1)']
-    });
     const { node } = content.data;
     return (
       <Animated.View
         style={[
           Styles.row,
           {
-            backgroundColor: (this.state.onPressedBookIndex === index && this.state.onPressedColumn === col) ? color : 'white'
+            backgroundColor: (this.state.onPressedBookIndex === index && this.state.onPressedColumn === col) ?
+              'rgba(236, 236, 236, 1)' : 'white'
           }
         ]}
         key={index}
@@ -104,6 +91,7 @@ export default class LibraryView extends Component {
           style={Styles.row}
           onPressIn={() => this.handleOnPressBookStyle(index, col)}
           onPress={() => this.handleOnPressBookTransition(content.data)}
+          onPressOut={this.resetBookBackgroundColor}
           activeOpacity={1}
         >
           {(node.thumbnail) ?
