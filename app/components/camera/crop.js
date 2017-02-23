@@ -9,20 +9,23 @@ import Styles from './styles';
 import { Actions, ActionConst } from 'react-native-router-flux';
 import RNFS from 'react-native-fs';
 
+import Cropping from './cropping';
 import imgCameraButton from '../../resources/camera BTN_deactive.png';
 import imgCancelButton from '../../resources/x btn.png';
 import imgCropButton from '../../resources/crop.png';
 
 class Crop extends Component {
   static propTypes = {
-    imgPath: PropTypes.string
+    imgPath: PropTypes.string,
+    crop: PropTypes.boolean
   };
 
   constructor(props) {
     super(props);
 
     this.state = {
-      imagePath: undefined
+      imagePath: undefined,
+      crop: false
     };
 
     this.encodeBase64(props);
@@ -37,12 +40,17 @@ class Crop extends Component {
       })
       .catch(error => console.log(error.message));
   }
+  
+  setCropView() {
+    this.state.crop = true;
+    Actions.cropping({cropTop: 50, cropLeft: 50, width: 200, height: 300});
+  }
 
   renderCropButton() {
     return (
       <View style={Styles.cropButtonContainer}>
         <TouchableOpacity
-          onPress={()=>Actions.pop()}
+          onPress={()=>Actions.cropping({cropTop: 50, cropLeft: 50, width: 200, height: 300})}
         >
           <Image
             style={Styles.cropButton}
@@ -83,9 +91,26 @@ class Crop extends Component {
             style={Styles.cancelButton}
             source={imgCancelButton}/>
         </TouchableOpacity>
-        <Image
+        {this.state.crop ?
+          <Cropping
+            cropTop={50}
+            cropLeft={50}
+            width={200}
+            height={300}
+            style={{
+              borderRadius: 5
+            }}>
+            <Image
+              source={{uri: this.props.imgPath}}
+              style={{
+                width: 350,
+                height: 526
+              }}
+              resizeMode="contain" />
+          </Cropping>
+          : <Image
           style={Styles.window}
-          source={{uri: this.props.imgPath}}/>
+          source={{uri: this.props.imgPath}}/>}
         {this.renderCropButton()}
         {this.renderBottom()}
       </View>

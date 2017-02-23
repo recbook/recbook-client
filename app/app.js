@@ -16,6 +16,7 @@ import MyPage from './components/myPage/myPage';
 import Snippet from './components/snippet/snippet';
 import Camera from './components/camera/camera';
 import Crop from './components/camera/crop';
+import Cropping from './components/camera/cropping';
 import FlipCardDetailView from './components/detailView/flipCard';
 import Expanded from './components/expanded/expanded';
 import SearchBar from './components/search/search';
@@ -191,6 +192,12 @@ export default class App extends React.Component {
               hideNavBar={true}
               direction="fade"
               queries={{user: () => Relay.QL`query { viewer } `}}
+            />
+            <Scene
+              key="cropping"
+              component={Cropping}
+              hideNavBar={true}
+              direction="fade"
             />
             <Scene
               key="expanded"
