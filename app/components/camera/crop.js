@@ -63,7 +63,9 @@ class Crop extends Component {
         </TouchableOpacity>
         <Image style={Styles.captureButton} source={imgCameraButton}/>
         <TouchableOpacity
-          onPress={()=>Actions.myLibrary({type: ActionConst.RESET})}
+          onPress={()=>Actions.createSnippet({
+            imgPath: this.props.imgPath
+          })}
           style={Styles.nextButtonContainer}
         >
           <Text style={Styles.nextButton}>Next</Text>

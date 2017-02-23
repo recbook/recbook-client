@@ -16,6 +16,7 @@ import MyPage from './components/myPage/myPage';
 import Snippet from './components/snippet/snippet';
 import Camera from './components/camera/camera';
 import Crop from './components/camera/crop';
+import CreateSnippet from './components/create/createSnippet';
 import FlipCardDetailView from './components/detailView/flipCard';
 import Expanded from './components/expanded/expanded';
 import SearchBar from './components/search/search';
@@ -41,6 +42,7 @@ export const SCENE_CONSTANT = {
 };
 
 const API_URL = 'http://52.79.112.162/graphql';
+
 export function setNetworkLayer(options) {
   Relay.injectNetworkLayer(
     new Relay.DefaultNetworkLayer(API_URL, options)
@@ -191,6 +193,12 @@ export default class App extends React.Component {
               hideNavBar={true}
               direction="fade"
               queries={{user: () => Relay.QL`query { viewer } `}}
+            />
+            <Scene
+              key="createSnippet"
+              component={CreateSnippet}
+              hideNavBar={true}
+              direction="fade"
             />
             <Scene
               key="expanded"
