@@ -13,7 +13,7 @@ import MyLibrary from './components/myLibrary/myLibrary';
 import Recommended from './components/myLibrary/recommended';
 import Saved from './components/myLibrary/saved';
 import MyPage from './components/myPage/myPage';
-import Snippet from './components/snippet/snippet';
+import Snippet from './components/snippet/myLibrary';
 import Camera from './components/camera/camera';
 import Crop from './components/camera/crop';
 import CreateSnippet from './components/create/createSnippet';
@@ -24,8 +24,8 @@ import FirstPage from './components/signIn/first';
 import Register from './components/signIn/register';
 import Login from './components/signIn/login';
 
-import imgViewChange01 from './resources/view change01.png';
-import imgViewChange02 from './resources/view change02.png';
+import imgListView from './resources/view change01.png';
+import imgSnippetView from './resources/view change02.png';
 
 // Define reducer to manage scenes
 const reducerCreate = (params) => {
@@ -69,6 +69,16 @@ export default class App extends React.Component {
       currentScene: SCENE_CONSTANT.MY_LIBRARY
     };
   }
+  
+  viewChange() {
+    if (this.state.viewSnippet) {
+      Actions.myLibrary();
+    } else {
+      Actions.snippet();
+    }
+    this.setState({viewSnippet: !this.state.viewSnippet});
+    Actions.refresh();
+  }
 
   render() {
     const createNavBarButtons = (route) => {
@@ -93,15 +103,12 @@ export default class App extends React.Component {
           {(sceneKey === 'detailView') ? null :
             <TouchableOpacity
               style={Styles.changeButton}
-              onPress={() => {
-                this.setState({viewSnippet: !this.state.viewSnippet});
-                (this.state.viewSnippet) ? Actions.snippet() : Actions.pop();
-              }}
+              onPress={() => {this.viewChange()}}
               activeOpacity={1}
             >
               <Image
                 style={Styles.changeImage}
-                source={(!this.state.viewMyLibrary) ? imgViewChange02 : imgViewChange01}
+                source={(!this.state.viewSnippet) ? imgListView : imgSnippetView}
               />
             </TouchableOpacity>
           }

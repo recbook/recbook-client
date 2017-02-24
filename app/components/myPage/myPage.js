@@ -35,7 +35,7 @@ class MyPage extends Component {
           onOpen={()=>Actions.refresh({key: state.key, open: true})}
           onClose={()=>Actions.refresh({key: state.key, open: false})}
           type="displace"
-          content={<MyPageContent isOpen={this.state.isDrawerOpen}/>}
+          content={<MyPageContent isOpen={this.state.isDrawerOpen} navigationState={state}/>}
           tapToClose={true}
           openDrawerOffset={0.10}
           panCloseMask={0.10}

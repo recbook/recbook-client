@@ -13,7 +13,8 @@ export default class FlipCardDetailView extends Component {
 
   static propTypes = {
     prevScene: PropTypes.string,
-    bookInfo: PropTypes.any
+    bookInfo: PropTypes.any,
+    color: PropTypes.string
   };
 
   handleSwitch() {
@@ -36,12 +37,14 @@ export default class FlipCardDetailView extends Component {
             prevScene={this.props.prevScene}
             handleSwitch={this.handleSwitch.bind(this)}
             bookInfo={this.props.bookInfo}
+            color={this.props.color}
           />
           <DetailView
             viewMyLibrary={false}
             prevScene={this.props.prevScene}
             handleSwitch={this.handleSwitch.bind(this)}
             bookInfo={this.props.bookInfo}
+            color={this.props.color}
           />
         </FlipCard>
       );
@@ -61,12 +64,14 @@ export default class FlipCardDetailView extends Component {
             prevScene={this.props.prevScene}
             handleSwitch={this.handleSwitch.bind(this)}
             bookInfo={this.props.bookInfo}
+            color={this.props.color}
           />
           <DetailView
             viewMyLibrary={false}
             prevScene={this.props.prevScene}
             handleSwitch={this.handleSwitch.bind(this)}
             bookInfo={this.props.bookInfo}
+            color={this.props.color}
           />
         </FlipCard>
       )
@@ -78,6 +83,7 @@ export default class FlipCardDetailView extends Component {
           prevScene={this.props.prevScene}
           handleSwitch={()=>{}}
           bookInfo={this.props.bookInfo}
+          color={this.props.color}
         />
       )
     }

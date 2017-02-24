@@ -41,13 +41,6 @@ class Crop extends Component {
   renderCropButton() {
     return (
       <View style={Styles.cropButtonContainer}>
-        <TouchableOpacity
-          onPress={()=>Actions.pop()}
-        >
-          <Image
-            style={Styles.cropButton}
-            source={imgCropButton}/>
-        </TouchableOpacity>
       </View>
     );
   }

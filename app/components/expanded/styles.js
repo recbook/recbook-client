@@ -68,6 +68,11 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     paddingLeft: 24,
     paddingRight: 24
+  },
+  textDetailSlide: {
+    fontSize: 14,
+    fontFamily: 'Calibri',
+    color: '#929292'
   }
 });
 

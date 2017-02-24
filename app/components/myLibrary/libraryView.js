@@ -38,14 +38,14 @@ export default class LibraryView extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      dataSource: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+      dataSource: this.props.libraryList,
       onPressedBookIndex: undefined,
       onPressedColumn: undefined,
       initialBookColor: [],
       offset: 0,
       direction: undefined
     };
-    for (let i = 0; i < this.state.dataSource.length; i = i + 1) {
+    for (let i = 0; i < this.props.libraryList.length; i = i + 1) {
       this.state.initialBookColor.push(generateRandomColor());
     }
     this.resetBookBackgroundColor = this.resetBookBackgroundColor.bind(this);
@@ -61,7 +61,11 @@ export default class LibraryView extends Component {
 
   handleOnPressBookTransition(bookInfo) {
     // todo: implement scene transition on book press here
-    Actions.detailView({prevScene: this.props.prevScene, bookInfo: bookInfo.node});
+    Actions.detailView({
+      prevScene: this.props.prevScene,
+      bookInfo: bookInfo.data.node,
+      color: bookInfo.color
+    });
     // this changing the color back to white after transition animation is done
     setTimeout(()=>{this.resetBookBackgroundColor()}, 800);
   }
@@ -89,20 +93,16 @@ export default class LibraryView extends Component {
         <TouchableOpacity
           style={Styles.row}
           onPressIn={() => this.handleOnPressBookStyle(index, col)}
-          onPress={() => this.handleOnPressBookTransition(content.data)}
+          onPress={() => this.handleOnPressBookTransition(content)}
           onPressOut={this.resetBookBackgroundColor}
           activeOpacity={1}
         >
-          {(node.thumbnail) ?
-            <View style={Styles.bookContainer}>
+          <View style={[Styles.bookContainer, {backgroundColor: content.color}]}>
+            {(node.thumbnail) ?
               <Image
                 source={{uri: node.thumbnail}}
-                style={Styles.book}
-              />
-            </View>
-            :
-            <View style={[Styles.bookContainer, {backgroundColor: content.color}]}/>
-          }
+                style={Styles.book}/> : null}
+          </View>
           <View style={Styles.textContainerInfo}>
             <View style={Styles.textContainerTitle}>
               <Text style={Styles.textBookTitle}

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {
+  AsyncStorage,
   Image,
   StatusBar,
   Switch,
@@ -7,6 +8,7 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
+import { Actions, ActionConst } from 'react-native-router-flux';
 import Styles from './styles';
 import Footer from '../../footer'
 
@@ -28,6 +30,13 @@ class MyPageContent extends Component {
     } else {
       StatusBar.setHidden(false);
     }
+  }
+
+  signOut() {
+    AsyncStorage.removeItem('currentUser', () => {
+      Actions.refresh({key: this.props.navigationState.key, open: false});
+      Actions.first();
+    });
   }
 
   render() {
@@ -79,7 +88,10 @@ class MyPageContent extends Component {
           </TouchableOpacity>
           <View style={Styles.signOutRow}>
             <View style={Styles.signOutContainer}>
-              <Text style={Styles.signOutText}>Sign Out</Text>
+              <TouchableOpacity
+                onPress={() => this.signOut()}>
+                <Text style={Styles.signOutText}>Sign Out</Text>
+              </TouchableOpacity>
             </View>
           </View>
           <Footer isOpen={this.state.isDrawerOpen}/>

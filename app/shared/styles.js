@@ -47,6 +47,7 @@ const styles = StyleSheet.create({
   navBarButtonContainer: {
     width: WIDTH,
     flexDirection: 'row',
+    justifyContent: 'space-between',
     backgroundColor: 'transparent',
     top: 10 // eslint-disable-line todo: change magic num 10 to relative value
   },
@@ -64,14 +65,13 @@ const styles = StyleSheet.create({
   dropDownButtonContainer: {
     width: 150,
     height: 25,
+    marginRight: WIDTH * 20 / 375,
     flexDirection: 'row',
-    backgroundColor: 'transparent',
-    marginLeft: WIDTH * 34 / 375
+    backgroundColor: 'transparent'
   },
   dropDownText: {
     color: '#212121',
     fontSize: 22,
-    marginRight: 5,
     fontWeight: 'bold',
     backgroundColor: 'transparent'
   },
@@ -82,12 +82,11 @@ const styles = StyleSheet.create({
     resizeMode: 'contain'
   },
   changeButton: {
-    width: 20,
-    height: 20,
+    width: 30,
+    height: 30,
     backgroundColor: 'transparent',
-    marginRight: 20,
-    marginTop: 5,
-    left: WIDTH * 0.32 - WIDTH * 24 / 376
+    left: WIDTH * 30 / 375,
+    marginTop: 5
   },
   changeImage: {
     width: 20,
@@ -96,12 +95,10 @@ const styles = StyleSheet.create({
     resizeMode: 'contain'
   },
   searchButton: {
-    width: 20,
-    height: 20,
+    width: 30,
+    height: 30,
     backgroundColor: 'transparent',
-    marginRight: 20,
-    marginTop: 5,
-    left: WIDTH * 0.32 - WIDTH * 24 / 376
+    marginTop: 5
   },
   searchImage: {
     width: 20,

@@ -54,7 +54,7 @@ export default class BookAPIUtil {
     return Rx.Observable.merge(
       KakaoBookAPIUtil.searchBook$(keyword, options),
       GoogleBookAPIUtil.searchBook$(keyword, options)
-    )
+    );
   }
   /*
    @Usage
