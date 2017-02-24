@@ -43,6 +43,7 @@ export const SCENE_CONSTANT = {
 };
 
 const API_URL = 'http://52.79.112.162/graphql';
+
 export function setNetworkLayer(options) {
   Relay.injectNetworkLayer(
     new Relay.DefaultNetworkLayer(API_URL, options)
