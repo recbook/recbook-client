@@ -15,16 +15,14 @@ import imgCropButton from '../../resources/crop.png';
 
 class Crop extends Component {
   static propTypes = {
-    imgPath: PropTypes.string,
-    crop: PropTypes.boolean
+    imgPath: PropTypes.string
   };
 
   constructor(props) {
     super(props);
 
     this.state = {
-      imagePath: undefined,
-      crop: false
+      imagePath: undefined
     };
 
     this.encodeBase64(props);
@@ -39,17 +37,10 @@ class Crop extends Component {
       })
       .catch(error => console.log(error.message));
   }
-  
-  setCropView() {
-    this.state.crop = true;
-  }
 
   renderCropButton() {
     return (
       <View style={Styles.cropButtonContainer}>
-        <Image
-          style={Styles.cropButton}
-          source={imgCropButton}/>
       </View>
     );
   }
@@ -87,6 +78,11 @@ class Crop extends Component {
             style={Styles.cancelButton}
             source={imgCancelButton}/>
         </TouchableOpacity>
+        <Image
+          style={Styles.window}
+          source={{uri: this.props.imgPath}}/>
+        {this.renderCropButton()}
+        {this.renderBottom()}
       </View>
     );
   }
