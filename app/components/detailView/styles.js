@@ -30,9 +30,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff'
   },
   detailViewBottom: {
-    alignItems: 'flex-end',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    marginLeft: 20,
     width: WIDTH * 320 / 376,
-    height: HEIGHT * 30 / 667,
+    height: HEIGHT * 80 / 667,
+    marginBottom: HEIGHT * 40 / 667
   },
   detailViewBottomContainer: {
     height: HEIGHT * (667 - 201) / 667,
@@ -58,7 +61,7 @@ const styles = StyleSheet.create({
     top: HEADER_HEIGHT + STATUSBAR_HEIGHT,
     marginTop: 0.5,
     left: WIDTH * 38 / 376,
-    borderRadius: 7,
+    borderRadius: 7
   },
   book: {
     height: HEIGHT * 165 / 667,
@@ -109,18 +112,20 @@ const styles = StyleSheet.create({
     width: WIDTH * 328 / 376,
     marginRight: WIDTH * 10 / 376,
     backgroundColor: '#fff',
-    borderWidth: 1,
     borderRadius: 4,
     flexDirection: 'column',
     justifyContent: 'space-between',
-    flex: 1,
+    flex: 1
   },
   detailViewSnippetContainerWithOutSnippet: {
-    height: HEIGHT * 300 / 376,
-    width: WIDTH * 328 / 376,
-    marginRight: WIDTH * 24 / 376,
-    marginLeft: - WIDTH * 14 / 376,
-    flexDirection: 'column'
+    height: HEIGHT * 170 / 376,
+    width: WIDTH * 352 / 376,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-end'
+  },
+  detailViewSnippetTouchable: {
+    height: HEIGHT * 150 / 376
   },
   detailViewSnippetDateContainer: {
     width: WIDTH * 280 / 375,
@@ -132,6 +137,10 @@ const styles = StyleSheet.create({
     paddingRight: 19,
     marginLeft: 19,
     alignItems: 'flex-start'
+  },
+  textEmpty: {
+    marginBottom: WIDTH * 24 / 375,
+    marginLeft: -WIDTH * 14 / 375
   },
   textDetailViewTopTitle: {
     fontSize: 26,
@@ -157,11 +166,6 @@ const styles = StyleSheet.create({
     marginRight: 5,
     left: WIDTH * 24 / 376,
   },
-  textDetailViewSnippetDate: {
-    fontSize: 14,
-    fontFamily: 'Calibri',
-    color: '#929292',
-  },
   textDetailViewSnippetSlide: {
     fontSize: 22,
     fontFamily: 'Calibri',
@@ -170,14 +174,11 @@ const styles = StyleSheet.create({
   textDetailViewSnippetSlideWithOutSnippets: {
     fontSize: 17,
     fontWeight: 'bold',
-    width: WIDTH * 328 / 376,
-    height: HEIGHT * 359 / 376,
     color: '#FFF',
     fontFamily: 'Calibri',
-    bottom: -HEIGHT * 288 / 667,
     marginLeft: 20
   },
-  textSnippetSlidePageNum: {
+  textSnippetSlide: {
     fontSize: 14,
     fontFamily: 'Calibri',
     color: '#929292',
@@ -185,9 +186,11 @@ const styles = StyleSheet.create({
   borderBottomLine: {
     borderBottomWidth: 1,
     borderColor: '#dadada',
-    marginBottom: 30,
-    marginRight: 20,
-    marginLeft: 20
+    marginBottom: HEIGHT * 20 / 667,
+    marginRight: 30
+  },
+  original: {
+    marginBottom: HEIGHT * 80 / 667
   },
   detailViewDropDown: {
     height: HEIGHT * 0.254,

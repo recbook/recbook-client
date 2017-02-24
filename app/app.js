@@ -17,6 +17,7 @@ import Snippet from './components/snippet/myLibrary';
 import Camera from './components/camera/camera';
 import Crop from './components/camera/crop';
 import Cropping from './components/camera/cropping';
+import CreateSnippet from './components/create/createSnippet';
 import FlipCardDetailView from './components/detailView/flipCard';
 import Expanded from './components/expanded/expanded';
 import SearchBar from './components/search/search';
@@ -203,6 +204,12 @@ export default class App extends React.Component {
             <Scene
               key="cropping"
               component={Cropping}
+              hideNavBar={true}
+              direction="fade"
+            />
+            <Scene
+              key="createSnippet"
+              component={CreateSnippet}
               hideNavBar={true}
               direction="fade"
             />

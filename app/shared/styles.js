@@ -82,8 +82,8 @@ const styles = StyleSheet.create({
     resizeMode: 'contain'
   },
   changeButton: {
-    width: 20,
-    height: 20,
+    width: 30,
+    height: 30,
     backgroundColor: 'transparent',
     marginRight: 20,
     marginTop: 5,
@@ -96,8 +96,8 @@ const styles = StyleSheet.create({
     resizeMode: 'contain'
   },
   searchButton: {
-    width: 20,
-    height: 20,
+    width: 30,
+    height: 30,
     backgroundColor: 'transparent',
     marginRight: 20,
     marginTop: 5,

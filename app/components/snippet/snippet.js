@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import {
   ScrollView,
   Text,
@@ -8,15 +8,29 @@ import {
   TouchableOpacity
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import { SCENE_CONSTANT } from './../../app';
 import Styles, { HEIGHT, WIDTH } from './styles';
 import Footer from '../../footer';
 
 export default class Snippet extends Component {
-  constructor() {
-    super();
+  static propTypes = {
+    libraryList: PropTypes.any
+  };
+  
+  constructor(props) {
+    super(props);
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    const dataSource = [];
+    Object.keys(this.props.libraryList).map((key) => {
+      if (this.props.libraryList[key].node.mySnippets !== undefined
+        && this.props.libraryList[key].node.mySnippets.length !== 0) {
+        dataSource.push(this.props.libraryList[key]);
+      }
+    });
     this.state = {
-      dataSource: ds.cloneWithRows(['row 1', 'row 2']),
+      dataSource: ds.cloneWithRows(dataSource),
+      offset: 0,
+      direction: undefined
     };
   }
 
@@ -29,49 +43,65 @@ export default class Snippet extends Component {
       direction: direction
     });
   }
+  
+  handleOnPressBookTransition(bookInfo) {
+    // todo: implement scene transition on book press here
+    Actions.detailView({
+      prevScene: SCENE_CONSTANT.MY_LIBRARY,
+      bookInfo: bookInfo.node
+    });
+  }
 
-  renderRow() {
+  renderRow(rowData) {
+    const { node } = rowData;
     return (
-      <TouchableOpacity
-        onPress={() => Actions.expanded()}
-        activeOpacity={0.7}
-      >
-        <View style={Styles.snippetContainer}>
-          <View style={[Styles.snippetSlide, {zIndex: 3, left: 0}]}>
-            <View style={Styles.snippetSlideInnerContainer}>
-              <View style={{alignItems: 'flex-end'}}>
-                <Text style={Styles.textSnippetSlideDate}>26 Oct 2016</Text>
+      <View style={Styles.snippetContainer}>
+        <View style={[Styles.snippetSlide, {left: 0}]}>
+          <TouchableOpacity
+            style={Styles.snippetSlideInnerContainer}
+            onPress={() => this.handleOnPressBookTransition(rowData)}
+          >
+            <View style={{flexDirection: 'row'}}>
+              <View style={Styles.snippetSlideBookThumbnail}>
+                {node.thumbnail ?
+                  <Image
+                    style={Styles.book}
+                    source={{uri: node.thumbnail}}/> : null}
               </View>
-              <View style={{flexDirection: 'row'}}>
-                <View style={Styles.snippetSlideBookThumbnail}/>
-                <View style={Styles.snippetSlideTitleContainer}>
-                  <Text style={Styles.textSnippetSlideTitle}>Danish Architecture</Text>
-                  <View style={Styles.snippetSlideCntBox}>
-                    <Text style={Styles.textSnippetSlideCnt}>11</Text>
-                  </View>
+              <View style={Styles.snippetSlideTitleContainer}>
+                <Text style={Styles.textSnippetSlideTitle}>{node.title}</Text>
+                <View style={Styles.snippetSlideCntBox}>
+                  <Text style={Styles.textSnippetSlideCnt}>{node.mySnippets.length}</Text>
                 </View>
               </View>
-              <View style={{marginTop: 10}}>
-                <Text style={Styles.textSnippetSlide}>
-                  The success of one design, however, does not suggest that the others are less useful or not as good. Des
-                  ign can have diversity in its solution to problems without compromising the success of any of them
-                </Text>
-              </View>
-              <View style={{alignItems: 'flex-end', marginTop: 2}}>
-                <Text style={Styles.textSnippetSlidePageNum}>P.102</Text>
-              </View>
-              <View style={{borderBottomWidth: 1, borderColor: '#dadada', marginTop: 6}}/>
-              <View style={{marginTop: 20}}>
-                <Image
-                  source={require('./../../resources/originalImg.png')}
-                />
-              </View>
+            </View>
+            <View style={Styles.snippet}>
+              <Text
+                style={Styles.textSnippetSlide}
+                numberOfLines={10}
+                ellipsizeMode='tail'>
+                {node.mySnippets[0].contents}
+              </Text>
+            </View>
+          </TouchableOpacity>
+          <View style={Styles.snippetBottom}>
+            <View style={Styles.snippetBottomText}>
+              <Text style={Styles.textSnippetSlideDate}>{node.mySnippets[0].createdDate}</Text>
+              <Text style={Styles.textSnippetSlidePageNum}>p.{node.mySnippets[0].page}</Text>
+            </View>
+            <View style={Styles.snippetBottomComponents}/>
+            <View style={{marginTop: 20}}>
+              <Image
+                source={require('./../../resources/originalImg.png')}
+              />
             </View>
           </View>
-          <View style={[Styles.snippetSlide, {zIndex: 2, left: WIDTH * 4 / 375, top: WIDTH * 4 / 375}]}/>
-          <View style={[Styles.snippetSlide, {zIndex: 1, left: WIDTH * 8 / 375, top: WIDTH * 8 / 375}]}/>
         </View>
-      </TouchableOpacity>
+        {(node.mySnippets.length > 1) ?
+          <View style={[Styles.snippetSlide, {left: WIDTH * 5 / 375, top: WIDTH * 15 / 375}]}/> : null}
+        {(node.mySnippets.length > 1) ?
+          <View style={[Styles.snippetSlide, {left: WIDTH * 10 / 375, top: WIDTH * 30 / 375}]}/> : null}
+      </View>
     );
   }
 
@@ -81,11 +111,11 @@ export default class Snippet extends Component {
         <ScrollView
           scrollEventThrottle={16}
           onScroll={this.onScroll.bind(this)}
-          style={{flex: 1, marginTop: HEIGHT * 0.11}}
+          style={{flex: 1, marginTop: HEIGHT * 0.14}}
         >
           <ListView
             dataSource={this.state.dataSource}
-            renderRow={this.renderRow}
+            renderRow={this.renderRow.bind(this)}
             style={{backgroundColor: '#fdfdfd'}}
             contentContainerStyle={{alignItems: 'center'}}
           />

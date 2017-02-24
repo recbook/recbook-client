@@ -30,6 +30,8 @@ export default class Expanded extends Component {
     this.state = {
       viewMyLibrary: this.props.viewMyLibrary,
       data: this.props.data,
+      bundle: this.props.bundle,
+      page: this.props.page,
       onScrollcontentOffsetY: 0,
       pressed: undefined
     };
@@ -57,6 +59,18 @@ export default class Expanded extends Component {
 
   changeNativeShadowOpacity(opacity) {
     this.refHeader.setNativeProps({style: {shadowOpacity: opacity}});
+  }
+
+  renderWeight(array) {
+    return (
+      array.map((arr) =>
+        <Text
+          key={arr.key}
+          style={[Styles.textDetailViewSnippetSlide, {fontWeight: (arr.fontWeight)}]}>
+          {arr.text}{'. '}
+        </Text>
+      )
+    );
   }
 
   render() {
@@ -88,16 +102,16 @@ export default class Expanded extends Component {
           <Text style={Styles.textExpandedContent}>
             {(!this.props.viewMyLibrary) ?
               this.state.data.contents :
-            "A sunflower seed and a solar system are the same thing;" +
-            " they both are whole systems. I find it easier to pay attention" +
-            " to the complexities of the smaller than to pay attention to the" +
-            " complexities of the larger. That, as much as anything, is why I'm a craftsman." +
-            " It's a small discipline, but you can put an awful lot into it.{'\n'}ADAM SMITH, KNIFEMAKER"
+              this.state.bundle.map((renderText) => this.renderWeight(renderText))
             }
           </Text>
         </ScrollView>
       </View>
       <View style={Styles.expandedFooterContainer}>
+        <View>
+          <Text style={Styles.textDetailSlide}>{this.props.data.createdDate}</Text>
+          <Text style={Styles.textDetailSlide}>p.{this.props.page}</Text>
+        </View>
         <TouchableOpacity
           style={{marginLeft: 32}}
           onPress={() => this.setState({pressed: PRESSED_CONSTANT.EDIT})}

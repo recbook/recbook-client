@@ -14,14 +14,15 @@ const styles = StyleSheet.create({
     marginBottom: 20
   },
   snippetSlide: {
-    position: 'absolute',
     height: HEIGHT * 385 / 667,
     width: WIDTH * 327 / 375,
     backgroundColor: '#fff',
     marginTop: 20,
     borderRadius: 4,
     borderWidth: 1,
-    borderColor: '#efefef'
+    borderColor: '#efefef',
+    flexDirection: 'column',
+    justifyContent: 'space-between'
   },
   snippetSlideInnerContainer: {
     flex: 1,
@@ -41,6 +42,17 @@ const styles = StyleSheet.create({
       width: 0.3
     }
   },
+  book: {
+    borderRadius: 2,
+    height: 30,
+    width: 20
+  },
+  snippet: {
+    alignItems: 'flex-start',
+    paddingTop: 10,
+    paddingRight: 19,
+    marginLeft: 19
+  },
   snippetSlideTitleContainer: {
     flex: 1,
     marginLeft: 12,
@@ -55,6 +67,22 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 6
+  },
+  snippetBottom: {
+    height: HEIGHT * 80 / 667,
+    width: WIDTH * 335 / 375,
+    marginLeft: WIDTH * 20 / 375
+  },
+  snippetBottomComponents: {
+    borderBottomWidth: 1,
+    borderColor: '#dadada',
+    marginTop: HEIGHT * 6 / 667,
+    marginRight: WIDTH * 50 / 375
+  },
+  snippetBottomText: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginRight: WIDTH * 50 / 375
   },
   textSnippetSlideTitle: {
     fontSize: 18,
