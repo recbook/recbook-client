@@ -26,6 +26,12 @@ const styles = StyleSheet.create({
     width: WIDTH * 0.228,
     height: WIDTH * 0.228
   },
+  capturedButton: {
+    alignSelf: 'center',
+    width: WIDTH * 0.228,
+    height: WIDTH * 0.228,
+    marginRight: 18
+  },
   cancelButton: {
     position: 'absolute',
     left: WIDTH * 0.04,

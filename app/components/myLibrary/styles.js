@@ -11,13 +11,13 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: HEIGHT * 0.03,
+    marginTop: HEIGHT * 0.03
   },
   empty: {
     height: 229,
     width: 229,
     left: WIDTH * 0.5 - 114.5,
-    top: HEIGHT * 220 / 667 - 114.5,
+    top: HEIGHT * 220 / 667 - 114.5
   },
   row: {
     flexDirection: 'column',
