@@ -3,6 +3,7 @@ import { View } from 'react-native';
 import Relay from 'react-relay';
 import LibraryView from './libraryView';
 import { SCENE_CONSTANT } from './../../app';
+import { Actions } from 'react-native-router-flux';
 
 export class MyLibrary extends Component {
   static propTypes = {
@@ -28,6 +29,10 @@ export class MyLibrary extends Component {
 export default Relay.createContainer(MyLibrary, {
   initialVariables: {
     orderBy: null
+  },
+  shouldComponentUpdate: () => {
+    console.log('shouldComponentUpdate is called');
+    return true;
   },
   fragments: {
     user: () => {

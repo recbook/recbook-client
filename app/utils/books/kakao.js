@@ -179,8 +179,8 @@ export default class KakaoBookAPIUtil {
     if (item.pub_date && item.pub_date !== '') book.publishedDate = item.pub_date;
     if (item.category && item.category !== '') book.category = KakaoBookAPIUtil.removeTag(item.category);
     if (item.isbn13 && item.isbn13 !== '') book.isbn = KakaoBookAPIUtil.removeTag(item.isbn13);
-    if (item.cover_s_url && item.cover_s_url !== '') book.thumbnail = item.cover_s_url;
-    if (item.cover_l_url && item.cover_l_url !== '') book.thumbnail = item.cover_l_url;
+    if (item.cover_s_url && item.cover_s_url !== '') book.thumbnail = item.cover_s_url.replace('http','https');
+    if (item.cover_l_url && item.cover_l_url !== '') book.thumbnail = item.cover_l_url.replace('http','https');
 
     return book;
   }

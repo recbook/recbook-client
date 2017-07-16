@@ -157,8 +157,8 @@ export default class App extends React.Component {
               key="myLibrary"
               component={MyLibrary}
               hideNavBar={false}
-              type="replace"
               initial={false}
+              forceFetch={true}
               renderRightButton={createNavBarButtons}
               queries={{user: () => Relay.QL`query { viewer } `}}
             />

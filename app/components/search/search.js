@@ -8,6 +8,9 @@ import {
   Modal,
   Text
 } from 'react-native';
+import Rx from 'rx';
+import EventEmitter from 'EventEmitter';
+import BooksUtil from '../../utils/books.util';
 import { Actions, ActionConst } from 'react-native-router-flux';
 import { SCENE_CONSTANT } from './../../app';
 import Styles from './styles';
@@ -30,14 +33,43 @@ class Search extends Component {
 
     this.state = {
       message: undefined,
-      count: 0
+      count: 0,
+      bookList: this.props.user.recommendedBooks.edges
     };
+
+    this.updateBookList = this.updateBookList.bind(this);
+
+    this.searchInputEventEmitter = new EventEmitter();
+    this.searchInput$ = Rx.Observable.fromEvent(this.searchInputEventEmitter, 'searchInput')
+      .filter((text) => text.length > 2)
+      .debounce(750)  /* Pause for 750ms */
+      .distinctUntilChanged();
+
+    this.searchInput$.subscribe(() => { this.updateBookList([]); });
+    this.searchInput$.subscribe(
+      text => BooksUtil.searchBook$(text)
+        .subscribe(
+          books => {
+            books = books.map(book => {
+              book.mySnippets = [];
+              book.snippets = [];
+              return { node: book}
+            });
+            this.updateBookList(this.state.bookList.concat(books));
+          }
+        )
+    );
   }
-  
+
+  updateBookList(bookList) {
+    this.setState({ bookList });
+  }
+
   onChangeSearch(message) {
     this.setState({
       message: message
     });
+    this.searchInputEventEmitter.emit('searchInput', message);
   }
 
   searchBook() {
@@ -71,7 +103,7 @@ class Search extends Component {
             style={Styles.backButton}
           />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => this.searchBook()}>
+        <TouchableOpacity>
           <TextInput
             style={Styles.searchBar}
             underlineColorAndroid="transparent"
@@ -95,16 +127,13 @@ class Search extends Component {
       </View>
         <View style={Styles.resultContainer}>
         <Text style={Styles.resultText}>
-          {this.props.prevScene === 'Recommended' ?
-            " " : "RECOMMENDED BOOKS "
-          }
-          {this.state.count} result of {this.state.message}
+
         </Text>
         </View>
         <StatusBar hidden={true}/>
         <View style={{flex: 1}}>
           <LibraryView
-            libraryList={this.props.user.recommendedBooks.edges}
+            libraryList={this.state.bookList}
             prevScene={SCENE_CONSTANT.RECOMMENDED}
           />
         </View>

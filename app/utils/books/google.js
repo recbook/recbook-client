@@ -177,7 +177,7 @@ export default class GoogleBookAPIUtil {
       if (isbnArr.length === 1) bookInfo.isbn = isbnArr[0].identifier;
     }
     if (info.imageLinks) {
-      bookInfo.thumbnail = info.imageLinks.thumbnail;
+      bookInfo.thumbnail = info.imageLinks.thumbnail.replace('http','https');
     }
     return bookInfo;
   }

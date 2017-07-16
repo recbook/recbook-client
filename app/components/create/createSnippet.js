@@ -110,7 +110,7 @@ class CreateSnippet extends Component {
                   });
                 })
                 .then((result) => {
-                  Actions.myLibrary({type: ActionConst.RESET});
+                  Actions.pop({popNum:3, refresh:{}});
                 })
                 .catch(console.log);
             }

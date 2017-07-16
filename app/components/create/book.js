@@ -6,10 +6,6 @@ export class Book extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      thumbnail: this.props.book.thumbnail ?
-        this.props.book.thumbnail.replace('http', 'https') : this.props.book.thumbnail
-    };
   }
 
   render() {
@@ -25,7 +21,7 @@ export class Book extends Component {
           {(this.props.book.thumbnail) ?
              <View style={Styles.bookContainer}>
                <Image
-                 source={{uri: this.state.thumbnail}}
+                 source={{uri: this.props.book.thumbnail}}
                  style={Styles.book}
                />
              </View>
